@@ -1,0 +1,6 @@
+##Interface: 30300
+##Title: NoobDKP
+##Author: The Guild Master
+##Version: 0.0.1
+
+main.lua
