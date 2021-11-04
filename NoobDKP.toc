@@ -1,6 +1,7 @@
 ##Interface: 30300
 ##Title: NoobDKP
 ##Author: The Guild Master
-##Version: 0.0.1
+##Version: 0.0.2
+##SavedVariables: NOOBDKP_ROSTER
 
 main.lua
