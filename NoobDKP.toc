@@ -2,6 +2,6 @@
 ##Title: NoobDKP
 ##Author: The Guild Master
 ##Version: 0.0.2
-##SavedVariables: NOOBDKP_ROSTER
+##SavedVariables: NOOBDKP_g_roster, NOOBDKP_g_events
 
 main.lua
