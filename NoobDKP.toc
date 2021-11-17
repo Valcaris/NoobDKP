@@ -4,4 +4,7 @@
 ##Version: 0.0.2
 ##SavedVariables: NOOBDKP_g_roster, NOOBDKP_g_events
 
-main.lua
+main.xml
+blah.xml
+roster.lua
+events.lua
