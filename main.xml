@@ -1,22 +1,377 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/">
     <Script file="main.lua"/>
-    <Frame name="NoobDKP_Frame" parent="UIParent" toplevel="true" hidden="false" frameStrata="DIALOG" enableMouse="true">
-        <Size x="260" y="280"></Size>
+  <Frame
+       name="noobMainFrame"
+       toplevel="true"
+       frameStrata="DIALOG"
+       movable="true"
+       enableMouse="true"
+       hidden="false"
+       parent="UIParent">
+       <Size>
+           <AbsDimension x="480" y="325"/>
+       </Size>
+       <Anchors>
+           <Anchor point="CENTER">
+               <Offset><AbsDimension x="-200" y="200"/></Offset>
+           </Anchor>
+       </Anchors>
+       <Backdrop
+           bgFile="Interface\DialogFrame\UI-DialogBox-Background"
+           edgeFile="Interface\DialogFrame\UI-DialogBox-Border"
+           tile="true">
+           <BackgroundInsets>
+               <AbsInset left="11" right="12" top="12" bottom="11"/>
+           </BackgroundInsets>
+           <TileSize>
+               <AbsValue val="32"/>
+           </TileSize>
+           <EdgeSize>
+               <AbsValue val="32"/>
+           </EdgeSize>
+       </Backdrop>
+       <Layers>
+           <Layer level="ARTWORK">
+               <Texture name="myFrameHeader" file="Interface\DialogFrame\UI-DialogBox-Header">
+                   <Size>
+                       <AbsDimension x="356" y="64"/>
+                   </Size>
+                   <Anchors>
+                       <Anchor point="TOP">
+                           <Offset>
+                               <AbsDimension x="0" y="12"/>
+                           </Offset>
+                       </Anchor>
+                   </Anchors>
+               </Texture>
+               <FontString inherits="GameFontNormal" text="My Frame">
+                   <Anchors>
+                       <Anchor point="TOP" relativeTo="myFrameHeader">
+                           <Offset>
+                               <AbsDimension x="0" y="-14"/>
+                           </Offset>
+                       </Anchor>
+                   </Anchors>
+               </FontString>
+           </Layer>
+       </Layers>
+       <Frames>
+      <Button name="$parent_ButtonClose" inherits="UIPanelCloseButton">
         <Anchors>
-            <Anchor point="CENTER"/>
+          <Anchor point="TOPRIGHT">
+            <Offset>
+              <AbsDimension x="2" y="2"/>
+            </Offset>
+          </Anchor>
         </Anchors>
         <Scripts>
-            <OnLoad>NoobDKP_OnLoad();</OnLoad>
+          <OnClick>
+            (this:GetParent()):Hide()
+          </OnClick>
         </Scripts>
-		<Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
-        </Backdrop>
-        <Frames>
-            <Button name="$parent_Button">
-                <Anchors>
-                    <Anchor point="CENTER"/>
-                </Anchors>
-                <ButtonText name="hi"/>
-            </Button>
-        </Frames>
-    </Frame>
+      </Button>
+           <Frame name="myTabPage1" hidden="false">
+               <Anchors>
+                   <Anchor point="TOPLEFT"/>
+                   <Anchor point="BOTTOMRIGHT"/>
+               </Anchors>
+               <Layers>
+                   <Layer level="ARTWORK">
+                       <FontString inherits="GameFontNormal" text="Roster 2">
+                           <Anchors>
+                               <Anchor point="TOPLEFT" relativeTo="$parent">
+                                   <Offset>
+                                       <AbsDimension x="20" y="-30"/>
+                                   </Offset>
+                               </Anchor>
+                           </Anchors>
+                       </FontString>
+                   </Layer>
+               </Layers>
+               <Frames>
+                   <Button name="$parentScan" text="Guild Scan" inherits="UIPanelButtonTemplate">
+                        <Anchors>
+                            <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT">
+                                <Offset>
+                                    <AbsDimension x="10" y="15"/>
+                                </Offset>
+                            </Anchor>
+                        </Anchors>
+                        <Size>
+                            <AbsDimension x="80" y="25"/>
+                        </Size>
+                    </Button>
+                    <EditBox name="$parentExternalName" inherits="InputBoxTemplate" autoFocus="false">
+                        <Size>
+                            <AbsDimension x="100" y="25"/>
+                        </Size>
+                        <Anchors>
+                            <Anchor relativePoint="BOTTOM" point="BOTTOM">
+                                <Offset>
+                                    <AbsDimension x="80" y="15"/>
+                                </Offset>
+                            </Anchor>
+                        </Anchors>
+                    </EditBox>
+                   <Button name="$parentAddExternal" text="Add External" inherits="UIPanelButtonTemplate">
+                        <Anchors>
+                            <Anchor point="BOTTOMRIGHT" relativePoint="BOTTOMRIGHT">
+                                <Offset>
+                                    <AbsDimension x="-10" y="15"/>
+                                </Offset>
+                            </Anchor>
+                        </Anchors>
+                        <Size>
+                            <AbsDimension x="100" y="25"/>
+                        </Size>
+                    </Button>
+               </Frames> 
+           </Frame>   
+           <Frame name="myTabPage2" hidden="true">
+               <Anchors>
+                   <Anchor point="TOPLEFT"/>
+                   <Anchor point="BOTTOMRIGHT"/>
+               </Anchors>
+               <Layers>
+                   <Layer level="ARTWORK">
+                       <FontString inherits="GameFontNormal" text="Events">
+                           <Anchors>
+                               <Anchor point="TOPLEFT" relativeTo="$parent">
+                                   <Offset>
+                                       <AbsDimension x="20" y="-30"/>
+                                   </Offset>
+                               </Anchor>
+                           </Anchors>
+                       </FontString>
+                   </Layer>
+               </Layers>
+               <Frames>
+               </Frames> 
+           </Frame>
+           <Frame name="myTabPage3" hidden="true">
+               <Anchors>
+                   <Anchor point="TOPLEFT"/>
+                   <Anchor point="BOTTOMRIGHT"/>
+               </Anchors>
+               <Layers>
+                   <Layer level="ARTWORK">
+                       <FontString inherits="GameFontNormal" text="Auctions">
+                           <Anchors>
+                               <Anchor point="TOPLEFT" relativeTo="$parent">
+                                   <Offset>
+                                       <AbsDimension x="20" y="-30"/>
+                                   </Offset>
+                               </Anchor>
+                           </Anchors>
+                       </FontString>
+                   </Layer>
+               </Layers>
+               <Frames>
+               </Frames> 
+           </Frame>
+           <Frame name="myTabPage4" hidden="true">
+               <Anchors>
+                   <Anchor point="TOPLEFT"/>
+                   <Anchor point="BOTTOMRIGHT"/>
+               </Anchors>
+               <Layers>
+                   <Layer level="ARTWORK">
+                       <FontString inherits="GameFontNormal" text="Reports">
+                           <Anchors>
+                               <Anchor point="TOPLEFT" relativeTo="$parent">
+                                   <Offset>
+                                       <AbsDimension x="20" y="-30"/>
+                                   </Offset>
+                               </Anchor>
+                           </Anchors>
+                       </FontString>
+                   </Layer>
+               </Layers>
+               <Frames>
+               </Frames> 
+           </Frame>
+           <Frame name="myTabPage5" hidden="true">
+               <Anchors>
+                   <Anchor point="TOPLEFT"/>
+                   <Anchor point="BOTTOMRIGHT"/>
+               </Anchors>
+               <Layers>
+                   <Layer level="ARTWORK">
+                       <FontString inherits="GameFontNormal" text="Sync">
+                           <Anchors>
+                               <Anchor point="TOPLEFT" relativeTo="$parent">
+                                   <Offset>
+                                       <AbsDimension x="20" y="-30"/>
+                                   </Offset>
+                               </Anchor>
+                           </Anchors>
+                       </FontString>
+                   </Layer>
+               </Layers>
+               <Frames>
+               </Frames> 
+           </Frame>
+           <Frame name="myTabPage6" hidden="true">
+               <Anchors>
+                   <Anchor point="TOPLEFT"/>
+                   <Anchor point="BOTTOMRIGHT"/>
+               </Anchors>
+               <Layers>
+                   <Layer level="ARTWORK">
+                       <FontString inherits="GameFontNormal" text="Options">
+                           <Anchors>
+                               <Anchor point="TOPLEFT" relativeTo="$parent">
+                                   <Offset>
+                                       <AbsDimension x="20" y="-30"/>
+                                   </Offset>
+                               </Anchor>
+                           </Anchors>
+                       </FontString>
+                   </Layer>
+               </Layers>
+               <Frames>
+               </Frames> 
+           </Frame>
+           <Button name="$parentTab1" inherits="CharacterFrameTabButtonTemplate" id="1" text="Roster">
+               <Anchors>
+                   <Anchor point="CENTER" relativePoint="BOTTOMLEFT">
+                       <Offset>
+                           <AbsDimension x="60" y="-12"/>
+                       </Offset>
+                   </Anchor>
+               </Anchors>
+               <Scripts>
+                   <OnClick>
+                       PanelTemplates_SetTab(noobMainFrame, 1);
+                       myTabPage1:Show();
+                       myTabPage2:Hide();
+                       myTabPage3:Hide();
+                       myTabPage4:Hide();
+                       myTabPage5:Hide();
+                       myTabPage6:Hide();
+                   </OnClick>
+               </Scripts>
+           </Button>
+           <Button name="$parentTab2" inherits="CharacterFrameTabButtonTemplate" id="2" text="Events">
+               <Anchors>
+                   <Anchor point="LEFT" relativeTo="$parentTab1" relativePoint="RIGHT">
+                       <Offset>
+                           <AbsDimension x="-16" y="0"/>
+                       </Offset>
+                   </Anchor>
+               </Anchors>
+               <Scripts>
+                   <OnClick>
+                       PanelTemplates_SetTab(noobMainFrame, 2);
+                       myTabPage1:Hide();
+                       myTabPage2:Show();
+                       myTabPage3:Hide();
+                       myTabPage4:Hide();
+                       myTabPage5:Hide();
+                       myTabPage6:Hide();
+                   </OnClick>
+               </Scripts>
+           </Button>
+           <Button name="$parentTab3" inherits="CharacterFrameTabButtonTemplate" id="3" text="Auctions">
+               <Anchors>
+                   <Anchor point="LEFT" relativeTo="$parentTab2" relativePoint="RIGHT">
+                       <Offset>
+                           <AbsDimension x="-16" y="0"/>
+                       </Offset>
+                   </Anchor>
+               </Anchors>
+               <Scripts>
+                   <OnClick>
+                       PanelTemplates_SetTab(noobMainFrame, 3);
+                       myTabPage1:Hide();
+                       myTabPage2:Hide();
+                       myTabPage3:Show();
+                       myTabPage4:Hide();
+                       myTabPage5:Hide();
+                       myTabPage6:Hide();
+                   </OnClick>
+               </Scripts>
+           </Button>
+           <Button name="$parentTab4" inherits="CharacterFrameTabButtonTemplate" id="4" text="Reports">
+               <Anchors>
+                   <Anchor point="LEFT" relativeTo="$parentTab3" relativePoint="RIGHT">
+                       <Offset>
+                           <AbsDimension x="-16" y="0"/>
+                       </Offset>
+                   </Anchor>
+               </Anchors>
+               <Scripts>
+                   <OnClick>
+                       PanelTemplates_SetTab(noobMainFrame, 4);
+                       myTabPage1:Hide();
+                       myTabPage2:Hide();
+                       myTabPage3:Hide();
+                       myTabPage4:Show();
+                       myTabPage5:Hide();
+                       myTabPage6:Hide();
+                   </OnClick>
+               </Scripts>
+           </Button>
+           <Button name="$parentTab5" inherits="CharacterFrameTabButtonTemplate" id="5" text="Sync">
+               <Anchors>
+                   <Anchor point="LEFT" relativeTo="$parentTab4" relativePoint="RIGHT">
+                       <Offset>
+                           <AbsDimension x="-16" y="0"/>
+                       </Offset>
+                   </Anchor>
+               </Anchors>
+               <Scripts>
+                   <OnClick>
+                       PanelTemplates_SetTab(noobMainFrame, 5);
+                       myTabPage1:Hide();
+                       myTabPage2:Hide();
+                       myTabPage3:Hide();
+                       myTabPage4:Hide();
+                       myTabPage5:Show();
+                       myTabPage6:Hide();
+                   </OnClick>
+               </Scripts>
+           </Button>
+           <Button name="$parentTab6" inherits="CharacterFrameTabButtonTemplate" id="6" text="Options">
+               <Anchors>
+                   <Anchor point="LEFT" relativeTo="$parentTab5" relativePoint="RIGHT">
+                       <Offset>
+                           <AbsDimension x="-16" y="0"/>
+                       </Offset>
+                   </Anchor>
+               </Anchors>
+               <Scripts>
+                   <OnClick>
+                       PanelTemplates_SetTab(noobMainFrame, 6);
+                       myTabPage1:Hide();
+                       myTabPage2:Hide();
+                       myTabPage3:Hide();
+                       myTabPage4:Hide();
+                       myTabPage5:Hide();
+                       myTabPage6:Show();
+                   </OnClick>
+               </Scripts>
+           </Button>
+       </Frames>
+       <Scripts>
+           <OnLoad>
+               this.elapsed = 0;
+               PanelTemplates_SetNumTabs(noobMainFrame, 6);
+               PanelTemplates_SetTab(noobMainFrame, 1);
+           </OnLoad>
+           <OnShow>
+               PlaySound("UChatScrollButton");
+               PanelTemplates_SetTab(noobMainFrame, 1);
+               myTabPage1:Show()
+               myTabPage2:Hide()
+               myTabPage3:Hide()
+               myTabPage4:Hide()
+               myTabPage5:Hide()
+               myTabPage6:Hide()
+           </OnShow>
+           <OnHide>
+               PlaySound("UChatScrollButton");
+           </OnHide>
+       </Scripts>
+   </Frame>
 </Ui>
