@@ -1,38 +1,48 @@
+
+local noobcolor = "|cfff0ba3c"
+
 -- handler for /noob member
-function NoobDKPHandleMember(msg)
-    local syntax = "/noob member\n-scan: scans the guild and adds members to roster\n-add [name]: adds a character name as an external\n-remove [name]: removes a character name from the roster (for externals)\n-alt [nameA] [nameB]: sets nameA as an alt of nameB"
-    print("Handle Member: " .. msg)
+function NoobDKPHandleRoster(msg)
+    local syntax = "roster\n-scan: scans the guild and adds members to roster\n-add [name]: adds a character name as an external\n-remove [name]: removes a character name from the roster (for externals)\n-alt [nameA] [nameB]: sets nameA as an alt of nameB\n-set [name] [Net] [Total]: Sets the values of name to Net value and Total value"
+    print("Handle Roster: " .. msg)
     local _, _, cmd, args = string.find(msg, "%s?(%w+)%s?(.*)")
     if cmd == "scan" then
-        NoobDKP_ScanGuild()
+        NoobDKP_ScanRoster()
     elseif cmd == "add" then
         if args == "" then
             print("No character found to add!")
-            print("|cff0000ff" .. syntax)
+            print(noobcolor .. syntax)
         else
             NoobDKP_AddRoster(args)
         end
     elseif cmd == "remove" then
         if args == "" then
             print("No character found to remove!")
-            print("|cff0000ff" .. syntax)
+            print(noobcolor .. syntax)
         else
             NoobDKP_RemoveRoster(args)
         end
     elseif cmd == "alt" then
         if args == "" then
             print("No characters found to set alt!")
-            print("|cff0000ff" .. syntax)
+            print(noobcolor .. syntax)
         else
-            NoobDKP_Alt(args)
+            NoobDKP_AltRoster(args)
+        end
+    elseif cmd == "set" then
+        if args == "" then
+            print("No values found for set!")
+            print(noobcolor .. syntax)
+        else
+            NoobDKP_SetRoster(args)
         end
     else
-        print("|cff0000ff" .. syntax)
+        print(noobcolor .. syntax)
     end
 end
 
 -- scans the guild for members and adds them to NOOBDKP_g_roster variable
-function NoobDKP_ScanGuild()
+function NoobDKP_ScanRoster()
     SetGuildRosterShowOffline(true)
     local a = GetNumGuildMembers()
     print("Found " .. a .. " members")
@@ -73,7 +83,7 @@ function NoobDKP_RemoveRoster(name)
 end
 
 -- set a character as an alt of another character
-function NoobDKP_Alt(args)
+function NoobDKP_AltRoster(args)
     print("Set alt: " .. args)
     local _, _, alt, main = string.find(args, "%s?(%w+)%s?(.*)")
     print("Alt: " .. alt .. ", Main: " .. main)
@@ -83,5 +93,19 @@ function NoobDKP_Alt(args)
         print("Unable to find main: " .. main)
     else
         NOOBDKP_g_roster[alt][3] = main
+    end
+end
+
+function NoobDKP_SetRoster(args)
+    print("Set values: " .. args)
+    local _, _, char, net, total = string.find(args, "%s?(%w+)%s?(-?%d+)%s?(-?%d+)")
+    print("Char: " .. char .. ", Net: " .. net .. ", Total: " .. total)
+
+    local main = NOOBDKP_find_main(char)
+    if main ~= "" then
+        print("Found main of " .. char .. " is " .. main .. ". Setting values...")
+        NOOBDKP_g_roster[main][3] = "N:" .. net .. " T:" .. total
+    else
+        print("Can't find main of " .. char)
     end
 end

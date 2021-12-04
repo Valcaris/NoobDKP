@@ -17,15 +17,15 @@ local function NoobDKPAddonCommands(msg, editbox)
     end
 
     local syntax =
-        "NoobDKP Syntax\n-help: This text\n-version\n-member add | remove | alt | scan \n-event open | remove | award | loot\n-options\n-sync\n-report guild | event | member\n-value add | set"
+        "NoobDKP Syntax\n-help: This text\n-version\n-roster add | remove | alt | scan | set\n-event open | remove | award | loot\n-options\n-sync\n-report guild | event | member\n-value add | set\n-auction create | cancel | finish | bid"
     local _, _, cmd, args = string.find(msg, "%s?(%w+)%s?(.*)")
 
     if cmd == "version" then
         -- prints the current addon's version
         print("NoobDKP Version: " .. noobversion)
-    elseif cmd == "member" then
+    elseif cmd == "roster" then
         -- member roster manipulation
-        NoobDKPHandleMember(args)
+        NoobDKPHandleRoster(args)
     elseif cmd == "event" then
         -- event manipulation
         NoobDKPHandleEvents(args)
@@ -41,13 +41,15 @@ local function NoobDKPAddonCommands(msg, editbox)
     elseif cmd == "value" and args ~= "" then
         -- manipulates DKP values directly
         print("Values, args: " .. args)
+    elseif cmd == "auction" and args ~= "" then
+        NoobDKPHandleAuction(args)
     elseif cmd == "show" then
         print("show")
         --DBMBossHealthBarTemplate:Show()
         NoobDKP_Frame:Show();
     else
         -- prints the help syntax to the user
-        print("|cff0000ff" .. syntax)
+        print(noobcolor .. syntax)
     end
 end
 

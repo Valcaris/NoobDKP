@@ -2,9 +2,10 @@
 ##Title: NoobDKP
 ##Author: The Guild Master
 ##Version: 0.0.2
-##SavedVariables: NOOBDKP_g_roster, NOOBDKP_g_events
+##SavedVariables: NOOBDKP_g_auction, NOOBDKP_g_events, NOOBDKP_g_roster
 
 main.xml
-blah.xml
 roster.lua
 events.lua
+auction.lua
+util.lua

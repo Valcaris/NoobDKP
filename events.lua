@@ -1,3 +1,5 @@
+local noobcolor = "|cfff0ba3c"
+
 function NoobDKPHandleEvents(msg)
     print("Handle Events: " .. msg)
     local syntax = "/noob event\n-add [timestamp][description]: adds an event/raid by the name of description created at timestamp. Creates new if not found. Timestamp defaults to now if creating. Find first raid if no timestamp and multiple same descriptions are found.\n-remove [description]: deletes an event/raid with the name description\n-raid [dkp]([description]): applies dkp to the raid (can be negative) with an optional description\n-char [dkp][name]([description]): applies dkp to a character (can be negative) with an optional description (can be an item ID)"
@@ -16,7 +18,7 @@ function NoobDKPHandleEvents(msg)
     elseif cmd == "char" and args ~= "" then
         NoobDKP_CharEvent(args)
     else
-        print("|cff0000ff" .. syntax)
+        print(noobcolor .. syntax)
     end
 end
 
