@@ -1,6 +1,25 @@
 
 local noobcolor = "|cfff0ba3c"
 
+--[[
+    TODO list
+    - Roster Tab
+        - Roster can be guild or raid (need checkboxes to toggle)
+        - Link Roster List to Roster Data
+        - Scrolling Roster List
+        - Right-Click Context menu on List buttons
+            - @see Roster functions
+    - Events Tab
+    - Auctions Tab
+    - Reports Tab
+    - Sync Tab
+    - Options Tab
+    - Communications
+        - Member requests for information
+        - Detect member rolls
+]]
+
+
 -- handler for /noob member
 function NoobDKPHandleRoster(msg)
     local syntax = "roster\n-scan: scans the guild and adds members to roster\n-add [name]: adds a character name as an external\n-remove [name]: removes a character name from the roster (for externals)\n-alt [nameA] [nameB]: sets nameA as an alt of nameB\n-set [name] [Net] [Total]: Sets the values of name to Net value and Total value"

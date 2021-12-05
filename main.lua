@@ -3,10 +3,6 @@ local noobcolor = "|cfff0ba3c"
 
 print(noobcolor .. "NoobDKP v" .. noobversion)
 
-local function NoobDKP_OnLoad()
-    message("Loadry")
-end
-
 local function NoobDKPAddonCommands(msg, editbox)
     -- handle nil tables
     if NOOBDKP_g_roster == nil then

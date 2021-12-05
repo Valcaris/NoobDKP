@@ -1,5 +1,68 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/">
     <Script file="main.lua"/>
+
+    <Button name="roster_list_template" virtual="true" hidden="false">
+        <Size>
+            <AbsDimension x="400" y="14"/>
+        </Size>
+        <Layers>
+            <Layer level="ARTWORK">
+                <Texture name="$parent_Highlight" setAllPoints="true" hidden="true">
+                    <Size><AbsDimension y="12"/></Size>
+                    <Anchors>
+                        <Anchor point="TOPLEFT">
+                            <Offset><AbsDimension x="-2" y="-1"/></Offset>
+                        </Anchor>
+                        <Anchor point="TOPRIGHT">
+                            <Offset><AbsDimension x="2"/></Offset>
+                        </Anchor>
+                    </Anchors>
+                    <Color r="1.0" g="1.0" b="0.0" a="0.6" />
+                    <Gradient orientation="VERTICAL">
+                        <MaxColor r="1.0" g="1.0" b="0.0" a="0.7" />
+                        <MinColor r="1.0" g="1.0" b="0.0" a="0.2" />
+                    </Gradient>
+                </Texture>
+                <Texture name="$parent_Background" setAllPoints="true">
+                    <Size><AbsDimension y="12"/></Size>
+                    <Anchors>
+                        <Anchor point="TOPLEFT">
+                            <Offset><AbsDimension x="-2" y="-1"/></Offset>
+                        </Anchor>
+                        <Anchor point="TOPRIGHT">
+                            <Offset><AbsDimension x="2"/></Offset>
+                        </Anchor>
+                    </Anchors>
+                    <Color r="0.5" g="0.5" b="0.5" a="1" />
+                    <Gradient orientation="VERTICAL">
+                        <MaxColor r="0.5" g="0.5" b="0.5" a="0.0" />
+                        <MinColor r="0.2" g="0.2" b="0.2" a="0.8" />
+                    </Gradient>
+                </Texture>
+                <FontString name="$parent_name" inherits="GameFontHighlight" wraponspaces="false" justifyH="LEFT" text="a">
+                    <Size><AbsDimension x="195" y="14"/></Size>
+                        <Anchors><Anchor relativePoint="LEFT" point="LEFT"/></Anchors>
+                </FontString>
+                <FontString name="$parent_priority" inherits="GameFontHighlight" wraponspaces="false" justifyH="LEFT" text="b">
+                    <Size><AbsDimension x="50" y="14"/></Size>
+                    <Anchors><Anchor point="TOPLEFT" relativeTo="$parent_name" relativePoint="TOPRIGHT"/></Anchors>
+                </FontString>
+                <FontString name="$parent_score" inherits="GameFontHighlight" wraponspaces="false" justifyH="LEFT" text="c">
+                    <Size><AbsDimension x="50" y="14"/></Size>
+                    <Anchors><Anchor point="TOPLEFT" relativeTo="$parent_priority" relativePoint="TOPRIGHT"/></Anchors>
+                </FontString>
+                <FontString name="$parent_EP" inherits="GameFontHighlight" wraponspaces="false" justifyH="LEFT" text="d">
+                    <Size><AbsDimension x="50" y="14"/></Size>
+                    <Anchors><Anchor point="TOPLEFT" relativeTo="$parent_score" relativePoint="TOPRIGHT"/></Anchors>
+                </FontString>
+                <FontString name="$parent_GP" inherits="GameFontHighlight" wraponspaces="false" justifyH="LEFT" text="e">
+                    <Size><AbsDimension x="50" y="14"/></Size>
+                    <Anchors><Anchor point="TOPLEFT" relativeTo="$parent_EP" relativePoint="TOPRIGHT"/></Anchors>
+                </FontString>
+            </Layer>
+        </Layers>
+    </Button>
+
   <Frame
        name="noobMainFrame"
        toplevel="true"
@@ -44,7 +107,7 @@
                        </Anchor>
                    </Anchors>
                </Texture>
-               <FontString inherits="GameFontNormal" text="My Frame">
+               <FontString inherits="GameFontNormal" text="NoobDKP">
                    <Anchors>
                        <Anchor point="TOP" relativeTo="myFrameHeader">
                            <Offset>
@@ -56,39 +119,163 @@
            </Layer>
        </Layers>
        <Frames>
-      <Button name="$parent_ButtonClose" inherits="UIPanelCloseButton">
-        <Anchors>
-          <Anchor point="TOPRIGHT">
-            <Offset>
-              <AbsDimension x="2" y="2"/>
-            </Offset>
-          </Anchor>
-        </Anchors>
-        <Scripts>
-          <OnClick>
-            (this:GetParent()):Hide()
-          </OnClick>
-        </Scripts>
-      </Button>
+
+
+            <Button name="$parent_ButtonClose" inherits="UIPanelCloseButton">
+                <Anchors>
+                    <Anchor point="TOPRIGHT">
+                        <Offset>
+                            <AbsDimension x="2" y="2"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+                <Scripts>
+                    <OnClick>
+                        (this:GetParent()):Hide()
+                    </OnClick>
+                </Scripts>
+            </Button>
            <Frame name="myTabPage1" hidden="false">
                <Anchors>
                    <Anchor point="TOPLEFT"/>
                    <Anchor point="BOTTOMRIGHT"/>
                </Anchors>
-               <Layers>
-                   <Layer level="ARTWORK">
-                       <FontString inherits="GameFontNormal" text="Roster 2">
-                           <Anchors>
-                               <Anchor point="TOPLEFT" relativeTo="$parent">
-                                   <Offset>
-                                       <AbsDimension x="20" y="-30"/>
-                                   </Offset>
-                               </Anchor>
-                           </Anchors>
-                       </FontString>
-                   </Layer>
-               </Layers>
                <Frames>
+                    <Button name="$parent_entry1" inherits="roster_list_template">
+                        <Anchors>
+                            <Anchor relativePoint="TOPLEFT" point="TOPLEFT" relativeTo="$parent">
+                                <Offset>
+                                    <AbsDimension x="10" y="-25" />
+                                </Offset>
+                            </Anchor>
+                        </Anchors>
+                    </Button>
+                    <Button name="$parent_entry2" inherits="roster_list_template">
+                        <Anchors>
+                            <Anchor relativePoint="BOTTOMLEFT" point="TOPLEFT" relativeTo="$parent_entry1">
+                                <Offset>
+                                    <AbsDimension x="0" y="-2" />
+                                </Offset>
+                            </Anchor>
+                        </Anchors>
+                    </Button>
+                    <Button name="$parent_entry3" inherits="roster_list_template">
+                        <Anchors>
+                            <Anchor relativePoint="BOTTOMLEFT" point="TOPLEFT" relativeTo="$parent_entry2">
+                                <Offset>
+                                    <AbsDimension x="0" y="-2" />
+                                </Offset>
+                            </Anchor>
+                        </Anchors>
+                    </Button>
+                    <Button name="$parent_entry4" inherits="roster_list_template">
+                        <Anchors>
+                            <Anchor relativePoint="BOTTOMLEFT" point="TOPLEFT" relativeTo="$parent_entry3">
+                                <Offset>
+                                    <AbsDimension x="0" y="-2" />
+                                </Offset>
+                            </Anchor>
+                        </Anchors>
+                    </Button>
+                    <Button name="$parent_entry5" inherits="roster_list_template">
+                        <Anchors>
+                            <Anchor relativePoint="BOTTOMLEFT" point="TOPLEFT" relativeTo="$parent_entry4">
+                                <Offset>
+                                    <AbsDimension x="0" y="-2" />
+                                </Offset>
+                            </Anchor>
+                        </Anchors>
+                    </Button>
+                    <Button name="$parent_entry6" inherits="roster_list_template">
+                        <Anchors>
+                            <Anchor relativePoint="BOTTOMLEFT" point="TOPLEFT" relativeTo="$parent_entry5">
+                                <Offset>
+                                    <AbsDimension x="0" y="-2" />
+                                </Offset>
+                            </Anchor>
+                        </Anchors>
+                    </Button>
+                    <Button name="$parent_entry7" inherits="roster_list_template">
+                        <Anchors>
+                            <Anchor relativePoint="BOTTOMLEFT" point="TOPLEFT" relativeTo="$parent_entry6">
+                                <Offset>
+                                    <AbsDimension x="0" y="-2" />
+                                </Offset>
+                            </Anchor>
+                        </Anchors>
+                    </Button>
+                    <Button name="$parent_entry8" inherits="roster_list_template">
+                        <Anchors>
+                            <Anchor relativePoint="BOTTOMLEFT" point="TOPLEFT" relativeTo="$parent_entry7">
+                                <Offset>
+                                    <AbsDimension x="0" y="-2" />
+                                </Offset>
+                            </Anchor>
+                        </Anchors>
+                    </Button>
+                    <Button name="$parent_entry9" inherits="roster_list_template">
+                        <Anchors>
+                            <Anchor relativePoint="BOTTOMLEFT" point="TOPLEFT" relativeTo="$parent_entry8">
+                                <Offset>
+                                    <AbsDimension x="0" y="-2" />
+                                </Offset>
+                            </Anchor>
+                        </Anchors>
+                    </Button>
+                    <Button name="$parent_entry10" inherits="roster_list_template">
+                        <Anchors>
+                            <Anchor relativePoint="BOTTOMLEFT" point="TOPLEFT" relativeTo="$parent_entry9">
+                                <Offset>
+                                    <AbsDimension x="0" y="-2" />
+                                </Offset>
+                            </Anchor>
+                        </Anchors>
+                    </Button>
+                    <Button name="$parent_entry11" inherits="roster_list_template">
+                        <Anchors>
+                            <Anchor relativePoint="BOTTOMLEFT" point="TOPLEFT" relativeTo="$parent_entry10">
+                                <Offset>
+                                    <AbsDimension x="0" y="-2" />
+                                </Offset>
+                            </Anchor>
+                        </Anchors>
+                    </Button>
+                    <Button name="$parent_entry12" inherits="roster_list_template">
+                        <Anchors>
+                            <Anchor relativePoint="BOTTOMLEFT" point="TOPLEFT" relativeTo="$parent_entry11">
+                                <Offset>
+                                    <AbsDimension x="0" y="-2" />
+                                </Offset>
+                            </Anchor>
+                        </Anchors>
+                    </Button>
+                    <Button name="$parent_entry13" inherits="roster_list_template">
+                        <Anchors>
+                            <Anchor relativePoint="BOTTOMLEFT" point="TOPLEFT" relativeTo="$parent_entry12">
+                                <Offset>
+                                    <AbsDimension x="0" y="-2" />
+                                </Offset>
+                            </Anchor>
+                        </Anchors>
+                    </Button>
+                    <Button name="$parent_entry14" inherits="roster_list_template">
+                        <Anchors>
+                            <Anchor relativePoint="BOTTOMLEFT" point="TOPLEFT" relativeTo="$parent_entry13">
+                                <Offset>
+                                    <AbsDimension x="0" y="-2" />
+                                </Offset>
+                            </Anchor>
+                        </Anchors>
+                    </Button>
+                    <Button name="$parent_entry15" inherits="roster_list_template">
+                        <Anchors>
+                            <Anchor relativePoint="BOTTOMLEFT" point="TOPLEFT" relativeTo="$parent_entry14">
+                                <Offset>
+                                    <AbsDimension x="0" y="-2" />
+                                </Offset>
+                            </Anchor>
+                        </Anchors>
+                    </Button>
                    <Button name="$parentScan" text="Guild Scan" inherits="UIPanelButtonTemplate">
                         <Anchors>
                             <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT">
