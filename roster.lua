@@ -128,3 +128,40 @@ function NoobDKP_SetRoster(args)
         print("Can't find main of " .. char)
     end
 end
+
+function NoobDKP_ScanOnClick()
+    print("Scan On Click!")
+    local i = 1
+    local nameFrame, priorityFrame, scoreFrame, EPFrame, GPFrame
+    for key, value in pairs(NOOBDKP_g_roster) do
+        nameFrame = getglobal("myTabPage1_entry" .. i .. "_name")
+        nameFrame:SetText(key)
+        i = i + 1
+    end
+end
+
+function NoobDKP_RosterItemOnClick(self)
+    print("Bob Loblaw " .. self:GetName())
+    local nameFrame = getglobal(self:GetName() .. "_name")
+    nameFrame:SetText("bob")
+end
+
+function NoobDKP_SortbyName(self)
+    print("Sort by Name...")
+end
+
+function NoobDKP_SortbyRank(self)
+    print("Sort by Rank...")
+end
+
+function NoobDKP_SortbyScore(self)
+    print("Sort by Score...")
+end
+
+function NoobDKP_SortbyEP(self)
+    print("Sort by EP...")
+end
+
+function NoobDKP_SortbyGP(self)
+    print("Sort by GP...")
+end

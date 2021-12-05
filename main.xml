@@ -39,17 +39,17 @@
                         <MinColor r="0.2" g="0.2" b="0.2" a="0.8" />
                     </Gradient>
                 </Texture>
-                <FontString name="$parent_name" inherits="GameFontHighlight" wraponspaces="false" justifyH="LEFT" text="a">
+                <FontString name="$parent_name" inherits="GameFontHighlight" wraponspaces="false" justifyH="LEFT" enableMouse="true" text="a">
                     <Size><AbsDimension x="195" y="14"/></Size>
-                        <Anchors><Anchor relativePoint="LEFT" point="LEFT"/></Anchors>
+                    <Anchors><Anchor relativePoint="LEFT" point="LEFT"/></Anchors>
                 </FontString>
-                <FontString name="$parent_priority" inherits="GameFontHighlight" wraponspaces="false" justifyH="LEFT" text="b">
-                    <Size><AbsDimension x="50" y="14"/></Size>
+                <FontString name="$parent_rank" inherits="GameFontHighlight" wraponspaces="false" justifyH="LEFT" text="b">
+                    <Size><AbsDimension x="100" y="14"/></Size>
                     <Anchors><Anchor point="TOPLEFT" relativeTo="$parent_name" relativePoint="TOPRIGHT"/></Anchors>
                 </FontString>
                 <FontString name="$parent_score" inherits="GameFontHighlight" wraponspaces="false" justifyH="LEFT" text="c">
                     <Size><AbsDimension x="50" y="14"/></Size>
-                    <Anchors><Anchor point="TOPLEFT" relativeTo="$parent_priority" relativePoint="TOPRIGHT"/></Anchors>
+                    <Anchors><Anchor point="TOPLEFT" relativeTo="$parent_rank" relativePoint="TOPRIGHT"/></Anchors>
                 </FontString>
                 <FontString name="$parent_EP" inherits="GameFontHighlight" wraponspaces="false" justifyH="LEFT" text="d">
                     <Size><AbsDimension x="50" y="14"/></Size>
@@ -61,6 +61,13 @@
                 </FontString>
             </Layer>
         </Layers>
+                    <Scripts>
+                        <OnClick>NoobDKP_RosterItemOnClick(this);</OnClick>
+                        <OnLoad>
+                            this:RegisterForClicks("LeftButtonDown", "RightButtonDown")
+                        </OnLoad>
+                    </Scripts>
+
     </Button>
 
   <Frame
@@ -141,11 +148,101 @@
                    <Anchor point="BOTTOMRIGHT"/>
                </Anchors>
                <Frames>
+                    <Button name="$parent_sort_name">
+                        <Anchors>
+                            <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$parent">
+                                <Offset><AbsDimension x="10" y="-20"/></Offset>
+                            </Anchor>
+                        </Anchors>
+                        <Size><AbsDimension x="195" y="15"/></Size>
+                        <Layers>
+                            <Layer>
+                                <FontString name="$parent_name" inherits="GameFontHighlight" wraponspaces="false" justifyH="LEFT" enableMouse="true" text="Name">
+                                    <Anchors><Anchor relativePoint="CENTER" point="CENTER"/></Anchors>
+                                </FontString>
+                            </Layer>
+                        </Layers>
+                        <Scripts>
+                            <OnClick>NoobDKP_SortbyName(this);</OnClick>
+                        </Scripts>
+                    </Button>
+                    <Button name="$parent_sort_rank">
+                        <Anchors>
+                            <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="$parent_sort_name">
+                                <Offset><AbsDimension x="0" y="0"/></Offset>
+                            </Anchor>
+                        </Anchors>
+                        <Size><AbsDimension x="100" y="15"/></Size>
+                        <Layers>
+                            <Layer>
+                                <FontString name="$parent_rank" inherits="GameFontHighlight" wraponspaces="false" justifyH="LEFT" enableMouse="true" text="Rank">
+                                    <Anchors><Anchor relativePoint="CENTER" point="CENTER"/></Anchors>
+                                </FontString>
+                            </Layer>
+                        </Layers>
+                        <Scripts>
+                            <OnClick>NoobDKP_SortbyRank(this);</OnClick>
+                        </Scripts>
+                    </Button>
+                    <Button name="$parent_sort_score">
+                        <Anchors>
+                            <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="$parent_sort_rank">
+                                <Offset><AbsDimension x="0" y="0"/></Offset>
+                            </Anchor>
+                        </Anchors>
+                        <Size><AbsDimension x="50" y="15"/></Size>
+                        <Layers>
+                            <Layer>
+                                <FontString name="$parent_score" inherits="GameFontHighlight" wraponspaces="false" justifyH="LEFT" enableMouse="true" text="Score">
+                                    <Anchors><Anchor relativePoint="CENTER" point="CENTER"/></Anchors>
+                                </FontString>
+                            </Layer>
+                        </Layers>
+                        <Scripts>
+                            <OnClick>NoobDKP_SortbyScore(this);</OnClick>
+                        </Scripts>
+                    </Button>
+                    <Button name="$parent_sort_EP">
+                        <Anchors>
+                            <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="$parent_sort_score">
+                                <Offset><AbsDimension x="0" y="0"/></Offset>
+                            </Anchor>
+                        </Anchors>
+                        <Size><AbsDimension x="50" y="15"/></Size>
+                        <Layers>
+                            <Layer>
+                                <FontString name="$parent_EP" inherits="GameFontHighlight" wraponspaces="false" justifyH="LEFT" enableMouse="true" text="EP">
+                                    <Anchors><Anchor relativePoint="CENTER" point="CENTER"/></Anchors>
+                                </FontString>
+                            </Layer>
+                        </Layers>
+                        <Scripts>
+                            <OnClick>NoobDKP_SortbyEP(this);</OnClick>
+                        </Scripts>
+                    </Button>
+                    <Button name="$parent_sort_GP">
+                        <Anchors>
+                            <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="$parent_sort_EP">
+                                <Offset><AbsDimension x="0" y="0"/></Offset>
+                            </Anchor>
+                        </Anchors>
+                        <Size><AbsDimension x="50" y="15"/></Size>
+                        <Layers>
+                            <Layer>
+                                <FontString name="$parent_GP" inherits="GameFontHighlight" wraponspaces="false" justifyH="LEFT" enableMouse="true" text="GP">
+                                    <Anchors><Anchor relativePoint="CENTER" point="CENTER"/></Anchors>
+                                </FontString>
+                            </Layer>
+                        </Layers>
+                        <Scripts>
+                            <OnClick>NoobDKP_SortbyGP(this);</OnClick>
+                        </Scripts>
+                    </Button>
                     <Button name="$parent_entry1" inherits="roster_list_template">
                         <Anchors>
                             <Anchor relativePoint="TOPLEFT" point="TOPLEFT" relativeTo="$parent">
                                 <Offset>
-                                    <AbsDimension x="10" y="-25" />
+                                    <AbsDimension x="10" y="-40" />
                                 </Offset>
                             </Anchor>
                         </Anchors>
@@ -287,6 +384,9 @@
                         <Size>
                             <AbsDimension x="80" y="25"/>
                         </Size>
+                        <Scripts>
+                            <OnClick>NoobDKP_ScanOnClick();</OnClick>
+                        </Scripts>
                     </Button>
                     <EditBox name="$parentExternalName" inherits="InputBoxTemplate" autoFocus="false">
                         <Size>
@@ -545,6 +645,7 @@
                this.elapsed = 0;
                PanelTemplates_SetNumTabs(noobMainFrame, 6);
                PanelTemplates_SetTab(noobMainFrame, 1);
+               this:RegisterForDrag("LeftButton");
            </OnLoad>
            <OnShow>
                PlaySound("UChatScrollButton");
@@ -559,6 +660,14 @@
            <OnHide>
                PlaySound("UChatScrollButton");
            </OnHide>
+           <OnDragStart>
+            this:StartMoving();
+            this.isMoving = true;
+        </OnDragStart>
+      <OnDragStop>
+        this:StopMovingOrSizing();
+        this.isMoving = false;
+      </OnDragStop>
        </Scripts>
    </Frame>
 </Ui>
