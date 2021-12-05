@@ -9,3 +9,6 @@ roster.lua
 events.lua
 auction.lua
 util.lua
+
+default_options.lua
+options.ini

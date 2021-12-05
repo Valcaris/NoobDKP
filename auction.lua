@@ -1,10 +1,6 @@
 
 local noobcolor = "|cfff0ba3c"
 
-local base_EP = 200
-local base_GP = 200
-local scale_EP = 100
-
 function NoobDKPHandleAuction(msg)
     local syntax = "auction\n-create [item]: creates an auction for item\n-cancel: cancels the active auction\n-finish ([character]): finishes the active auction, optionally overriding the default winner\n-bid [character] need|greed: adds a bid for character as need or greed"
     print("Handle Auction: " .. msg)
@@ -100,7 +96,7 @@ function NoobDKP_BidAuction(args)
             if n ~= nil and n ~= "" and t ~= nil and t ~= "" then
                 local EP = t
                 local GP = t - n
-                local score = ceil(((t + base_EP) * scale_EP) / (GP + base_GP))
+                local score = ceil(((t + NoobDKP_base_EP) * NoobDKP_scale_EP) / (GP + NoobDKP_base_GP))
                 print("EP: " .. EP .. " GP: " .. GP .. " score: " .. score)
                 NOOBDKP_g_auction[char] = score
             end

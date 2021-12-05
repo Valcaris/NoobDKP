@@ -1,3 +1,25 @@
+--[[
+    TODO list
+    - Roster Tab
+        - Roster can be guild or raid (need checkboxes to toggle)
+        - Link Roster List to Roster Data
+        - Scrolling Roster List
+        - Right-Click Context menu on List buttons
+            - @see Roster functions
+        - Give sort headers a background that is used on mouseover
+    - Events Tab
+    - Auctions Tab
+    - Reports Tab
+    - Sync Tab
+    - Options Tab
+    - Communications
+        - Member requests for information
+        - Detect member rolls
+]]
+
+
+
+
 local noobversion = GetAddOnMetadata("NoobDKP", "Version")
 local noobcolor = "|cfff0ba3c"
 

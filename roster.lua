@@ -1,25 +1,6 @@
 
 local noobcolor = "|cfff0ba3c"
 
---[[
-    TODO list
-    - Roster Tab
-        - Roster can be guild or raid (need checkboxes to toggle)
-        - Link Roster List to Roster Data
-        - Scrolling Roster List
-        - Right-Click Context menu on List buttons
-            - @see Roster functions
-    - Events Tab
-    - Auctions Tab
-    - Reports Tab
-    - Sync Tab
-    - Options Tab
-    - Communications
-        - Member requests for information
-        - Detect member rolls
-]]
-
-
 -- handler for /noob member
 function NoobDKPHandleRoster(msg)
     local syntax = "roster\n-scan: scans the guild and adds members to roster\n-add [name]: adds a character name as an external\n-remove [name]: removes a character name from the roster (for externals)\n-alt [nameA] [nameB]: sets nameA as an alt of nameB\n-set [name] [Net] [Total]: Sets the values of name to Net value and Total value"
@@ -132,10 +113,19 @@ end
 function NoobDKP_ScanOnClick()
     print("Scan On Click!")
     local i = 1
-    local nameFrame, priorityFrame, scoreFrame, EPFrame, GPFrame
+    local nameFrame, rankFrame, scoreFrame, EPFrame, GPFrame
     for key, value in pairs(NOOBDKP_g_roster) do
         nameFrame = getglobal("myTabPage1_entry" .. i .. "_name")
         nameFrame:SetText(key)
+        rankFrame = getglobal("myTabPage1_entry" .. i .. "_rank")
+        rankFrame:SetText(value[1])
+        local score, ep, gp = NoobDKP_ParseOfficerNote(value[3])
+        scoreFrame = getglobal("myTabPage1_entry" .. i .. "_score")
+        scoreFrame:SetText(score)
+        EPFrame = getglobal("myTabPage1_entry" .. i .. "_EP")
+        EPFrame:SetText(ep)
+        GPFrame = getglobal("myTabPage1_entry" .. i .. "_GP")
+        GPFrame:SetText(gp)
         i = i + 1
     end
 end

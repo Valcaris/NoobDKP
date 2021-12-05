@@ -1,5 +1,5 @@
 function NOOBDKP_find_main(char)
-
+    print("Find main for " .. char)
     -- if no note, this is a main char that hasn't had values set
     if NOOBDKP_g_roster[3] == nil or NOOBDKP_g_roster[3] == "" then
         return char
@@ -21,4 +21,18 @@ function NOOBDKP_find_main(char)
         return char
     end
 
+end
+
+function NoobDKP_ParseOfficerNote(note)
+    local _, _, n, t = string.find(note, "N:(%d+) T:(%d+)")
+    if n == nil or n == "" or t == nil or t == "" then
+        local newnote = NOOBDKP_g_roster[note][3]
+        _, _, n, t = string.find(newnote, "N:(%d+) T:(%d+)")
+    end
+
+    local EP = t
+    local GP = t - n
+    local score = ceil(((t + NoobDKP_base_EP) * NoobDKP_scale_EP) / (GP + NoobDKP_base_GP))
+
+    return score, EP, GP
 end

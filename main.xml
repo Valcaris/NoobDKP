@@ -131,15 +131,11 @@
             <Button name="$parent_ButtonClose" inherits="UIPanelCloseButton">
                 <Anchors>
                     <Anchor point="TOPRIGHT">
-                        <Offset>
-                            <AbsDimension x="2" y="2"/>
-                        </Offset>
+                        <Offset><AbsDimension x="2" y="2"/></Offset>
                     </Anchor>
                 </Anchors>
                 <Scripts>
-                    <OnClick>
-                        (this:GetParent()):Hide()
-                    </OnClick>
+                    <OnClick>(this:GetParent()):Hide()</OnClick>
                 </Scripts>
             </Button>
            <Frame name="myTabPage1" hidden="false">
@@ -373,7 +369,7 @@
                             </Anchor>
                         </Anchors>
                     </Button>
-                   <Button name="$parentScan" text="Guild Scan" inherits="UIPanelButtonTemplate">
+                    <Button name="$parentScan" text="Guild Scan" inherits="UIPanelButtonTemplate">
                         <Anchors>
                             <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT">
                                 <Offset>
