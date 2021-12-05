@@ -1,6 +1,8 @@
 
 local noobcolor = "|cfff0ba3c"
 
+local roster_index = 1
+
 -- handler for /noob member
 function NoobDKPHandleRoster(msg)
     local syntax = "roster\n-scan: scans the guild and adds members to roster\n-add [name]: adds a character name as an external\n-remove [name]: removes a character name from the roster (for externals)\n-alt [nameA] [nameB]: sets nameA as an alt of nameB\n-set [name] [Net] [Total]: Sets the values of name to Net value and Total value"
@@ -45,7 +47,7 @@ end
 function NoobDKP_ScanRoster()
     SetGuildRosterShowOffline(true)
     local a = GetNumGuildMembers()
-    print("Found " .. a .. " members")
+    print(noobcolor .. "NoobDKP Guild scan found " .. a .. " members")
 
     if NOOBDKP_g_roster == nil then
         NOOBDKP_g_roster = {}
@@ -60,9 +62,8 @@ function NoobDKP_ScanRoster()
         j = j + 1
     end
 
-    print("Roster table size: " .. j)
-
     SetGuildRosterShowOffline(false)
+    NoobDKP_UpdateRoster()
 end
 
 -- add a character to the roster as an external
@@ -111,23 +112,7 @@ function NoobDKP_SetRoster(args)
 end
 
 function NoobDKP_ScanOnClick()
-    print("Scan On Click!")
-    local i = 1
-    local nameFrame, rankFrame, scoreFrame, EPFrame, GPFrame
-    for key, value in pairs(NOOBDKP_g_roster) do
-        nameFrame = getglobal("myTabPage1_entry" .. i .. "_name")
-        nameFrame:SetText(key)
-        rankFrame = getglobal("myTabPage1_entry" .. i .. "_rank")
-        rankFrame:SetText(value[1])
-        local score, ep, gp = NoobDKP_ParseOfficerNote(value[3])
-        scoreFrame = getglobal("myTabPage1_entry" .. i .. "_score")
-        scoreFrame:SetText(score)
-        EPFrame = getglobal("myTabPage1_entry" .. i .. "_EP")
-        EPFrame:SetText(ep)
-        GPFrame = getglobal("myTabPage1_entry" .. i .. "_GP")
-        GPFrame:SetText(gp)
-        i = i + 1
-    end
+    NoobDKP_ScanRoster()
 end
 
 function NoobDKP_RosterItemOnClick(self)
@@ -154,4 +139,59 @@ end
 
 function NoobDKP_SortbyGP(self)
     print("Sort by GP...")
+end
+
+function NoobDKP_VerticalScroll(self, offset)
+    roster_index = roster_index + offset
+    local tableSize = getTableSize(NOOBDKP_g_roster)
+
+    if roster_index > (tableSize - 14) then
+        roster_index = tableSize - 14
+    end
+
+    if roster_index < 1 then
+        roster_index = 1
+    end
+    NoobDKP_UpdateRoster()
+end
+
+function NoobDKP_UpdateRoster()
+    local i = 1 -- index into the table
+    local pos = 1 -- index into the frame list
+    local nameFrame, rankFrame, scoreFrame, EPFrame, GPFrame
+    for key, value in pairs(NOOBDKP_g_roster) do
+        if i >= roster_index then
+            nameFrame = getglobal("myTabPage1_entry" .. pos .. "_name")
+            nameFrame:SetText(key)
+            rankFrame = getglobal("myTabPage1_entry" .. pos .. "_rank")
+            rankFrame:SetText(value[1])
+            local score, ep, gp = NoobDKP_ParseOfficerNote(value[3])
+            scoreFrame = getglobal("myTabPage1_entry" .. pos .. "_score")
+            scoreFrame:SetText(score)
+            EPFrame = getglobal("myTabPage1_entry" .. pos .. "_EP")
+            EPFrame:SetText(ep)
+            GPFrame = getglobal("myTabPage1_entry" .. pos .. "_GP")
+            GPFrame:SetText(gp)
+            pos = pos + 1
+            if pos > 15 then
+                break
+            end
+        end
+        i = i + 1
+    end
+
+    if pos <= 15 then
+        for j = pos, 15 do
+            nameFrame = getglobal("myTabPage1_entry" .. j .. "_name")
+            nameFrame:SetText("")
+            rankFrame = getglobal("myTabPage1_entry" .. j .. "_rank")
+            rankFrame:SetText("")
+            scoreFrame = getglobal("myTabPage1_entry" .. j .. "_score")
+            scoreFrame:SetText("")
+            EPFrame = getglobal("myTabPage1_entry" .. j .. "_EP")
+            EPFrame:SetText("")
+            GPFrame = getglobal("myTabPage1_entry" .. j .. "_GP")
+            GPFrame:SetText("")
+        end
+    end
 end

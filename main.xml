@@ -138,7 +138,7 @@
                     <OnClick>(this:GetParent()):Hide()</OnClick>
                 </Scripts>
             </Button>
-           <Frame name="myTabPage1" hidden="false">
+           <Frame name="myTabPage1" hidden="false" enableMouse="true">
                <Anchors>
                    <Anchor point="TOPLEFT"/>
                    <Anchor point="BOTTOMRIGHT"/>
@@ -369,6 +369,28 @@
                             </Anchor>
                         </Anchors>
                     </Button>
+                    <Button name="$parent_scrollUp" inherits="UIPanelButtonTemplate" text="^">
+                        <Anchors>
+                            <Anchor point="RIGHT" relativePoint="RIGHT" relativeTo="$parent">
+                                <Offset><AbsDimension x="-20" y="10"/></Offset>
+                            </Anchor>
+                        </Anchors>
+                        <Size><AbsDimension x="30" y="30"/></Size>
+                        <Scripts>
+                            <OnClick>NoobDKP_VerticalScroll(this, -3)</OnClick>
+                        </Scripts>
+                    </Button>
+                    <Button name="$parent_scrollDown" inherits="UIPanelButtonTemplate" text="v">
+                        <Anchors>
+                            <Anchor point="RIGHT" relativePoint="RIGHT" relativeTo="$parent">
+                                <Offset><AbsDimension x="-20" y="-20"/></Offset>
+                            </Anchor>
+                        </Anchors>
+                        <Size><AbsDimension x="30" y="30"/></Size>
+                        <Scripts>
+                            <OnClick>NoobDKP_VerticalScroll(this, 3)</OnClick>
+                        </Scripts>
+                    </Button>
                     <Button name="$parentScan" text="Guild Scan" inherits="UIPanelButtonTemplate">
                         <Anchors>
                             <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT">
@@ -407,7 +429,19 @@
                         <Size>
                             <AbsDimension x="100" y="25"/>
                         </Size>
+                        <Scripts>
+                            <OnClick>
+                                local nameText = getglobal("myTabPage1ExternalName")
+                                NoobDKP_AddRoster(nameText:GetText())
+                                NoobDKP_VerticalScroll(this, 1)
+                                nameText:ClearFocus()
+                            </OnClick>
+                        </Scripts>
                     </Button>
+                <Scripts>
+                    <!-- Note: This doesn't work right now -->
+                    <OnVerticalScroll>NoobDKP_VerticalScroll(this, offset)</OnVerticalScroll>
+                </Scripts>               
                </Frames> 
            </Frame>   
            <Frame name="myTabPage2" hidden="true">

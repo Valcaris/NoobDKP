@@ -25,9 +25,16 @@ end
 
 function NoobDKP_ParseOfficerNote(note)
     local _, _, n, t = string.find(note, "N:(%d+) T:(%d+)")
-    if n == nil or n == "" or t == nil or t == "" then
+    if note == nil or note == "" then
+        t = 0
+        n = 0
+    elseif n == nil or n == "" or t == nil or t == "" then
         local newnote = NOOBDKP_g_roster[note][3]
         _, _, n, t = string.find(newnote, "N:(%d+) T:(%d+)")
+        if n == nil or n == "" or t == nil or t == "" then
+            t = 0
+            n = 0
+        end
     end
 
     local EP = t
@@ -35,4 +42,12 @@ function NoobDKP_ParseOfficerNote(note)
     local score = ceil(((t + NoobDKP_base_EP) * NoobDKP_scale_EP) / (GP + NoobDKP_base_GP))
 
     return score, EP, GP
+end
+
+function getTableSize(t)
+    local i = 0
+    for key, value in pairs(t) do
+        i = i + 1
+    end
+    return i
 end
