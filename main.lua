@@ -11,6 +11,7 @@
         - Default view to raid roster?
         - Add external button
         - **slash command to directly set EP or GP
+        - Last update timestamp
     - Events Tab
         - **Raid-wide add/remove EP (GUI elements are there, need to hook up to table)
         - Current Raid description, action list
@@ -48,6 +49,7 @@
     - Minimap Icon
     - TitanBars Icon
     - README.md, code documentation comments, general cleanup, QDKP acknowledgement
+    - Conversion from QDKP T:x N:y to own custom notes E:x G:y
 ]]
 
 
