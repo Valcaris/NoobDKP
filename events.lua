@@ -1,4 +1,3 @@
-local noobcolor = "|cfff0ba3c"
 
 function NoobDKPHandleEvents(msg)
     print("Handle Events: " .. msg)
@@ -18,7 +17,7 @@ function NoobDKPHandleEvents(msg)
     elseif cmd == "char" and args ~= "" then
         NoobDKP_CharEvent(args)
     else
-        print(noobcolor .. syntax)
+        print(NoobDKP_color .. syntax)
     end
 end
 
@@ -63,4 +62,19 @@ function NoobDKP_CharEvent(msg)
     print(" active raid: " .. a)
     local t = { char = c, dkp = d, description = desc}
     table.insert(NOOBDKP_g_events[a], t)
+end
+
+function NoobDKP_ShowEventTab()
+  local emptyFrame = getglobal("myTabPage2_emptyEvent")
+  local fullFrame = getglobal("myTabPage2_Event")
+  if NOOBDKP_g_events == nil or NOOBDKP_g_events["active_raid"] == nil then
+      fullAuction:Hide()
+      fullFrame:Show()
+  else
+    local activeRaid = NOOBDKP_g_events["active_raid"]
+    local eventName = NOOBDKP_g_events[activeRaid]["description"]
+    getglobal("myTabPage2_Event_Name"):SetText("Event: " .. eventName)
+    emptyFrame:Hide()
+    fullFrame:Show()
+  end
 end

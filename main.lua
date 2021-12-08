@@ -1,31 +1,61 @@
 --[[
     TODO list
     - Roster Tab
-        - Roster can be guild or raid (need checkboxes to toggle)
-        - Scrolling Roster List
+        - Guild vs Raid checkbox
         - Right-Click Context menu on List buttons
             - @see Roster functions
         - Give sort headers a background that is used on mouseover
-        - Give main name in parens after alt name
+        - **Give main name in parens after alt name
         - Figure out proper mouse wheel scrolling
-        - Figure out character classes, colorize accordingly
+        - **Guild Scan does actual scan
+        - Default view to raid roster?
+        - Add external button
+        - **slash command to directly set EP or GP
     - Events Tab
+        - **Raid-wide add/remove EP (GUI elements are there, need to hook up to table)
+        - Current Raid description, action list
+        - List of raids in history
+        - Detect people in the raid (and when they leave the raid)
+        - Refresh raid view (to force people in/out of raid)
     - Auctions Tab
+        - Grey out Declare Winner until someone has bid
+        - Detect Loot Window, queue up auctions?
+        - Set GP according to Loot detection
+        - Add countdown to window when auction started, possibly broadcast to raid (with checkbox)
+        - **Item Links (shift-click to add item)
+        - Option to have Declare Winner set GP and close auction all at once (or have separate actions)
+        - **If below min EP, automatically set to greed
     - Reports Tab
+        - Export to text
     - Sync Tab
+        - Show who else has addon and what version
+        - Permissions based on guild rank for who can set what
+        - Auction and Event updates in real time
+        - Sync Externals (guildies are just in notes)
     - Options Tab
+          - Make Options table in SavedVariables
+          - Various widgets for the options, may need mulitple pages or scrolling page
     - Communications
-        - Member requests for information
-        - Detect member rolls
+          - **Respond to bid with ack and score
+        - **Member requests for information with ?noob
+            - Your EPGP Score is X
+              There is no auction in progress right now
+              Auction is in progress for <item>
+              personA need score
+              personB need score
+              personC greed score
+              personA need score > personB need score > personC greed score
+    - Minimap Icon
+    - TitanBars Icon
+    - README.md, code documentation comments, general cleanup, QDKP acknowledgement
 ]]
 
 
 
 
 local noobversion = GetAddOnMetadata("NoobDKP", "Version")
-local noobcolor = "|cfff0ba3c"
 
-print(noobcolor .. "NoobDKP v" .. noobversion)
+print(NoobDKP_color .. "NoobDKP v" .. noobversion)
 
 local function NoobDKPAddonCommands(msg, editbox)
     -- handle nil tables
@@ -34,6 +64,9 @@ local function NoobDKPAddonCommands(msg, editbox)
     end
     if NOOBDKP_g_events == nil then
         NOOBDKP_g_events = {}
+    end
+    if NOOBDKP_g_raid_roster == nil then
+      NOOBDKP_g_raid_roster = {}
     end
 
     local syntax =
@@ -69,8 +102,19 @@ local function NoobDKPAddonCommands(msg, editbox)
         NoobDKP_Frame:Show();
     else
         -- prints the help syntax to the user
-        print(noobcolor .. syntax)
+        print(NoobDKP_color .. syntax)
     end
+end
+
+function NoobDKP_OnEvent(self, event, ...)
+  if event == "CHAT_MSG_RAID" or event == "CHAT_MSG_RAID_LEADER" then
+    local text, playerName = ...;
+    if text == "need" or text == "greed" then 
+      NoobDKP_BidAuction(playerName .. " " .. text)
+    end
+  elseif event == "RAID_ROSTER_UPDATE" then
+    NoobDKP_UpdateRaidRoster()
+  end
 end
 
 SLASH_NOOBDKP1 = "/noob"

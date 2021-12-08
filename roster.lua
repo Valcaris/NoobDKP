@@ -1,7 +1,7 @@
 
-local noobcolor = "|cfff0ba3c"
 
 local roster_index = 1
+local roster_type = 0 -- 0 = guild, 1 = raid
 
 -- handler for /noob member
 function NoobDKPHandleRoster(msg)
@@ -13,33 +13,33 @@ function NoobDKPHandleRoster(msg)
     elseif cmd == "add" then
         if args == "" then
             print("No character found to add!")
-            print(noobcolor .. syntax)
+            print(NoobDKP_color .. syntax)
         else
             NoobDKP_AddRoster(args)
         end
     elseif cmd == "remove" then
         if args == "" then
             print("No character found to remove!")
-            print(noobcolor .. syntax)
+            print(NoobDKP_color .. syntax)
         else
             NoobDKP_RemoveRoster(args)
         end
     elseif cmd == "alt" then
         if args == "" then
             print("No characters found to set alt!")
-            print(noobcolor .. syntax)
+            print(NoobDKP_color .. syntax)
         else
             NoobDKP_AltRoster(args)
         end
     elseif cmd == "set" then
         if args == "" then
             print("No values found for set!")
-            print(noobcolor .. syntax)
+            print(NoobDKP_color .. syntax)
         else
             NoobDKP_SetRoster(args)
         end
     else
-        print(noobcolor .. syntax)
+        print(NoobDKP_color .. syntax)
     end
 end
 
@@ -47,7 +47,7 @@ end
 function NoobDKP_ScanRoster()
     SetGuildRosterShowOffline(true)
     local a = GetNumGuildMembers()
-    print(noobcolor .. "NoobDKP Guild scan found " .. a .. " members")
+    print(NoobDKP_color .. "NoobDKP Guild scan found " .. a .. " members")
 
     if NOOBDKP_g_roster == nil then
         NOOBDKP_g_roster = {}
@@ -155,17 +155,63 @@ function NoobDKP_VerticalScroll(self, offset)
     NoobDKP_UpdateRoster()
 end
 
+function NoobDKP_UpdateRaidRoster()
+  NOOBDKP_g_raid_roster = {}
+
+  for idx = 1, 40 do
+    local name, _, _, _, class = GetRaidRosterInfo(idx);
+    local score, ep, gp 
+
+    if name ~= nil and class ~= nil then
+      if NOOBDKP_g_roster[name] == nil then
+        NOOBDKP_g_roster[name] = {"*external*", class, ""}
+        ep = 0
+        gp = 0
+        score = 100
+      else
+        NOOBDKP_g_roster[name][2] = class
+        score, ep, gp = NoobDKP_ParseOfficerNote(NOOBDKP_g_roster[name][3])
+      end
+
+      NOOBDKP_g_raid_roster[name] = { class, score, ep, gp }
+    end
+  end
+
+  roster_type = 1
+  roster_index = 1
+  NoobDKP_UpdateRoster();
+end
+
+function NoobDKP_UpdateGuildRoster()
+  roster_type = 0
+  roster_index = 1
+  NoobDKP_UpdateRoster();
+end
+
 function NoobDKP_UpdateRoster()
     local i = 1 -- index into the table
     local pos = 1 -- index into the frame list
     local nameFrame, rankFrame, scoreFrame, EPFrame, GPFrame
-    for key, value in pairs(NOOBDKP_g_roster) do
+    local whichRoster
+
+    if(roster_type == 0) then
+      whichRoster = NOOBDKP_g_roster
+    else
+      whichRoster = NOOBDKP_g_raid_roster
+      if NOOBDKP_g_raid_roster == nil then
+        NOOBDKP_g_raid_roster = {}
+      end
+    end
+
+    for key, value in pairs(whichRoster) do
         if i >= roster_index then
             nameFrame = getglobal("myTabPage1_entry" .. pos .. "_name")
             nameFrame:SetText(key)
+            local r, g, b, a = NoobDKP_getClassColor(NOOBDKP_g_roster[key][2])
+            nameFrame:SetVertexColor(r, g, b, a)
             rankFrame = getglobal("myTabPage1_entry" .. pos .. "_rank")
             rankFrame:SetText(value[1])
-            local score, ep, gp = NoobDKP_ParseOfficerNote(value[3])
+            local score, ep, gp = NoobDKP_ParseOfficerNote(NOOBDKP_g_roster[key][3])
             scoreFrame = getglobal("myTabPage1_entry" .. pos .. "_score")
             scoreFrame:SetText(score)
             EPFrame = getglobal("myTabPage1_entry" .. pos .. "_EP")

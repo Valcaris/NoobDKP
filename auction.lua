@@ -1,6 +1,4 @@
 
-local noobcolor = "|cfff0ba3c"
-
 function NoobDKPHandleAuction(msg)
     local syntax = "auction\n-create [item]: creates an auction for item\n-cancel: cancels the active auction\n-finish ([character]): finishes the active auction, optionally overriding the default winner\n-bid [character] need|greed: adds a bid for character as need or greed"
     print("Handle Auction: " .. msg)
@@ -8,7 +6,7 @@ function NoobDKPHandleAuction(msg)
     if cmd == "create" then
         if args == "" then
             print("No item found to create an auction!")
-            print(noobcolor .. syntax)
+            print(NoobDKP_color .. syntax)
         else
             NoobDKP_CreateAuction(args)
         end
@@ -24,7 +22,7 @@ function NoobDKPHandleAuction(msg)
             NoobDKP_BidAuction(args)
         end
     else
-        print(noobcolor .. syntax)
+        print(NoobDKP_color .. syntax)
     end
 end
 
@@ -36,19 +34,20 @@ function NoobDKP_CreateAuction(args)
     else
         NOOBDKP_g_auction = {_item = item}
     end
+    NoobDKP_ShowAuctionTab()
 end
 
 function NoobDKP_CancelAuction()
-    print("Cancel auction")
     if NOOBDKP_g_auction ~= nil then
         NOOBDKP_g_auction = nil
+        print(NoobDKP_color .. "Auction Cancelled!")
     else
-        print("No auction in progress to cancel!")
+        print(NoobDKP_color .. "No auction in progress to cancel!")
     end
+    NoobDKP_ShowAuctionTab()
 end
 
 function NoobDKP_FinishAuction(args)
-    print("Finish auction: " .. args)
     local _, _, char = string.find(args, "%s?(%w+)%s?")
     if NOOBDKP_g_auction == nil then
         print("No auction in progress to finish!")
@@ -56,7 +55,6 @@ function NoobDKP_FinishAuction(args)
         print("Overriding " .. char .. " as the winner!")
         NOOBDKP_g_auction[winner] = char
     else
-        print("Determining winner...")
         local chars = 0
         for key, value in pairs(NOOBDKP_g_auction) do
             if key ~= "_item" and key ~= "_winner" then
@@ -64,17 +62,18 @@ function NoobDKP_FinishAuction(args)
             end
         end
         if chars == 0 then
-            print("No bidding characters detected!")
+          SendChatMessage("NoobDKP: No bids detected", "RAID")
         else
-            print("Finding winner...")
             local win_char, num_winners = NoobDKP_FindWinner()
-            print("Found " .. num_winners .. " winners!")
             if num_winners > 1 then
-                print("Breaking tie...")
+              SendChatMessage("NoobDKP: Breaking tie...", "RAID")
                 win_char = NOOBDKP_break_tie(win_char)
             end
-            print("Winner is " .. win_char[1])
+            SendChatMessage("NoobDKP: " .. win_char[1] .. " wins the bid for " .. NOOBDKP_g_auction["_item"] .. " with a score of " .. NOOBDKP_g_auction[win_char[1] ]["_score"], "RAID")
             NOOBDKP_g_auction["_winner"] = win_char[1]
+            getglobal("myTabPage3_Auction_Winner"):SetText(win_char[1])
+            local r, g, b, a = NoobDKP_getClassColor(NOOBDKP_g_roster[win_char[1] ][2])
+            getglobal("myTabPage3_Auction_Winner"):SetVertexColor(r, g, b, a)
         end
     end
 end
@@ -98,10 +97,18 @@ function NoobDKP_BidAuction(args)
                 local GP = t - n
                 local score = ceil(((t + NoobDKP_base_EP) * NoobDKP_scale_EP) / (GP + NoobDKP_base_GP))
                 print("EP: " .. EP .. " GP: " .. GP .. " score: " .. score)
-                NOOBDKP_g_auction[char] = score
+                NOOBDKP_g_auction[char] = {}
+                NOOBDKP_g_auction[char]["_score"] = score
+                NOOBDKP_g_auction[char]["_type"] = val
+            else
+                local score = ceil(((NoobDKP_base_EP) * NoobDKP_scale_EP) / (NoobDKP_base_GP))
+                NOOBDKP_g_auction[char] = {}
+                NOOBDKP_g_auction[char]["_score"] = score
+                NOOBDKP_g_auction[char]["_type"] = val
             end
         end
     end
+    NoobDKP_UpdateAuction()
 end
 
 function NoobDKP_FindWinner()
@@ -109,29 +116,25 @@ function NoobDKP_FindWinner()
     local winners = {}
     local num_winners = 0;
 
-    print("Finding high bid...")
     -- find what the high bid was
     for key, value in pairs(NOOBDKP_g_auction) do
         if key ~= "_item" and key ~= "_winner" then
-            print("Checking " .. key .. " -- " .. value)
-            if value > max_bid then
-                max_bid = value
+            if value["_score"] > max_bid then
+                max_bid = value["_score"]
             end
         end
     end
 
-    print("High bid was " .. max_bid)
     -- now find who had the high bid
     for key, value in pairs(NOOBDKP_g_auction) do
         if key ~= "_item" and key ~= "_winner" then
-            if value == max_bid then
+            if value["_score"] == max_bid then
                 table.insert(winners, key)
                 num_winners = num_winners + 1
             end
         end
     end
 
-    print("Found " .. num_winners .. " winners!")
     return winners, num_winners
 end
 
@@ -145,19 +148,17 @@ function NOOBDKP_break_tie(char_list)
     for key, value in pairs(char_list) do
         s = s .. " " .. value
     end
-    print("Rolling off for: " .. s)
 
     -- give every character in the list a random roll
     for key, value in pairs(char_list) do
         rolls[value] = random(1, 100)
     end
 
-    print("Rolls are:")
+    SendChatMessage("NoobDKP: Rolls are:", "RAID")
     for key, value in pairs(rolls) do
-        print(key .. " = " .. value)
+        SendChatMessage(key .. " = " .. value, "RAID")
     end
 
-    print("rolls complete. looking for high roll...")
     -- determine which roll is the highest
     for key, value in pairs(rolls) do
         if value > high_roll then
@@ -165,9 +166,6 @@ function NOOBDKP_break_tie(char_list)
         end
     end
 
-    print("high roll is: " .. high_roll)
-
-    print("high roll found. looking for who has it...")
     -- determine how many characters have the high roll (in case of another tie)
     for key, value in pairs(rolls) do
         if value == high_roll then
@@ -178,11 +176,125 @@ function NOOBDKP_break_tie(char_list)
 
     -- if only one character had the high roll, we're done
     if num_winners == 1 then
-        print("one winner found: " .. winners[1])
         return winners
     else
-        print("tie detected. Rolling again...")
+      SendChatMessage("NoobDKP: Tie detected. Rolling again...", "RAID")
         -- otherwise, take all the high rollers and roll again
         return NOOBDKP_break_tie(winners)
     end
+end
+
+function NoobDKP_ShowAuctionTab()
+    local emptyAuction = getglobal("myTabPage3_emptyAuction")
+    local fullAuction = getglobal("myTabPage3_Auction")
+    if NOOBDKP_g_auction == nil then
+        fullAuction:Hide()
+        emptyAuction:Show()
+    else
+        (getglobal("myTabPage3_Auction_Item")):SetText("Auction for: " .. NOOBDKP_g_auction["_item"])
+        NoobDKP_UpdateAuction()
+        emptyAuction:Hide()
+        fullAuction:Show()
+    end
+  end
+
+function NoobDKP_UpdateAuction()
+    local nameFrame, priorityFrame, scoreFrame, EPFrame, GPFrame
+    local pos = 1 -- index into the frame list
+
+    local sortedList = NoobDKP_SortAuction()    
+
+    for key, value in pairs(sortedList) do
+        local name = value[2]
+        local priority = NOOBDKP_g_auction[ value[2] ]["_type"]
+        local score = NOOBDKP_g_auction[ value[2] ]["_score"]
+        if key ~= "_item" and key ~= "_winner" then
+            nameFrame = getglobal("myTabPage3_Auction_entry" .. pos .. "_name")
+            nameFrame:SetText(name)
+            local r, g, b, a = NoobDKP_getClassColor(NOOBDKP_g_roster[name][2])
+            nameFrame:SetVertexColor(r, g, b, a)
+            priorityFrame = getglobal("myTabPage3_Auction_entry" .. pos .. "_rank")
+            priorityFrame:SetText(priority)
+            scoreFrame = getglobal("myTabPage3_Auction_entry" .. pos .. "_score")
+            scoreFrame:SetText(score)
+            local score, ep, gp = NoobDKP_ParseOfficerNote(NOOBDKP_g_roster[name][3])
+            EPFrame = getglobal("myTabPage3_Auction_entry" .. pos .. "_EP")
+            EPFrame:SetText(ep)
+            GPFrame = getglobal("myTabPage3_Auction_entry" .. pos .. "_GP")
+            GPFrame:SetText(gp)
+            pos = pos + 1
+        end
+    end
+
+    if pos <= 10 then
+        for j = pos, 10 do
+            nameFrame = getglobal("myTabPage3_Auction_entry" .. j .. "_name")
+            nameFrame:SetText("")
+            rankFrame = getglobal("myTabPage3_Auction_entry" .. j .. "_rank")
+            rankFrame:SetText("")
+            scoreFrame = getglobal("myTabPage3_Auction_entry" .. j .. "_score")
+            scoreFrame:SetText("")
+            EPFrame = getglobal("myTabPage3_Auction_entry" .. j .. "_EP")
+            EPFrame:SetText("")
+            GPFrame = getglobal("myTabPage3_Auction_entry" .. j .. "_GP")
+            GPFrame:SetText("")
+        end
+    end
+end
+
+function auctionCompare(a, b)
+    return a[1] > b[1]
+end
+
+function NoobDKP_SortAuction()
+    local sortedList = {}
+    local needList = {}
+    local greedList = {}
+
+    -- find all need rolls and insert into needList
+    for key, value in pairs(NOOBDKP_g_auction) do
+        if key ~= "_item" and key ~= "_winner" and value["_type"] == "need" then
+            local t = {value["_score"], key}
+            table.insert(needList, t)
+        end
+    end
+    -- sort needList by score
+    table.sort(needList, auctionCompare)
+
+    -- insert sorted needList into sortedList
+    for key, value in pairs(needList) do
+        table.insert(sortedList, value)
+    end
+
+    -- find all greed rolls and insert into greedList
+    for key, value in pairs(NOOBDKP_g_auction) do
+        if key ~= "_item" and key ~= "_winner" and value["_type"] == "greed" then
+            local t = {value["_score"], key}
+            table.insert(greedList, t)
+        end
+    end
+    -- sort greedList by score
+    table.sort(greedList, auctionCompare)
+
+    -- insert sorted greedList into sortedList
+    for key, value in pairs(greedList) do
+        table.insert(sortedList, value)
+    end
+
+    return sortedList
+end
+
+function NoobDKP_GPtoWinner()
+  local winner = NOOBDKP_g_auction["_winner"]
+  local wingp = getglobal("myTabPage3_Auction_Amount"):GetText()
+  if wingp == nil then
+    wingp = NoobDKP_defaultGP
+  end
+
+  SendChatMessage("NoobDKP: Adding " .. wingp .. " GP to " .. winner, "RAID")
+  local score, ep, gp = NoobDKP_ParseOfficerNote(NOOBDKP_g_roster[winner][3])
+  gp = gp + wingp
+  NoobDKP_SetOfficerNote(winner, ep, gp)
+  NoobDKP_UpdateAuction()
+  getglobal("myTabPage3_Auction_Amount"):ClearFocus()
 end

@@ -1,10 +1,10 @@
 function NOOBDKP_find_main(char)
     print("Find main for " .. char)
     -- if no note, this is a main char that hasn't had values set
-    if NOOBDKP_g_roster[3] == nil or NOOBDKP_g_roster[3] == "" then
+    if NOOBDKP_g_roster[char][3] == nil or NOOBDKP_g_roster[char][3] == "" then
         return char
     end
-    local _, _, n, t = string.find(NOOBDKP_g_roster[char][3], "N:(%d+) T:(%d+)")
+    local _, _, n, t = string.find(NOOBDKP_g_roster[char][3], "N:(-?%d+) T:(%d+)")
     if n == nil or n == "" or t == nil or t == "" then
         -- values not found, so this is an alt, find the main
         print("Alt detected, looking for main...")
@@ -24,13 +24,13 @@ function NOOBDKP_find_main(char)
 end
 
 function NoobDKP_ParseOfficerNote(note)
-    local _, _, n, t = string.find(note, "N:(%d+) T:(%d+)")
+    local _, _, n, t = string.find(note, "N:(-?%d+) T:(%d+)")
     if note == nil or note == "" then
         t = 0
         n = 0
     elseif n == nil or n == "" or t == nil or t == "" then
         local newnote = NOOBDKP_g_roster[note][3]
-        _, _, n, t = string.find(newnote, "N:(%d+) T:(%d+)")
+        _, _, n, t = string.find(newnote, "N:(-?%d+) T:(%d+)")
         if n == nil or n == "" or t == nil or t == "" then
             t = 0
             n = 0
@@ -39,9 +39,14 @@ function NoobDKP_ParseOfficerNote(note)
 
     local EP = t
     local GP = t - n
-    local score = ceil(((t + NoobDKP_base_EP) * NoobDKP_scale_EP) / (GP + NoobDKP_base_GP))
+    local score = ceil(((EP + NoobDKP_base_EP) * NoobDKP_scale_EP) / (GP + NoobDKP_base_GP))
 
     return score, EP, GP
+end
+
+function NoobDKP_SetOfficerNote(char, ep, gp)
+  local note = "N:" .. (ep - gp) .. " T:" .. ep
+  NOOBDKP_g_roster[char][3] = note
 end
 
 function getTableSize(t)
@@ -50,4 +55,30 @@ function getTableSize(t)
         i = i + 1
     end
     return i
+end
+
+function NoobDKP_getClassColor(class)
+  if class == "Death Knight" or class == "death knight" then
+    return 0.77, 0.12, 0.23, 1.0
+  elseif class == "Druid" or class == "druid" then
+    return 1.00, 0.49, 0.04, 1.0
+  elseif class == "Hunter" or class == "hunter" then
+    return 0.67, 0.83, 0.45, 1.0
+  elseif class == "Mage" or class == "mage" then
+    return 0.25, 0.78, 0.92, 1.0
+  elseif class == "Paladin" or class == "paladin" then
+    return 0.96, 0.55, 0.73, 1.0
+  elseif class == "Priest" or class == "priest" then
+    return 1.0, 1.0, 1.0, 1.0
+  elseif class == "Rogue" or class == "rogue" then
+    return 1.00, 0.96, 0.41, 1.0
+  elseif class == "Shaman" or class == "shaman" then
+    return 0.0, 0.44, 0.87, 1.0
+  elseif class == "Warlock" or class == "warlock" then
+    return 0.53, 0.53, 0.93, 1.0
+  elseif class == "Warrior" or class == "warrior" then
+    return 0.78, 0.61, 0.43, 1.0
+  end
+
+    return 0.0, 1.0, 0.0, 1.0
 end
