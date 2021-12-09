@@ -45,6 +45,11 @@ function NoobDKP_RemoveEvent(msg)
     end
 end
 
+function NoobDKP_CloseEvent()
+  NOOBDKP_g_events["active_raid"] = nil
+  NoobDKP_ShowEventTab()
+end
+
 function NoobDKP_RaidEvent(msg)
     local _, _, d, desc = string.find(msg, "%s?(-?%d+)%s?(.*)")
     print("Raid event: " .. d .. " " .. desc)
@@ -68,8 +73,8 @@ function NoobDKP_ShowEventTab()
   local emptyFrame = getglobal("myTabPage2_emptyEvent")
   local fullFrame = getglobal("myTabPage2_Event")
   if NOOBDKP_g_events == nil or NOOBDKP_g_events["active_raid"] == nil then
-      fullAuction:Hide()
-      fullFrame:Show()
+    fullFrame:Hide()
+      emptyFrame:Show()
   else
     local activeRaid = NOOBDKP_g_events["active_raid"]
     local eventName = NOOBDKP_g_events[activeRaid]["description"]
@@ -77,4 +82,24 @@ function NoobDKP_ShowEventTab()
     emptyFrame:Hide()
     fullFrame:Show()
   end
+end
+
+function NoobDKP_AddRaidEP()
+  local amount = getglobal("myTabPage2_Amount"):GetText()
+  local reason = getglobal("myTabPage2_Reason"):GetText()
+  if reason == nil or reason == "" then
+    reason = "no reason"
+  end
+  SendChatMessage("NoobDKP: Adding " .. amount .. " EP to the raid for " .. reason, "RAID")
+  for key, value in pairs(NOOBDKP_g_raid_roster) do
+    local ep = value[3] + amount
+    local gp = value[4]
+    value[3] = ep
+    value[2] = ceil(((ep + NoobDKP_base_EP) * NoobDKP_scale_EP) / (gp + NoobDKP_base_GP))
+    NoobDKP_SetOfficerNote(key, ep, gp)
+  end
+  getglobal("myTabPage2_Amount"):ClearFocus()
+  getglobal("myTabPage2_Reason"):ClearFocus()
+  NoobDKP_UpdateRoster()
+  NoobDKP_UpdateAuction()
 end

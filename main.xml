@@ -374,7 +374,7 @@
                             <AbsDimension x="80" y="25"/>
                         </Size>
                         <Scripts>
-                            <OnClick>NoobDKP_ScanOnClick();</OnClick>
+                            <OnClick>NoobDKP_ScanRoster();</OnClick>
                         </Scripts>
                     </Button>
                     <Button name="$parentGuildRoster" text="Guild Roster" inherits="UIPanelButtonTemplate">
@@ -451,6 +451,31 @@
               <Anchor point="TOPLEFT"/>
               <Anchor point="BOTTOMRIGHT"/>
             </Anchors>
+            <Layers>
+              <Layer level="ARTWORK">
+
+
+                       <FontString inherits="GameFontNormal" text="EP Amount: ">
+                           <Anchors>
+                               <Anchor point="BOTTOMLEFT" relativeTo="$parent">
+                                   <Offset>
+                                       <AbsDimension x="20" y="30"/>
+                                   </Offset>
+                               </Anchor>
+                           </Anchors>
+                       </FontString>
+                       <FontString inherits="GameFontNormal" text="Reason: ">
+                           <Anchors>
+                               <Anchor point="BOTTOMLEFT" relativeTo="$parent">
+                                   <Offset>
+                                       <AbsDimension x="155" y="30"/>
+                                   </Offset>
+                               </Anchor>
+                           </Anchors>
+                       </FontString>
+
+              </Layer>
+            </Layers>
             <Frames>
               <Frame name="$parent_emptyEvent" hidden="false">
                 <Anchors>
@@ -507,32 +532,33 @@
                       </Anchors>
                     </FontString>
 
-                       <FontString inherits="GameFontNormal" text="EP Amount: ">
-                           <Anchors>
-                               <Anchor point="BOTTOMLEFT" relativeTo="$parent">
-                                   <Offset>
-                                       <AbsDimension x="20" y="30"/>
-                                   </Offset>
-                               </Anchor>
-                           </Anchors>
-                       </FontString>
-                       <FontString inherits="GameFontNormal" text="Reason: ">
-                           <Anchors>
-                               <Anchor point="BOTTOMLEFT" relativeTo="$parent">
-                                   <Offset>
-                                       <AbsDimension x="155" y="30"/>
-                                   </Offset>
-                               </Anchor>
-                           </Anchors>
-                       </FontString>
                    </Layer>
                </Layers>
 
                
 
               <Frames>
-<!--
-                    <EditBox name="$parent_Amount" inherits="InputBoxTemplate" autoFocus="false" >
+                    <Button name="$parent_CloseEvent" text="Close Event" inherits="UIPanelButtonTemplate">
+                        <Anchors>
+                            <Anchor point="BOTTOMLEFT" relativeTo="$parent">
+                                <Offset>
+                                    <AbsDimension x="200" y="50"/>
+                                </Offset>
+                            </Anchor>
+                        </Anchors>
+                        <Size>
+                            <AbsDimension x="80" y="25"/>
+                        </Size>
+                        <Scripts>
+                            <OnClick>NoobDKP_CloseEvent();</OnClick>
+                        </Scripts>
+                    </Button>
+
+                    
+
+              </Frames>
+                    </Frame>
+                                        <EditBox name="$parent_Amount" inherits="InputBoxTemplate" autoFocus="false" >
                         <Size>
                             <AbsDimension x="50" y="25"/>
                         </Size>
@@ -544,6 +570,7 @@
                             </Anchor>
                         </Anchors>
                     </EditBox>
+                    
                     <EditBox name="$parent_Reason" inherits="InputBoxTemplate" autoFocus="false" >
                         <Size>
                             <AbsDimension x="215" y="25"/>
@@ -556,6 +583,7 @@
                             </Anchor>
                         </Anchors>
                     </EditBox>
+                    
                     <Button name="$parentAddEP" text="Add" inherits="UIPanelButtonTemplate">
                         <Anchors>
                             <Anchor point="BOTTOMLEFT" relativeTo="$parent">
@@ -568,13 +596,10 @@
                             <AbsDimension x="35" y="25"/>
                         </Size>
                         <Scripts>
-                            <OnClick>NoobDKP_RaidEvent();</OnClick>
+                            <OnClick>NoobDKP_AddRaidEP();</OnClick>
                         </Scripts>
                     </Button>
-                    -->
 
-                        </Frames>
-                    </Frame>
                </Frames> 
                <Scripts>
                     <OnShow>NoobDKP_ShowEventTab()</OnShow>
@@ -1090,6 +1115,7 @@
                this:RegisterForDrag("LeftButton");
                this:RegisterEvent("CHAT_MSG_RAID");
                this:RegisterEvent("CHAT_MSG_RAID_LEADER");
+               this:RegisterEvent("CHAT_MSG_WHISPER");
                this:RegisterEvent("RAID_ROSTER_UPDATE");
            </OnLoad>
            <OnShow>

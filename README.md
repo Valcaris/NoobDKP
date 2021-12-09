@@ -2,7 +2,7 @@
 DKP/EPGP Addon for &lt;The Noob Guild>
 
 ## Overview
-This addon was created to help manage the loot system of &lt;The Noob Guild>. I looked at EPGP_Lootmaster, but it wouldn't work for me out of the box and just didn't feel like it did what I wanted to. QDKP was closer, but it's more geared for DKP rather than EPGP. I tried it in a raid, and there were several issues.
+This addon was created to help manage the loot system of &lt;The Noob Guild>. I looked at EPGP_Lootmaster, but it wouldn't work for me out of the box and just didn't feel like it did what I wanted to. QDKP was closer, but it's more geared for DKP rather than EPGP. I tried it in a raid, and it had several issues such as not telling people what their final score was and not letting people with more GP than EP bid.
 
 This addon has the following tabs:
 - Roster
@@ -61,7 +61,7 @@ This is a run-through of how a typical user is expected to use NoobDKP
 
 ## Maintenance
 - Members contribute to the gbank and are awarded EP (or are awarded EP for other reasons)
-- Errors were discovered need EP or GP corrections
+- Errors were discovered which need EP or GP corrections
 - Logs need to be modified to add/remove/modify entries
   - The wrong person received loot
   - The wrong EP or GP was applied or missed

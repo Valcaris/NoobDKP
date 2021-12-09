@@ -5,15 +5,12 @@
         - Right-Click Context menu on List buttons
             - @see Roster functions
         - Give sort headers a background that is used on mouseover
-        - **Give main name in parens after alt name
         - Figure out proper mouse wheel scrolling
-        - **Guild Scan does actual scan
         - Default view to raid roster?
-        - Add external button
-        - **slash command to directly set EP or GP
+        - slash command to directly set EP or GP
         - Last update timestamp
+        - **Send local values back to guild notes
     - Events Tab
-        - **Raid-wide add/remove EP (GUI elements are there, need to hook up to table)
         - Current Raid description, action list
         - List of raids in history
         - Detect people in the raid (and when they leave the raid)
@@ -25,9 +22,9 @@
         - Add countdown to window when auction started, possibly broadcast to raid (with checkbox)
         - **Item Links (shift-click to add item)
         - Option to have Declare Winner set GP and close auction all at once (or have separate actions)
-        - **If below min EP, automatically set to greed
+        - trim need/greed of whitespace
     - Reports Tab
-        - Export to text
+        - **Export to text
     - Sync Tab
         - Show who else has addon and what version
         - Permissions based on guild rank for who can set what
@@ -37,15 +34,6 @@
           - Make Options table in SavedVariables
           - Various widgets for the options, may need mulitple pages or scrolling page
     - Communications
-          - **Respond to bid with ack and score
-        - **Member requests for information with ?noob
-            - Your EPGP Score is X
-              There is no auction in progress right now
-              Auction is in progress for <item>
-              personA need score
-              personB need score
-              personC greed score
-              personA need score > personB need score > personC greed score
     - Minimap Icon
     - TitanBars Icon
     - README.md, code documentation comments, general cleanup, QDKP acknowledgement
@@ -113,6 +101,11 @@ function NoobDKP_OnEvent(self, event, ...)
     local text, playerName = ...;
     if text == "need" or text == "greed" then 
       NoobDKP_BidAuction(playerName .. " " .. text)
+    end
+  elseif event == "CHAT_MSG_WHISPER" then
+    local text, playerName = ...;
+    if text == "noob" then
+      NoobDKP_QueryReply(playerName)
     end
   elseif event == "RAID_ROSTER_UPDATE" then
     NoobDKP_UpdateRaidRoster()

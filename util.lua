@@ -1,5 +1,5 @@
 function NOOBDKP_find_main(char)
-    print("Find main for " .. char)
+    --print("Find main for " .. char)
     -- if no note, this is a main char that hasn't had values set
     if NOOBDKP_g_roster[char][3] == nil or NOOBDKP_g_roster[char][3] == "" then
         return char
@@ -7,17 +7,17 @@ function NOOBDKP_find_main(char)
     local _, _, n, t = string.find(NOOBDKP_g_roster[char][3], "N:(-?%d+) T:(%d+)")
     if n == nil or n == "" or t == nil or t == "" then
         -- values not found, so this is an alt, find the main
-        print("Alt detected, looking for main...")
+        --print("Alt detected, looking for main...")
         local main = NOOBDKP_g_roster[char][3]
         if main ~= nil and main ~= "" then
             return NOOBDKP_find_main(main)
         else
-            print("Can't find main for " .. char)
+            --print("Can't find main for " .. char)
             return ""
         end
     else
         -- values found, so this is a main character
-        print("Character " .. char .. " was a main")
+        --print("Character " .. char .. " was a main")
         return char
     end
 
@@ -46,7 +46,8 @@ end
 
 function NoobDKP_SetOfficerNote(char, ep, gp)
   local note = "N:" .. (ep - gp) .. " T:" .. ep
-  NOOBDKP_g_roster[char][3] = note
+  local main = NOOBDKP_find_main(char)
+  NOOBDKP_g_roster[main][3] = note
 end
 
 function getTableSize(t)

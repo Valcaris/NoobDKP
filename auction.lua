@@ -33,7 +33,8 @@ function NoobDKP_CreateAuction(args)
         print("Auction already in progress! Cancel first!")
     else
         NOOBDKP_g_auction = {_item = item}
-    end
+        SendChatMessage("NoobDKP: Creating auction for item " .. item, "RAID")
+      end
     NoobDKP_ShowAuctionTab()
 end
 
@@ -91,7 +92,7 @@ function NoobDKP_BidAuction(args)
         local main = NOOBDKP_find_main(char)
         if main ~= "" then
             print("Found main is: " .. main)
-            local _, _, n, t = string.find(NOOBDKP_g_roster[main][3], "N:(%d+) T:(%d+)")
+            local _, _, n, t = string.find(NOOBDKP_g_roster[main][3], "N:(-?%d+) T:(%d+)")
             if n ~= nil and n ~= "" and t ~= nil and t ~= "" then
                 local EP = t
                 local GP = t - n
@@ -99,14 +100,24 @@ function NoobDKP_BidAuction(args)
                 print("EP: " .. EP .. " GP: " .. GP .. " score: " .. score)
                 NOOBDKP_g_auction[char] = {}
                 NOOBDKP_g_auction[char]["_score"] = score
+                if tonumber(EP) < NoobDKP_min_EP and val == "need" then
+                  val = "greed"
+                  SendChatMessage("NoobDKP: " .. char .. " does not have " .. NoobDKP_min_EP .. " EP, setting to greed bid", "RAID")
+                end
                 NOOBDKP_g_auction[char]["_type"] = val
-            else
+                SendChatMessage("NoobDKP: " .. char .. " " .. val .. " bid of " .. score .. " accepted", "RAID")
+              else
                 local score = ceil(((NoobDKP_base_EP) * NoobDKP_scale_EP) / (NoobDKP_base_GP))
                 NOOBDKP_g_auction[char] = {}
                 NOOBDKP_g_auction[char]["_score"] = score
+                if 0 < NoobDKP_min_EP and val == "need" then
+                  val = "greed"
+                  SendChatMessage("NoobDKP: " .. char .. " does not have " .. NoobDKP_min_EP .. " EP, setting to greed bid", "RAID")
+                end
                 NOOBDKP_g_auction[char]["_type"] = val
-            end
-        end
+                SendChatMessage("NoobDKP: " .. char .. " " .. val .. " bid of " .. score .. " accepted", "RAID")
+              end
+          end
     end
     NoobDKP_UpdateAuction()
 end
@@ -196,7 +207,7 @@ function NoobDKP_ShowAuctionTab()
         emptyAuction:Hide()
         fullAuction:Show()
     end
-  end
+end
 
 function NoobDKP_UpdateAuction()
     local nameFrame, priorityFrame, scoreFrame, EPFrame, GPFrame
@@ -297,4 +308,10 @@ function NoobDKP_GPtoWinner()
   NoobDKP_SetOfficerNote(winner, ep, gp)
   NoobDKP_UpdateAuction()
   getglobal("myTabPage3_Auction_Amount"):ClearFocus()
+end
+
+function NoobDKP_QueryReply(name)
+  print("QueryReply")
+  local score, ep, gp = NoobDKP_ParseOfficerNote(NOOBDKP_g_roster[name][3])
+  SendChatMessage("NoobDKP: You have " .. ep .. " EP and " .. gp .. " GP for a score of " .. score, "WHISPER", nil, name)
 end

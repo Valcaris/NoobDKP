@@ -12,3 +12,5 @@ NoobDKP_scale_EP = 100
 NoobDKP_color = "|cfff0ba3c"
 
 NoobDKP_defaultGP = 50
+
+NoobDKP_min_EP = 500

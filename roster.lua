@@ -111,10 +111,6 @@ function NoobDKP_SetRoster(args)
     end
 end
 
-function NoobDKP_ScanOnClick()
-    NoobDKP_ScanRoster()
-end
-
 function NoobDKP_RosterItemOnClick(self)
     print("Bob Loblaw " .. self:GetName())
     local nameFrame = getglobal(self:GetName() .. "_name")
@@ -205,8 +201,12 @@ function NoobDKP_UpdateRoster()
 
     for key, value in pairs(whichRoster) do
         if i >= roster_index then
+            local nameText = key
+            if NOOBDKP_g_roster[NOOBDKP_g_roster[key][3] ] ~= nil then
+              nameText = nameText .. " (" .. NOOBDKP_g_roster[key][3] .. ")"
+            end
             nameFrame = getglobal("myTabPage1_entry" .. pos .. "_name")
-            nameFrame:SetText(key)
+            nameFrame:SetText(nameText)
             local r, g, b, a = NoobDKP_getClassColor(NOOBDKP_g_roster[key][2])
             nameFrame:SetVertexColor(r, g, b, a)
             rankFrame = getglobal("myTabPage1_entry" .. pos .. "_rank")
