@@ -10,11 +10,12 @@
         - slash command to directly set EP or GP
         - Last update timestamp
         - **Send local values back to guild notes
+        - Rank shows class
+        - Refresh raid view (to force people in/out of raid)
     - Events Tab
         - Current Raid description, action list
         - List of raids in history
         - Detect people in the raid (and when they leave the raid)
-        - Refresh raid view (to force people in/out of raid)
     - Auctions Tab
         - Grey out Declare Winner until someone has bid
         - Detect Loot Window, queue up auctions?
@@ -87,10 +88,10 @@ local function NoobDKPAddonCommands(msg, editbox)
     elseif cmd == "auction" and args ~= "" then
         NoobDKPHandleAuction(args)
     elseif cmd == "show" then
-        print("show")
-        --DBMBossHealthBarTemplate:Show()
-        NoobDKP_Frame:Show();
-    else
+        noobMainFrame:Show();
+    elseif cmd == "hide" then
+      noobMainFrame:Hide();
+      else
         -- prints the help syntax to the user
         print(NoobDKP_color .. syntax)
     end
