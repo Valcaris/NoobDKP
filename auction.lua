@@ -45,6 +45,7 @@ function NoobDKP_CancelAuction()
     else
         print(NoobDKP_color .. "No auction in progress to cancel!")
     end
+    getglobal("myTabPage3_Auction_Winner"):SetText("No Winner")
     NoobDKP_ShowAuctionTab()
 end
 
@@ -76,8 +77,9 @@ function NoobDKP_FinishAuction(args)
             local r, g, b, a = NoobDKP_getClassColor(NOOBDKP_g_roster[win_char[1] ][2])
             getglobal("myTabPage3_Auction_Winner"):SetVertexColor(r, g, b, a)
         end
-    end
-end
+        getglobal("myTabPage3_AuctionAddGP"):Enable()
+      end
+  end
 
 function NoobDKP_BidAuction(args)
     print("Bid auction: " .. args)
@@ -119,6 +121,7 @@ function NoobDKP_BidAuction(args)
               end
           end
     end
+    getglobal("myTabPage3_Auction_finishAuction"):Enable()
     NoobDKP_UpdateAuction()
 end
 
@@ -201,6 +204,8 @@ function NoobDKP_ShowAuctionTab()
     if NOOBDKP_g_auction == nil then
         fullAuction:Hide()
         emptyAuction:Show()
+        getglobal("myTabPage3_AuctionAddGP"):Disable()
+        getglobal("myTabPage3_Auction_finishAuction"):Disable()
     else
         (getglobal("myTabPage3_Auction_Item")):SetText("Auction for: " .. NOOBDKP_g_auction["_item"])
         NoobDKP_UpdateAuction()
@@ -315,3 +320,14 @@ function NoobDKP_QueryReply(name)
   local score, ep, gp = NoobDKP_ParseOfficerNote(NOOBDKP_g_roster[name][3])
   SendChatMessage("NoobDKP: You have " .. ep .. " EP and " .. gp .. " GP for a score of " .. score, "WHISPER", nil, name)
 end
+
+function NoobDKP_ShiftClickItem(item)
+  print("Shift Click detected for: " .. item)
+  if NOOBDKP_g_auction == nil then
+    NOOBDKP_g_auction = {_item = item}
+    NoobDKP_ShowAuctionTab()
+    SendChatMessage("NoobDKP: Creating auction for item " .. item, "RAID")
+  end
+end
+
+hooksecurefunc("ChatEdit_InsertLink",NoobDKP_ShiftClickItem)

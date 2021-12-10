@@ -17,15 +17,12 @@
         - List of raids in history
         - Detect people in the raid (and when they leave the raid)
     - Auctions Tab
-        - Grey out Declare Winner until someone has bid
         - Detect Loot Window, queue up auctions?
         - Set GP according to Loot detection
         - Add countdown to window when auction started, possibly broadcast to raid (with checkbox)
-        - **Item Links (shift-click to add item)
         - Option to have Declare Winner set GP and close auction all at once (or have separate actions)
         - trim need/greed of whitespace
     - Reports Tab
-        - **Export to text
     - Sync Tab
         - Show who else has addon and what version
         - Permissions based on guild rank for who can set what
@@ -39,6 +36,12 @@
     - TitanBars Icon
     - README.md, code documentation comments, general cleanup, QDKP acknowledgement
     - Conversion from QDKP T:x N:y to own custom notes E:x G:y
+
+    <OnMouseDown> if arg1 == "RightButton"
+        elseif arg1 == "LeftButton"
+        ...
+    <OnEnterPressed>
+    <OnLeave> for tooltips
 ]]
 
 

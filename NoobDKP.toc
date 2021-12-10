@@ -11,5 +11,5 @@ main.xml
 roster.lua
 events.lua
 auction.lua
+reports.lua
 util.lua
-

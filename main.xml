@@ -898,6 +898,9 @@
                                 </Offset>
                             </Anchor>
                         </Anchors>
+                        <Scripts>
+                          <OnEnterPressed>this:ClearFocus();</OnEnterPressed>
+                        </Scripts>
                     </EditBox>
                     <Button name="$parentAddGP" text="Add GP" inherits="UIPanelButtonTemplate">
                         <Anchors>
@@ -927,20 +930,43 @@
                    <Anchor point="TOPLEFT"/>
                    <Anchor point="BOTTOMRIGHT"/>
                </Anchors>
-               <Layers>
-                   <Layer level="ARTWORK">
-                       <FontString inherits="GameFontNormal" text="Reports">
-                           <Anchors>
-                               <Anchor point="TOPLEFT" relativeTo="$parent">
-                                   <Offset>
-                                       <AbsDimension x="20" y="-30"/>
-                                   </Offset>
-                               </Anchor>
-                           </Anchors>
-                       </FontString>
-                   </Layer>
-               </Layers>
                <Frames>
+               <Anchors>
+                   <Anchor point="TOPLEFT"/>
+                   <Anchor point="BOTTOMRIGHT"/>
+               </Anchors>
+                    <Button name="$parent_Generate" text="Generate Report" inherits="UIPanelButtonTemplate">
+                        <Anchors>
+                            <Anchor point="BOTTOMLEFT" relativeTo="$parent">
+                                <Offset>
+                                    <AbsDimension x="15" y="15"/>
+                                </Offset>
+                            </Anchor>
+                        </Anchors>
+                        <Size>
+                            <AbsDimension x="110" y="30"/>
+                        </Size>
+                        <Scripts>
+                            <OnClick>NoobDKP_GenerateReport();</OnClick>
+                        </Scripts>
+                    </Button>
+                    <EditBox name="$parent_Text" inherits="InputBoxTemplate" ignoreArrows="true">
+                      <Size><AbsDimension x="450" y="30"/></Size>
+                      <Anchors>
+                        <Anchor point="TOPLEFT" relativeTo="$parent">
+                          <Offset><AbsDimension x="15" y="-20"/></Offset>
+                        </Anchor>
+                      </Anchors>
+                      <Scripts>
+                        <OnLoad>
+                          <!--this:SetMultiLine(true)-->
+                        </OnLoad>
+                        <OnTextChanged>
+                          this:HighlightText()
+                          this:SetFocus()
+                        </OnTextChanged>
+                      </Scripts>
+                    </EditBox>
                </Frames> 
            </Frame>
            <Frame name="myTabPage5" hidden="true">
