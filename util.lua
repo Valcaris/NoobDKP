@@ -1,5 +1,10 @@
 function NOOBDKP_find_main(char)
     --print("Find main for " .. char)
+
+    if NOOBDKP_g_roster[char] == nil then
+      return ""
+    end
+
     -- if no note, this is a main char that hasn't had values set
     if NOOBDKP_g_roster[char][3] == nil or NOOBDKP_g_roster[char][3] == "" then
         return char
@@ -24,17 +29,25 @@ function NOOBDKP_find_main(char)
 end
 
 function NoobDKP_ParseOfficerNote(note)
-    local _, _, n, t = string.find(note, "N:(-?%d+) T:(%d+)")
     if note == nil or note == "" then
-        t = 0
+      return 100, 0, 0
+    end
+    local _, _, n, t = string.find(note, "N:(-?%d+) T:(%d+)")
+    if n == nil or n == "" or t == nil or t == "" then
+      -- did not find values, should be the main character
+      -- so go to the main character for the values
+      -- if the main is in the note but not in the roster, reset to zeros
+      if NOOBDKP_g_roster[note] == nil then
         n = 0
-    elseif n == nil or n == "" or t == nil or t == "" then
+        t = 0
+      else
         local newnote = NOOBDKP_g_roster[note][3]
         _, _, n, t = string.find(newnote, "N:(-?%d+) T:(%d+)")
         if n == nil or n == "" or t == nil or t == "" then
             t = 0
             n = 0
         end
+      end
     end
 
     local EP = t

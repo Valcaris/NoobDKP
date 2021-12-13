@@ -1,16 +1,19 @@
 --[[
     TODO list
+    - ** need to make characters not case-sensitive
+    - ** crashes if main character of an alt left the guild
+    - ** initial add to empty roster not working on first time setup!
     - Roster Tab
         - Guild vs Raid checkbox
         - Right-Click Context menu on List buttons
             - @see Roster functions
         - Give sort headers a background that is used on mouseover
         - Figure out proper mouse wheel scrolling
-        - Default view to raid roster?
+        - ** Default view to raid roster?
         - slash command to directly set EP or GP
         - Last update timestamp
-        - **Send local values back to guild notes
-        - Rank shows class
+        - ** Send local values back to guild notes
+        - Sorting by EP fails
         - Refresh raid view (to force people in/out of raid)
     - Events Tab
         - Current Raid description, action list
@@ -23,11 +26,13 @@
         - Option to have Declare Winner set GP and close auction all at once (or have separate actions)
         - trim need/greed of whitespace
     - Reports Tab
+        - Alt report should be Main | Alt | Alt | Alt...
     - Sync Tab
         - Show who else has addon and what version
         - Permissions based on guild rank for who can set what
-        - Auction and Event updates in real time
+        - ** Auction and Event updates in real time
         - Sync Externals (guildies are just in notes)
+        - ** If someone else starts an auction or event, create aution in read-only mode
     - Options Tab
           - Make Options table in SavedVariables
           - Various widgets for the options, may need mulitple pages or scrolling page

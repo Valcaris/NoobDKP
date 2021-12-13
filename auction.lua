@@ -32,10 +32,17 @@ function NoobDKP_CreateAuction(args)
     if NOOBDKP_g_auction ~= nil then
         print("Auction already in progress! Cancel first!")
     else
-        NOOBDKP_g_auction = {_item = item}
+      NoobDKP_ShiftClickItem(item)
+--[[        NOOBDKP_g_auction = {_item = item}
+
+        local name, _, _, iLvl, _, _, _, _, iSlot = GetItemInfo(item)
+        print("name: " .. name .. " iLvl: " .. iLvl .. " slot: " .. iSlot)
+
         SendChatMessage("NoobDKP: Creating auction for item " .. item, "RAID")
-      end
-    NoobDKP_ShowAuctionTab()
+        ]]
+    end
+    --NoobDKP_ShowAuctionTab()
+    
 end
 
 function NoobDKP_CancelAuction()
@@ -79,7 +86,7 @@ function NoobDKP_FinishAuction(args)
         end
         getglobal("myTabPage3_AuctionAddGP"):Enable()
       end
-  end
+end
 
 function NoobDKP_BidAuction(args)
     print("Bid auction: " .. args)
@@ -316,7 +323,7 @@ function NoobDKP_GPtoWinner()
 end
 
 function NoobDKP_QueryReply(name)
-  print("QueryReply")
+  --print("QueryReply")
   local score, ep, gp = NoobDKP_ParseOfficerNote(NOOBDKP_g_roster[name][3])
   SendChatMessage("NoobDKP: You have " .. ep .. " EP and " .. gp .. " GP for a score of " .. score, "WHISPER", nil, name)
 end
@@ -326,6 +333,14 @@ function NoobDKP_ShiftClickItem(item)
   if NOOBDKP_g_auction == nil then
     NOOBDKP_g_auction = {_item = item}
     NoobDKP_ShowAuctionTab()
+
+    local name, _, _, iLvl, _, _, _, _, iSlot = GetItemInfo(item)
+    if name == nil then name = "" end
+    if iLvl == nil then iLvl = "" end
+    if iSlot == nil then iSlot = "" end
+    print("name: " .. name .. " iLvl: " .. iLvl .. " slot: " .. iSlot)
+    -- todo: construct option name, get from option table, set GP
+
     SendChatMessage("NoobDKP: Creating auction for item " .. item, "RAID")
   end
 end

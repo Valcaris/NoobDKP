@@ -2,7 +2,7 @@
 ##Title: NoobDKP
 ##Author: The Guild Master
 ##Version: 0.0.2
-##SavedVariables: NOOBDKP_g_auction, NOOBDKP_g_raid_roster, NOOBDKP_g_events, NOOBDKP_g_roster
+##SavedVariables: NOOBDKP_g_auction, NOOBDKP_g_raid_roster, NOOBDKP_g_events, NOOBDKP_g_roster, NOOBDKP_g_options
 
 default_options.lua
 options.ini

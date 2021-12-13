@@ -130,7 +130,7 @@
                             </Layer>
                         </Layers>
                         <Scripts>
-                            <OnClick>NoobDKP_SortbyName(this);</OnClick>
+                            <OnClick>NoobDKP_SortBy(0);</OnClick>
                         </Scripts>
                     </Button>
                     <Button name="$parent_sort_rank">
@@ -148,7 +148,7 @@
                             </Layer>
                         </Layers>
                         <Scripts>
-                            <OnClick>NoobDKP_SortbyRank(this);</OnClick>
+                            <OnClick>NoobDKP_SortBy(1);</OnClick>
                         </Scripts>
                     </Button>
                     <Button name="$parent_sort_score">
@@ -166,7 +166,7 @@
                             </Layer>
                         </Layers>
                         <Scripts>
-                            <OnClick>NoobDKP_SortbyScore(this);</OnClick>
+                            <OnClick>NoobDKP_SortBy(2);</OnClick>
                         </Scripts>
                     </Button>
                     <Button name="$parent_sort_EP">
@@ -184,7 +184,7 @@
                             </Layer>
                         </Layers>
                         <Scripts>
-                            <OnClick>NoobDKP_SortbyEP(this);</OnClick>
+                            <OnClick>NoobDKP_SortBy(3);</OnClick>
                         </Scripts>
                     </Button>
                     <Button name="$parent_sort_GP">
@@ -202,7 +202,7 @@
                             </Layer>
                         </Layers>
                         <Scripts>
-                            <OnClick>NoobDKP_SortbyGP(this);</OnClick>
+                            <OnClick>NoobDKP_SortBy(4);</OnClick>
                         </Scripts>
                     </Button>
                     <Button name="$parent_entry1" inherits="roster_list_template">
@@ -443,6 +443,7 @@
                 <Scripts>
                     <!-- Note: This doesn't work right now -->
                     <OnVerticalScroll>NoobDKP_VerticalScroll(this, offset)</OnVerticalScroll>
+                    <OnLoad>NoobDKP_UpdateRoster()</OnLoad>
                 </Scripts>               
                </Frames> 
            </Frame>   
@@ -935,7 +936,7 @@
                    <Anchor point="TOPLEFT"/>
                    <Anchor point="BOTTOMRIGHT"/>
                </Anchors>
-                    <Button name="$parent_Generate" text="Generate Report" inherits="UIPanelButtonTemplate">
+                    <Button text="Full Report" inherits="UIPanelButtonTemplate">
                         <Anchors>
                             <Anchor point="BOTTOMLEFT" relativeTo="$parent">
                                 <Offset>
@@ -944,13 +945,43 @@
                             </Anchor>
                         </Anchors>
                         <Size>
-                            <AbsDimension x="110" y="30"/>
+                            <AbsDimension x="80" y="30"/>
                         </Size>
                         <Scripts>
-                            <OnClick>NoobDKP_GenerateReport();</OnClick>
+                            <OnClick>NoobDKP_GenerateFullReport();</OnClick>
                         </Scripts>
                     </Button>
-                    <EditBox name="$parent_Text" inherits="InputBoxTemplate" ignoreArrows="true">
+                    <Button text="Brief Report" inherits="UIPanelButtonTemplate">
+                        <Anchors>
+                            <Anchor point="BOTTOMLEFT" relativeTo="$parent">
+                                <Offset>
+                                    <AbsDimension x="100" y="15"/>
+                                </Offset>
+                            </Anchor>
+                        </Anchors>
+                        <Size>
+                            <AbsDimension x="95" y="30"/>
+                        </Size>
+                        <Scripts>
+                            <OnClick>NoobDKP_GenerateBriefReport();</OnClick>
+                        </Scripts>
+                    </Button>
+                    <Button text="Alt Report" inherits="UIPanelButtonTemplate">
+                        <Anchors>
+                            <Anchor point="BOTTOMLEFT" relativeTo="$parent">
+                                <Offset>
+                                    <AbsDimension x="200" y="15"/>
+                                </Offset>
+                            </Anchor>
+                        </Anchors>
+                        <Size>
+                            <AbsDimension x="90" y="30"/>
+                        </Size>
+                        <Scripts>
+                            <OnClick>NoobDKP_GenerateAltReport();</OnClick>
+                        </Scripts>
+                    </Button>
+                    <EditBox name="$parent_Text" inherits="InputBoxTemplate" autoFocus="false">
                       <Size><AbsDimension x="450" y="30"/></Size>
                       <Anchors>
                         <Anchor point="TOPLEFT" relativeTo="$parent">
@@ -958,13 +989,14 @@
                         </Anchor>
                       </Anchors>
                       <Scripts>
-                        <OnLoad>
-                          <!--this:SetMultiLine(true)-->
-                        </OnLoad>
                         <OnTextChanged>
-                          this:HighlightText()
-                          this:SetFocus()
+                          if this:GetText() ~= "" then
+                            this:HighlightText()
+                            this:SetFocus()
+                          end
                         </OnTextChanged>
+                          <OnEnterPressed>this:ClearFocus();</OnEnterPressed>
+                          <OnEscapePressed>this:ClearFocus();</OnEscapePressed>
                       </Scripts>
                     </EditBox>
                </Frames> 
