@@ -60,8 +60,9 @@ function NoobDKP_RaidEvent(msg)
 end
 
 function NoobDKP_CharEvent(msg)
-    print("Char event " .. msg)
+  print("Char event " .. msg)
     local _, _, d, c, desc = string.find(msg, "%s?(-?%d+)%s?(%w+)%s?(.*)")
+    c = NoobDKP_FixName(c)
     print("Character event: " .. d .. " " .. c .. " " .. desc)
     local a = NOOBDKP_g_events["active_raid"]
     print(" active raid: " .. a)

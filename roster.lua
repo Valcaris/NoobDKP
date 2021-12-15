@@ -1,7 +1,7 @@
 
 
 local roster_index = 1
-local roster_type = 1  -- 0 = guild, 1 = raid
+local roster_type = 1  -- 0 = guild, 1 = raid, 2 = main
 local sort_type = 0 -- 0 = name, 1 = rank, 2 = score, 3 = ep, 4 = gp
 local sort_order = 0 -- 0 = incrementing, 1 = decrementing
 
@@ -58,19 +58,17 @@ function NoobDKP_ScanRoster()
     local j = 0
     for i = 1, a do
         local name, rank, _, _, class, _, _, note = GetGuildRosterInfo(i)
-       -- if NOOBDKP_g_roster[name] ~= nil then
             NOOBDKP_g_roster[name] = {rank, class, note}
-      --  end
         j = j + 1
     end
 
     SetGuildRosterShowOffline(false)
-    --NoobDKP_AuditRoster()    
     NoobDKP_UpdateRoster()
 end
 
 -- add a character to the roster as an external
 function NoobDKP_AddRoster(name)
+  name = NoobDKP_FixName(name)
     print("Add member: " .. name)
     if NOOBDKP_g_roster[name] == nil then
         print("Not found! adding...")
@@ -82,14 +80,16 @@ end
 
 -- remove a character from the roster (should only be used on externals)
 function NoobDKP_RemoveRoster(name)
+  name = NoobDKP_FixName(name)
     print("Removing member: " .. name)
     NOOBDKP_g_roster[name] = nil
 end
 
 -- set a character as an alt of another character
 function NoobDKP_AltRoster(args)
-    print("Set alt: " .. args)
     local _, _, alt, main = string.find(args, "%s?(%w+)%s?(.*)")
+    alt = NoobDKP_FixName(alt)
+    main = NoobDKP_FixName(main)
     print("Alt: " .. alt .. ", Main: " .. main)
     if NOOBDKP_g_roster[alt] == nil then
         print("Unable to find alt: " .. alt)
@@ -101,8 +101,8 @@ function NoobDKP_AltRoster(args)
 end
 
 function NoobDKP_SetRoster(args)
-    print("Set values: " .. args)
     local _, _, char, net, total = string.find(args, "%s?(%w+)%s?(-?%d+)%s?(-?%d+)")
+    char = NoobDKP_FixName(char)
     print("Char: " .. char .. ", Net: " .. net .. ", Total: " .. total)
 
     local main = NOOBDKP_find_main(char)
@@ -181,6 +181,12 @@ function NoobDKP_UpdateGuildRoster()
   NoobDKP_UpdateRoster();
 end
 
+function NoobDKP_UpdateMainRoster()
+  roster_type = 2
+  roster_index = 1
+  NoobDKP_UpdateRoster();
+end
+
 function NoobDKP_NameSort(a, b)
   if sort_order == 0 then
     return a[1] < b[1]
@@ -199,40 +205,25 @@ end
 
 function NoobDKP_ScoreSort(a, b)
   if sort_order == 0 then
-    return a[7] < b[7]
+    return tonumber(a[7]) < tonumber(b[7])
   else
-    return a[7] > b[7]
+    return tonumber(a[7]) > tonumber(b[7])
   end
 end
 
 function NoobDKP_EPSort(a, b)
-  --[[
-  print("EP sort")
-  if a[8] == nil or a[8] == "" then
-    print(" a nil")
-    a[8] = 0
-  end
-  if b[8] == nil or b[8] == "" then
-    print("b nil")
-    b[8] = 0
-  end
-  ]]
-
-  print("a " .. a[8] .. " b " .. b[8])
   if sort_order == 0 then
-    print("<")
-    return a[8] < b[8]
+    return tonumber(a[8]) < tonumber(b[8])
   else
-    print(">")
-    return a[8] > b[8]
+    return tonumber(a[8]) > tonumber(b[8])
   end
 end
 
 function NoobDKP_GPSort(a, b)
   if sort_order == 0 then
-    return a[9] < b[9]
+    return tonumber(a[9]) < tonumber(b[9])
   else
-    return a[9] > b[9]
+    return tonumber(a[9]) > tonumber(b[9])
   end
 end
 
@@ -241,28 +232,36 @@ function NoobDKP_UpdateRoster()
     local whichRoster
     local sorted = {}
 
-    if(roster_type == 0) then
+    if roster_type == 0 then
       whichRoster = NOOBDKP_g_roster
-    else
+    elseif roster_type == 1 then
       whichRoster = NOOBDKP_g_raid_roster
       if NOOBDKP_g_raid_roster == nil then
         NOOBDKP_g_raid_roster = {}
       end
+    else
+      whichRoster = NOOBDKP_g_roster
     end
 
     for key, value in pairs(whichRoster) do
           local nameText = key
+          local skip = false
           if NOOBDKP_g_roster[NOOBDKP_g_roster[key][3] ] ~= nil then
-            nameText = nameText .. " (" .. NOOBDKP_g_roster[key][3] .. ")"
+            if roster_type == 2 then
+              skip = true
+            else
+              nameText = nameText .. " (" .. NOOBDKP_g_roster[key][3] .. ")"
+            end
           end
-          local rank = value[1]
-          local r, g, b, a = NoobDKP_getClassColor(NOOBDKP_g_roster[key][2])
-          local score, ep, gp = NoobDKP_ParseOfficerNote(NOOBDKP_g_roster[key][3])
-          local t = {nameText, r, g, b, a, rank, score, ep, gp}
-          table.insert(sorted, t)
+          
+          if skip == false then
+            local rank = value[1]
+            local r, g, b, a = NoobDKP_getClassColor(NOOBDKP_g_roster[key][2])
+            local score, ep, gp = NoobDKP_ParseOfficerNote(NOOBDKP_g_roster[key][3])
+            local t = {nameText, r, g, b, a, rank, score, ep, gp}
+            table.insert(sorted, t)
+          end
     end
-
-    print("sort type: " .. sort_type .. " order: " .. sort_order)
 
     if sort_type == 0 then
       table.sort(sorted, NoobDKP_NameSort)
@@ -275,8 +274,6 @@ function NoobDKP_UpdateRoster()
     elseif sort_type == 4 then
       table.sort(sorted, NoobDKP_GPSort)
     end
-
-    print("sort type: " .. sort_type .. " order: " .. sort_order)
 
     local i = 1 -- index into the table
     local pos = 1 -- index into the frame list
@@ -300,37 +297,6 @@ function NoobDKP_UpdateRoster()
       end
       i = i + 1
     end
-
-
---[[
-    for key, value in pairs(whichRoster) do
-        if i >= roster_index then
-            local nameText = key
-            if NOOBDKP_g_roster[NOOBDKP_g_roster[key][3] ] ~= nil then
-              nameText = nameText .. " (" .. NOOBDKP_g_roster[key][3] .. ")"
-            end
-            nameFrame = getglobal("myTabPage1_entry" .. pos .. "_name")
-            nameFrame:SetText(nameText)
-            local r, g, b, a = NoobDKP_getClassColor(NOOBDKP_g_roster[key][2])
-            nameFrame:SetVertexColor(r, g, b, a)
-            rankFrame = getglobal("myTabPage1_entry" .. pos .. "_rank")
-            rankFrame:SetText(value[1])
-            local score, ep, gp = NoobDKP_ParseOfficerNote(NOOBDKP_g_roster[key][3])
-            scoreFrame = getglobal("myTabPage1_entry" .. pos .. "_score")
-            scoreFrame:SetText(score)
-            EPFrame = getglobal("myTabPage1_entry" .. pos .. "_EP")
-            EPFrame:SetText(ep)
-            GPFrame = getglobal("myTabPage1_entry" .. pos .. "_GP")
-            GPFrame:SetText(gp)
-            pos = pos + 1
-            if pos > 15 then
-                break
-            end
-        end
-        i = i + 1
-    end
-
-    ]]
 
     if pos <= 15 then
         for j = pos, 15 do
@@ -362,6 +328,7 @@ function NoobDKP_AuditRoster()
   for key, value in pairs(NOOBDKP_g_roster) do
     if value[1] ~= "*external*" then
       if tempTable[key] ~= 1 then
+        print("Found " .. key .. " left the guild!")
         NOOBDKP_g_roster[key][1] = "*external*"
       end
     end
@@ -370,8 +337,8 @@ function NoobDKP_AuditRoster()
   -- find characters whose main left the guild
   for key, value in pairs(NOOBDKP_g_roster) do
     local main = NOOBDKP_find_main(key)
-    --print(key .. " - " .. main)
     if main == "" or main == nil then
+      print("Found " .. key .. "'s main left the guild!")
       NOOBDKP_g_roster[key][3] = ""
     end
   end
@@ -380,14 +347,30 @@ function NoobDKP_AuditRoster()
   for key, value in pairs(NOOBDKP_g_roster) do
     local score, ep, gp = NoobDKP_ParseOfficerNote(value[3])
     if ep == 0 or ep == "0" then
-      print("removing " .. key)
+      print("Found " .. key .. " has no EP, removing!")
       NOOBDKP_g_roster[key] = nil
     end
   end
 
-  print("4")
-
   SetGuildRosterShowOffline(false)
   NoobDKP_UpdateRoster()
 
+end
+
+function NoobDKP_PushRoster()
+  if NOOBDKP_g_roster == nil or CanEditOfficerNote() == false then
+    return ""
+  end
+
+  SetGuildRosterShowOffline(true)
+  local a = GetNumGuildMembers()
+
+  for i = 1, a do
+      local name = GetGuildRosterInfo(i)
+      if NOOBDKP_g_roster[name] ~= nil then
+        GuildRosterSetOfficerNote(i, NOOBDKP_g_roster[name][3])
+      end
+  end
+
+  SetGuildRosterShowOffline(false)
 end

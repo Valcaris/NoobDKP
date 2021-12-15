@@ -54,7 +54,7 @@ function altCompare(a, b)
 end
 
 function NoobDKP_GenerateAltReport()
-  local text = "| Main | Name |\n|---|---|"
+  local text = "| Main | Alts |\n|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|"
 
   local sorted = {}
   for key, value in pairs(NOOBDKP_g_roster) do 
@@ -66,9 +66,15 @@ function NoobDKP_GenerateAltReport()
   end
 
   table.sort(sorted, altCompare)
+  local main = ""
 
   for key, value in ipairs(sorted) do
-      text = text .. "\n| " .. value[2] .. " | " .. value[1] .. " |"
+    if value[2] == main then
+      text = text .. value[1] .. " | "
+    else
+      text = text .. "\n| " .. value[2] .. " | " .. value[1] .. " | "
+      main = value[2]
+    end
   end
   getglobal("myTabPage4_Text"):SetText(text)
 end

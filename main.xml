@@ -362,21 +362,6 @@
                             <OnClick>NoobDKP_VerticalScroll(this, 3)</OnClick>
                         </Scripts>
                     </Button>
-                    <Button name="$parentScan" text="Guild Scan" inherits="UIPanelButtonTemplate">
-                        <Anchors>
-                            <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT">
-                                <Offset>
-                                    <AbsDimension x="10" y="15"/>
-                                </Offset>
-                            </Anchor>
-                        </Anchors>
-                        <Size>
-                            <AbsDimension x="80" y="25"/>
-                        </Size>
-                        <Scripts>
-                            <OnClick>NoobDKP_ScanRoster();</OnClick>
-                        </Scripts>
-                    </Button>
                     <Button name="$parentGuildRoster" text="Guild Roster" inherits="UIPanelButtonTemplate">
                         <Anchors>
                             <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT">
@@ -407,39 +392,23 @@
                             <OnClick>NoobDKP_UpdateRaidRoster();</OnClick>
                         </Scripts>
                     </Button>
-
-                    <EditBox name="$parentExternalName" inherits="InputBoxTemplate" autoFocus="false">
-                        <Size>
-                            <AbsDimension x="90" y="25"/>
-                        </Size>
+                    <Button name="$parentMainRoster" text="Main Roster" inherits="UIPanelButtonTemplate">
                         <Anchors>
-                            <Anchor relativePoint="BOTTOM" point="BOTTOM">
+                            <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT">
                                 <Offset>
-                                    <AbsDimension x="85" y="15"/>
-                                </Offset>
-                            </Anchor>
-                        </Anchors>
-                    </EditBox>
-                   <Button name="$parentAddExternal" text="Add External" inherits="UIPanelButtonTemplate">
-                        <Anchors>
-                            <Anchor point="BOTTOMRIGHT" relativePoint="BOTTOMRIGHT">
-                                <Offset>
-                                    <AbsDimension x="-10" y="15"/>
+                                    <AbsDimension x="265" y="15"/>
                                 </Offset>
                             </Anchor>
                         </Anchors>
                         <Size>
-                            <AbsDimension x="100" y="25"/>
+                            <AbsDimension x="85" y="25"/>
                         </Size>
                         <Scripts>
-                            <OnClick>
-                                local nameText = getglobal("myTabPage1ExternalName")
-                                NoobDKP_AddRoster(nameText:GetText())
-                                NoobDKP_VerticalScroll(this, 1)
-                                nameText:ClearFocus()
-                            </OnClick>
+                            <OnClick>NoobDKP_UpdateMainRoster();</OnClick>
                         </Scripts>
                     </Button>
+
+
                 <Scripts>
                     <!-- Note: This doesn't work right now -->
                     <OnVerticalScroll>NoobDKP_VerticalScroll(this, offset)</OnVerticalScroll>
@@ -1006,20 +975,22 @@
                    <Anchor point="TOPLEFT"/>
                    <Anchor point="BOTTOMRIGHT"/>
                </Anchors>
-               <Layers>
-                   <Layer level="ARTWORK">
-                       <FontString inherits="GameFontNormal" text="Sync">
-                           <Anchors>
-                               <Anchor point="TOPLEFT" relativeTo="$parent">
-                                   <Offset>
-                                       <AbsDimension x="20" y="-30"/>
-                                   </Offset>
-                               </Anchor>
-                           </Anchors>
-                       </FontString>
-                   </Layer>
-               </Layers>
                <Frames>
+                    <Button name="$parentPush" text="Push Data Back to Guild" inherits="UIPanelButtonTemplate">
+                        <Anchors>
+                            <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT">
+                                <Offset>
+                                    <AbsDimension x="10" y="15"/>
+                                </Offset>
+                            </Anchor>
+                        </Anchors>
+                        <Size>
+                            <AbsDimension x="160" y="25"/>
+                        </Size>
+                        <Scripts>
+                            <OnClick>NoobDKP_PushRoster();</OnClick>
+                        </Scripts>
+                    </Button>
                </Frames> 
            </Frame>
            <Frame name="myTabPage6" hidden="true">
@@ -1027,20 +998,69 @@
                    <Anchor point="TOPLEFT"/>
                    <Anchor point="BOTTOMRIGHT"/>
                </Anchors>
-               <Layers>
-                   <Layer level="ARTWORK">
-                       <FontString inherits="GameFontNormal" text="Options">
-                           <Anchors>
-                               <Anchor point="TOPLEFT" relativeTo="$parent">
-                                   <Offset>
-                                       <AbsDimension x="20" y="-30"/>
-                                   </Offset>
-                               </Anchor>
-                           </Anchors>
-                       </FontString>
-                   </Layer>
-               </Layers>
                <Frames>
+                    <Button name="$parentScan" text="Guild Scan" inherits="UIPanelButtonTemplate">
+                        <Anchors>
+                            <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT">
+                                <Offset>
+                                    <AbsDimension x="10" y="15"/>
+                                </Offset>
+                            </Anchor>
+                        </Anchors>
+                        <Size>
+                            <AbsDimension x="80" y="25"/>
+                        </Size>
+                        <Scripts>
+                            <OnClick>NoobDKP_ScanRoster();</OnClick>
+                        </Scripts>
+                    </Button>
+                    <Button name="$parentAuditRoster" text="Audit Guild Roster" inherits="UIPanelButtonTemplate">
+                        <Anchors>
+                            <Anchor point="TOPLEFT" relativeTo="$parent">
+                                <Offset>
+                                    <AbsDimension x="15" y="-20"/>
+                                </Offset>
+                            </Anchor>
+                        </Anchors>
+                        <Size>
+                            <AbsDimension x="130" y="25"/>
+                        </Size>
+                        <Scripts>
+                            <OnClick>NoobDKP_AuditRoster();</OnClick>
+                        </Scripts>
+                    </Button>
+                    <EditBox name="$parentExternalName" inherits="InputBoxTemplate" autoFocus="false">
+                        <Size>
+                            <AbsDimension x="90" y="25"/>
+                        </Size>
+                        <Anchors>
+                            <Anchor relativePoint="TOP" point="TOP">
+                                <Offset>
+                                    <AbsDimension x="85" y="-20"/>
+                                </Offset>
+                            </Anchor>
+                        </Anchors>
+                    </EditBox>
+                   <Button name="$parentAddExternal" text="Add External" inherits="UIPanelButtonTemplate">
+                        <Anchors>
+                            <Anchor point="TOPRIGHT" relativePoint="TOPRIGHT">
+                                <Offset>
+                                    <AbsDimension x="-10" y="-20"/>
+                                </Offset>
+                            </Anchor>
+                        </Anchors>
+                        <Size>
+                            <AbsDimension x="100" y="25"/>
+                        </Size>
+                        <Scripts>
+                            <OnClick>
+                                local nameText = getglobal("myTabPage1ExternalName")
+                                NoobDKP_AddRoster(nameText:GetText())
+                                NoobDKP_VerticalScroll(this, 1)
+                                nameText:ClearFocus()
+                            </OnClick>
+                        </Scripts>
+                    </Button>
                </Frames> 
            </Frame>
            <Button name="$parentTab1" inherits="CharacterFrameTabButtonTemplate" id="1" text="Roster">

@@ -96,3 +96,8 @@ function NoobDKP_getClassColor(class)
 
     return 0.0, 1.0, 0.0, 1.0
 end
+
+function NoobDKP_FixName(name)
+  local lower = string.lower(name)
+  return lower:gsub("^%l", string.upper)
+end

@@ -58,6 +58,7 @@ end
 
 function NoobDKP_FinishAuction(args)
     local _, _, char = string.find(args, "%s?(%w+)%s?")
+    char = NoobDKP_FixName(char)
     if NOOBDKP_g_auction == nil then
         print("No auction in progress to finish!")
     elseif char ~= nil then
@@ -91,6 +92,7 @@ end
 function NoobDKP_BidAuction(args)
     print("Bid auction: " .. args)
     local _, _, char, val = string.find(args, "%s?(%w+)%s?(.*)")
+    char = NoobDKP_FixName(char)
     if NOOBDKP_g_auction == nil then
         print("No auction in progress to bid!")
     elseif char == "" or char == nil or val == "" or val == nil then
@@ -323,7 +325,7 @@ function NoobDKP_GPtoWinner()
 end
 
 function NoobDKP_QueryReply(name)
-  --print("QueryReply")
+  name = NoobDKP_FixName(name)
   local score, ep, gp = NoobDKP_ParseOfficerNote(NOOBDKP_g_roster[name][3])
   SendChatMessage("NoobDKP: You have " .. ep .. " EP and " .. gp .. " GP for a score of " .. score, "WHISPER", nil, name)
 end
