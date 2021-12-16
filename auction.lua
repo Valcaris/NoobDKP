@@ -33,16 +33,7 @@ function NoobDKP_CreateAuction(args)
         print("Auction already in progress! Cancel first!")
     else
       NoobDKP_ShiftClickItem(item)
---[[        NOOBDKP_g_auction = {_item = item}
-
-        local name, _, _, iLvl, _, _, _, _, iSlot = GetItemInfo(item)
-        print("name: " .. name .. " iLvl: " .. iLvl .. " slot: " .. iSlot)
-
-        SendChatMessage("NoobDKP: Creating auction for item " .. item, "RAID")
-        ]]
-    end
-    --NoobDKP_ShowAuctionTab()
-    
+    end    
 end
 
 function NoobDKP_CancelAuction()
@@ -57,11 +48,13 @@ function NoobDKP_CancelAuction()
 end
 
 function NoobDKP_FinishAuction(args)
+  print("Finishing Auction... " .. args)
     local _, _, char = string.find(args, "%s?(%w+)%s?")
     char = NoobDKP_FixName(char)
+    print(" for char: " .. char)
     if NOOBDKP_g_auction == nil then
         print("No auction in progress to finish!")
-    elseif char ~= nil then
+    elseif char ~= nil and char ~= "" then
         print("Overriding " .. char .. " as the winner!")
         NOOBDKP_g_auction[winner] = char
     else
@@ -90,6 +83,8 @@ function NoobDKP_FinishAuction(args)
 end
 
 function NoobDKP_BidAuction(args)
+  if NOOBDKP_g_options["admin_mode"] == nil then return end
+
     print("Bid auction: " .. args)
     local _, _, char, val = string.find(args, "%s?(%w+)%s?(.*)")
     char = NoobDKP_FixName(char)
@@ -103,30 +98,31 @@ function NoobDKP_BidAuction(args)
         local main = NOOBDKP_find_main(char)
         if main ~= "" then
             print("Found main is: " .. main)
-            local _, _, n, t = string.find(NOOBDKP_g_roster[main][3], "N:(-?%d+) T:(%d+)")
+            local t, n = NoobDKP_ParseNote(NOOBDKP_g_roster[main][3])
+            print("Note is: " .. t .. " " .. n)
             if n ~= nil and n ~= "" and t ~= nil and t ~= "" then
                 local EP = t
                 local GP = t - n
-                local score = ceil(((t + NoobDKP_base_EP) * NoobDKP_scale_EP) / (GP + NoobDKP_base_GP))
+                local score = NoobDKP_calculateScore(EP, GP)
                 print("EP: " .. EP .. " GP: " .. GP .. " score: " .. score)
                 NOOBDKP_g_auction[char] = {}
                 NOOBDKP_g_auction[char]["_score"] = score
-                if tonumber(EP) < NoobDKP_min_EP and val == "need" then
+                if tonumber(EP) < NOOBDKP_g_options["min_EP"] and val == "need" then
                   val = "greed"
-                  SendChatMessage("NoobDKP: " .. char .. " does not have " .. NoobDKP_min_EP .. " EP, setting to greed bid", "RAID")
+                  SendChatMessage("NoobDKP: " .. char .. " does not have " .. NOOBDKP_g_options["min_EP"] .. " EP, setting to greed bid", "RAID")
                 end
                 NOOBDKP_g_auction[char]["_type"] = val
-                SendChatMessage("NoobDKP: " .. char .. " " .. val .. " bid of " .. score .. " accepted", "RAID")
+                SendChatMessage("NoobDKP: Bid " .. char .. " " .. val .. " for " .. score .. " accepted " .. EP .. "/" .. GP, "RAID")
               else
-                local score = ceil(((NoobDKP_base_EP) * NoobDKP_scale_EP) / (NoobDKP_base_GP))
+                local score = NoobDKP_calculateScore(0, 0)
                 NOOBDKP_g_auction[char] = {}
                 NOOBDKP_g_auction[char]["_score"] = score
-                if 0 < NoobDKP_min_EP and val == "need" then
+                if 0 < NOOBDKP_g_options["min_EP"] and val == "need" then
                   val = "greed"
-                  SendChatMessage("NoobDKP: " .. char .. " does not have " .. NoobDKP_min_EP .. " EP, setting to greed bid", "RAID")
+                  SendChatMessage("NoobDKP: " .. char .. " does not have " .. NOOBDKP_g_options["min_EP"] .. " EP, setting to greed bid", "RAID")
                 end
                 NOOBDKP_g_auction[char]["_type"] = val
-                SendChatMessage("NoobDKP: " .. char .. " " .. val .. " bid of " .. score .. " accepted", "RAID")
+                SendChatMessage("NoobDKP: Bid " .. char .. " " .. val .. " for " .. score .. " accepted " .. EP .. "/" .. GP, "RAID")
               end
           end
     end
@@ -135,6 +131,7 @@ function NoobDKP_BidAuction(args)
 end
 
 function NoobDKP_FindWinner()
+  print("Finding winner...")
     local max_bid = 0
     local winners = {}
     local num_winners = 0;
@@ -215,6 +212,11 @@ function NoobDKP_ShowAuctionTab()
         emptyAuction:Show()
         getglobal("myTabPage3_AuctionAddGP"):Disable()
         getglobal("myTabPage3_Auction_finishAuction"):Disable()
+        if NOOBDKP_g_options["admin_mode"] then
+          getglobal("myTabPage3_emptyAuction_createAuction"):Enable()
+        else
+          getglobal("myTabPage3_emptyAuction_createAuction"):Disable()
+        end
     else
         (getglobal("myTabPage3_Auction_Item")):SetText("Auction for: " .. NOOBDKP_g_auction["_item"])
         NoobDKP_UpdateAuction()
@@ -316,7 +318,7 @@ function NoobDKP_GPtoWinner()
     wingp = NoobDKP_defaultGP
   end
 
-  SendChatMessage("NoobDKP: Adding " .. wingp .. " GP to " .. winner, "RAID")
+  SendChatMessage("NoobDKP: GP " .. wingp .. " to " .. winner, "RAID")
   local score, ep, gp = NoobDKP_ParseOfficerNote(NOOBDKP_g_roster[winner][3])
   gp = gp + wingp
   NoobDKP_SetOfficerNote(winner, ep, gp)
@@ -331,8 +333,9 @@ function NoobDKP_QueryReply(name)
 end
 
 function NoobDKP_ShiftClickItem(item)
-  print("Shift Click detected for: " .. item)
-  if NOOBDKP_g_auction == nil then
+  print("Starting auction for: " .. item)
+  NOOBDKP_g_auction = nil
+--  if NOOBDKP_g_auction == nil then
     NOOBDKP_g_auction = {_item = item}
     NoobDKP_ShowAuctionTab()
 
@@ -343,8 +346,10 @@ function NoobDKP_ShiftClickItem(item)
     print("name: " .. name .. " iLvl: " .. iLvl .. " slot: " .. iSlot)
     -- todo: construct option name, get from option table, set GP
 
-    SendChatMessage("NoobDKP: Creating auction for item " .. item, "RAID")
-  end
+    if NOOBDKP_g_options["admin_mode"] then
+      SendChatMessage("NoobDKP: Auction starting for item " .. item, "RAID")
+    end
+ -- end
 end
 
 hooksecurefunc("ChatEdit_InsertLink",NoobDKP_ShiftClickItem)

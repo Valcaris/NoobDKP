@@ -1,6 +1,5 @@
 --[[
     TODO list
-    - **** Finish option revamp, then setting default GP based on item
     - ** initial add to empty roster not working on first time setup!
     - Roster Tab
         - Guild vs Raid checkbox
@@ -9,7 +8,6 @@
         - Give sort headers a background that is used on mouseover
         - Figure out proper mouse wheel scrolling
         - ** Default view to raid roster?
-        - slash command to directly set EP or GP
         - Last update timestamp
         - Refresh raid view (to force people in/out of raid)
     - Events Tab
@@ -26,9 +24,8 @@
     - Sync Tab
         - Show who else has addon and what version
         - Permissions based on guild rank for who can set what
-        - ** Auction and Event updates in real time to read-only users
+        - ** Event updates in real time to read-only users
         - Sync Externals (guildies are just in notes)
-        - ** If someone else starts an auction or event, create aution in read-only mode
     - Options Tab
           - Make Options table in SavedVariables
           - Various widgets for the options, may need mulitple pages or scrolling page
@@ -108,6 +105,8 @@ function NoobDKP_OnEvent(self, event, ...)
     local text, playerName = ...;
     if text == "need" or text == "greed" then 
       NoobDKP_BidAuction(playerName .. " " .. text)
+    else
+      NoobDKP_ParseChat(text)
     end
   elseif event == "CHAT_MSG_WHISPER" then
     local text, playerName = ...;
@@ -116,6 +115,38 @@ function NoobDKP_OnEvent(self, event, ...)
     end
   elseif event == "RAID_ROSTER_UPDATE" then
     NoobDKP_UpdateRaidRoster()
+  end
+end
+
+function NoobDKP_ParseChat(text)
+  if NOOBDKP_g_options["admin_mode"] then return end
+
+  print("Parsing text: " .. text)
+
+  local _, _, cmd = string.find(text, "NoobDKP: (%w+)(.*)")
+  if cmd == "Bid" then
+    local _, _, char, val, score, ep, gp = string.find(text, "NoobDKP: Bid (%w+) (%w+) for (%d+) accepted (%d+)/(%d+)")
+    print("Found bid char: " .. char .. " val: " .. val .. " score: " .. score .. " ep: " .. ep .. " gp: " .. gp)
+    NoobDKP_SetEPGP(char, ep, gp)
+    NoobDKP_UpdateRoster()
+    local score = NoobDKP_calculateScore(ep, gp)
+    NOOBDKP_g_auction[char] = {}
+    NOOBDKP_g_auction[char]["_score"] = score
+    NOOBDKP_g_auction[char]["_type"] = val
+    NoobDKP_UpdateAuction()
+  elseif cmd == "Auction" then
+    local _, _, item = string.find(text, "NoobDKP: Auction starting for item (.*)")
+    NoobDKP_ShiftClickItem(item)
+  elseif cmd == "GP" then
+    local _, _, gp, char = string.find(text, "NoobDKP: GP (%d+) to (%w+)")
+    local main = NOOBDKP_find_main(char)
+    local ep = NOOBDKP_g_raid_roster[char][3]
+    local oldgp = NOOBDKP_g_raid_roster[char][4]
+    local newgp = tonumber(oldgp) + tonumber(gp)
+    NoobDKP_SetEPGP(main, ep, newgp)
+    print("Setting GP, char: " .. char .. " ep: " .. ep .. " gp: " .. newgp)
+    NoobDKP_UpdateRoster()
+    NoobDKP_UpdateAuction()
   end
 end
 

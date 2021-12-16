@@ -7,7 +7,7 @@ local sort_order = 0 -- 0 = incrementing, 1 = decrementing
 
 -- handler for /noob member
 function NoobDKPHandleRoster(msg)
-    local syntax = "roster\n-scan: scans the guild and adds members to roster\n-add [name]: adds a character name as an external\n-remove [name]: removes a character name from the roster (for externals)\n-alt [nameA] [nameB]: sets nameA as an alt of nameB\n-set [name] [Net] [Total]: Sets the values of name to Net value and Total value"
+    local syntax = "roster\n-scan: scans the guild and adds members to roster\n-add [name]: adds a character name as an external\n-remove [name]: removes a character name from the roster (for externals)\n-alt [nameA] [nameB]: sets nameA as an alt of nameB\n-set [name] [Net] [Total]: Sets the values of name to Net value and Total value\n-epgp [name] [ep] [gp]"
     print("Handle Roster: " .. msg)
     local _, _, cmd, args = string.find(msg, "%s?(%w+)%s?(.*)")
     if cmd == "scan" then
@@ -39,6 +39,14 @@ function NoobDKPHandleRoster(msg)
             print(NoobDKP_color .. syntax)
         else
             NoobDKP_SetRoster(args)
+        end
+      elseif cmd == "epgp" then
+        if args == "" then
+          print("No values found for set!")
+          print(NoobDKP_color .. syntax)
+      else
+          local _, _, char, ep, gp = string.find(args, "%s?(%w+)%s?(-?%d+)%s?(-?%d+)")
+          NoobDKP_SetEPGP(char, ep, gp)
         end
     else
         print(NoobDKP_color .. syntax)
@@ -112,6 +120,13 @@ function NoobDKP_SetRoster(args)
     else
         print("Can't find main of " .. char)
     end
+end
+
+function NoobDKP_SetEPGP(char, ep, gp)
+  local main = NOOBDKP_find_main(char)
+  local total = ep
+  local net = ep - gp
+  NOOBDKP_g_roster[main][3] = "N:" .. net .. " T:" .. total
 end
 
 function NoobDKP_RosterItemOnClick(self)

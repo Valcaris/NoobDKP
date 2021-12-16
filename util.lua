@@ -32,7 +32,8 @@ function NoobDKP_ParseOfficerNote(note)
     if note == nil or note == "" then
       return 100, 0, 0
     end
-    local _, _, n, t = string.find(note, "N:(-?%d+) T:(%d+)")
+    local t, n = NoobDKP_ParseNote(note)
+--    local _, _, n, t = string.find(note, "N:(-?%d+) T:(%d+)")
     if n == nil or n == "" or t == nil or t == "" then
       -- did not find values, should be the main character
       -- so go to the main character for the values
@@ -42,7 +43,8 @@ function NoobDKP_ParseOfficerNote(note)
         t = 0
       else
         local newnote = NOOBDKP_g_roster[note][3]
-        _, _, n, t = string.find(newnote, "N:(-?%d+) T:(%d+)")
+        local t, n = NoobDKP_ParseNote(newnote)
+--        _, _, n, t = string.find(newnote, "N:(-?%d+) T:(%d+)")
         if n == nil or n == "" or t == nil or t == "" then
             t = 0
             n = 0
@@ -52,7 +54,7 @@ function NoobDKP_ParseOfficerNote(note)
 
     local EP = t
     local GP = t - n
-    local score = ceil(((EP + NoobDKP_base_EP) * NoobDKP_scale_EP) / (GP + NoobDKP_base_GP))
+    local score = NoobDKP_calculateScore(EP, GP) 
 
     return score, EP, GP
 end
@@ -98,6 +100,25 @@ function NoobDKP_getClassColor(class)
 end
 
 function NoobDKP_FixName(name)
+  if name == "" or name == nil then return "" end
   local lower = string.lower(name)
   return lower:gsub("^%l", string.upper)
+end
+
+function NoobDKP_calculateScore(ep, gp)
+  return ceil(((ep + NOOBDKP_g_options["base_EP"]) * NOOBDKP_g_options["scale_EP"]) / (gp + NOOBDKP_g_options["base_GP"]))
+end
+
+function NoobDKP_ParseNote(note)
+  print("Parsing note: " .. note)
+  if note == nil or note == "" then return 0, 0 end
+  local _, _, n, t = string.find(note, "N:(-?%d+) T:(%d+)")
+  print("Done parsing: " .. n .. " " .. t)
+  if n == nil then
+    n = ""
+  end
+  if t == nil then
+    n = ""
+  end
+  return t, n
 end

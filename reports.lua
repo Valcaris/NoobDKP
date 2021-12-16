@@ -31,7 +31,7 @@ function NoobDKP_GenerateBriefReport()
 
   local sorted = {}
   for key, value in pairs(NOOBDKP_g_roster) do 
-    local _, _, n, t = string.find(value[3], "N:(-?%d+) T:(%d+)")
+    local t, n = NoobDKP_ParseNote(value[3])
     local score, ep, gp = NoobDKP_ParseOfficerNote(NOOBDKP_g_roster[key][3])
     if n ~= nil and n ~= "" and t ~= nil and t ~= "" then
       local t = {key, value[1], value[2], ep, gp, score}
@@ -58,7 +58,7 @@ function NoobDKP_GenerateAltReport()
 
   local sorted = {}
   for key, value in pairs(NOOBDKP_g_roster) do 
-    local _, _, n, t = string.find(value[3], "N:(-?%d+) T:(%d+)")
+    local t, n = NoobDKP_ParseNote(value[3])
     if (n == nil or n == "") and value[3] ~= "" then
       local t = {key, value[3]}
       table.insert(sorted, t)

@@ -74,6 +74,21 @@ function NoobDKP_ShowEventTab()
   local emptyFrame = getglobal("myTabPage2_emptyEvent")
   local fullFrame = getglobal("myTabPage2_Event")
   if NOOBDKP_g_events == nil or NOOBDKP_g_events["active_raid"] == nil then
+
+    if NOOBDKP_g_options["admin_mode"] then
+      getglobal("myTabPage2_emptyEvent_createEvent"):Enable()
+      getglobal("myTabPage2AddEP"):Enable()
+      getglobal("myTabPage2_emptyEvent_EventLocation"):Enable()
+      getglobal("myTabPage2_Amount"):Enable()
+      getglobal("myTabPage2_Reason"):Enable()
+    else
+      getglobal("myTabPage2_emptyEvent_createEvent"):Disable()
+      getglobal("myTabPage2AddEP"):Disable()
+      getglobal("myTabPage2_emptyEvent_EventLocation"):Disable()
+      getglobal("myTabPage2_Amount"):Disable()
+      getglobal("myTabPage2_Reason"):Disable()
+    end
+
     fullFrame:Hide()
       emptyFrame:Show()
   else
@@ -96,7 +111,7 @@ function NoobDKP_AddRaidEP()
     local ep = value[3] + amount
     local gp = value[4]
     value[3] = ep
-    value[2] = ceil(((ep + NoobDKP_base_EP) * NoobDKP_scale_EP) / (gp + NoobDKP_base_GP))
+    value[2] = NoobDKP_calculateScore(ep, gp)
     NoobDKP_SetOfficerNote(key, ep, gp)
   end
   getglobal("myTabPage2_Amount"):ClearFocus()

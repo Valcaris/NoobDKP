@@ -5,7 +5,6 @@
 ##SavedVariables: NOOBDKP_g_auction, NOOBDKP_g_raid_roster, NOOBDKP_g_events, NOOBDKP_g_roster, NOOBDKP_g_options
 
 default_options.lua
-options.ini
 
 main.xml
 roster.lua

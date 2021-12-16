@@ -1,25 +1,14 @@
 -- NoobDKP Options file
 
--- Base Effort Points Value
-NoobDKP_base_EP = 200
-
--- Base Gear Points Value
-NoobDKP_base_GP = 200
-
--- Effort Points Scale Value
-NoobDKP_scale_EP = 100
-
 NoobDKP_color = "|cfff0ba3c"
-
-NoobDKP_defaultGP = 50
-
-NoobDKP_min_EP = 0
 
 
 -- maybe make a default table and a list of option names, then go through the
 -- real option table by name. If not there, insert from default table?
 if NOOBDKP_g_options == nil then
   NOOBDKP_g_options = {}
+
+  NOOBDKP_g_options["admin_mode"] = false
   
   -- score calculation options
   NOOBDKP_g_options["base_EP"] = 200
