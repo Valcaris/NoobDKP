@@ -110,10 +110,8 @@ function NoobDKP_calculateScore(ep, gp)
 end
 
 function NoobDKP_ParseNote(note)
-  print("Parsing note: " .. note)
   if note == nil or note == "" then return 0, 0 end
   local _, _, n, t = string.find(note, "N:(-?%d+) T:(%d+)")
-  print("Done parsing: " .. n .. " " .. t)
   if n == nil then
     n = ""
   end
@@ -121,4 +119,21 @@ function NoobDKP_ParseNote(note)
     n = ""
   end
   return t, n
+end
+
+function NoobDKP_GetEPGP(char)
+  local main = NOOBDKP_find_main(char)
+  local t, n = NoobDKP_ParseNote(NOOBDKP_g_roster[main][3])
+  if t == "" or t == nil then t = 0 end 
+  if n == "" or n == nil then n = 0 end
+  local ep = t
+  local gp = t - n
+  local score = NoobDKP_calculateScore(ep, gp)
+  return score, ep, gp
+end
+
+function NoobDKP_SetEPGP(char, ep, gp)
+  local note = "N:" .. (ep - gp) .. " T:" .. ep
+  local main = NOOBDKP_find_main(char)
+  NOOBDKP_g_roster[main][3] = note
 end

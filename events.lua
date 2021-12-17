@@ -25,6 +25,11 @@ function NoobDKP_AddEvent(msg)
     local _, _, desc  = string.find(msg, "%s?(.*)")
     local timestamp = time()
     print("Add Event: " .. desc .. ", " .. timestamp)
+
+    if NOOBDKP_g_events == nil then
+      NOOBDKP_g_events = {}
+  end
+
     NOOBDKP_g_events[timestamp] = { description = desc }
     NOOBDKP_g_events["active_raid"] = timestamp
 end
@@ -51,6 +56,9 @@ function NoobDKP_CloseEvent()
 end
 
 function NoobDKP_RaidEvent(msg)
+  if NOOBDKP_g_events == nil then
+    NOOBDKP_g_events = {}
+  end
     local _, _, d, desc = string.find(msg, "%s?(-?%d+)%s?(.*)")
     print("Raid event: " .. d .. " " .. desc)
     local a = NOOBDKP_g_events["active_raid"]
@@ -61,7 +69,10 @@ end
 
 function NoobDKP_CharEvent(msg)
   print("Char event " .. msg)
-    local _, _, d, c, desc = string.find(msg, "%s?(-?%d+)%s?(%w+)%s?(.*)")
+  if NOOBDKP_g_events == nil then
+    NOOBDKP_g_events = {}
+  end
+  local _, _, d, c, desc = string.find(msg, "%s?(-?%d+)%s?(%w+)%s?(.*)")
     c = NoobDKP_FixName(c)
     print("Character event: " .. d .. " " .. c .. " " .. desc)
     local a = NOOBDKP_g_events["active_raid"]

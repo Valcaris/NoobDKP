@@ -1,6 +1,7 @@
 --[[
     TODO list
     - ** initial add to empty roster not working on first time setup!
+    - ** can't drag on first tab
     - Roster Tab
         - Guild vs Raid checkbox
         - Right-Click Context menu on List buttons
@@ -103,11 +104,7 @@ end
 function NoobDKP_OnEvent(self, event, ...)
   if event == "CHAT_MSG_RAID" or event == "CHAT_MSG_RAID_LEADER" then
     local text, playerName = ...;
-    if text == "need" or text == "greed" then 
-      NoobDKP_BidAuction(playerName .. " " .. text)
-    else
-      NoobDKP_ParseChat(text)
-    end
+    NoobDKP_ParseChat(text, playerName)
   elseif event == "CHAT_MSG_WHISPER" then
     local text, playerName = ...;
     if text == "noob" then
@@ -118,8 +115,19 @@ function NoobDKP_OnEvent(self, event, ...)
   end
 end
 
-function NoobDKP_ParseChat(text)
-  if NOOBDKP_g_options["admin_mode"] then return end
+function NoobDKP_ParseChat(text, playerName)
+  -- admins listen to need/greed, non-admins listen to the admin respons
+  if NOOBDKP_g_options["admin_mode"] then
+    if text == "need" or text == "greed" then
+      print("Parsed: " .. text .. " player: " .. playerName)
+      --NoobDKP_AddAuction(playerName, text)
+      --NoobDKP_BidAuction(playerName .. " " .. text)
+      NoobDKP_HandleAddBid(playerName, text)
+      NoobDKP_HandleUpdateAuction()
+      local score, ep, gp = NoobDKP_GetEPGP(playerName)
+      NoobDKP_HandleAuctionResponse("bid", playerName, text, score, ep, gp)
+    end
+  else
 
   print("Parsing text: " .. text)
 
@@ -138,16 +146,21 @@ function NoobDKP_ParseChat(text)
     local _, _, item = string.find(text, "NoobDKP: Auction starting for item (.*)")
     NoobDKP_ShiftClickItem(item)
   elseif cmd == "GP" then
-    local _, _, gp, char = string.find(text, "NoobDKP: GP (%d+) to (%w+)")
+    print("handling GP...")
+    local _, _, gp, char = string.find(text, "NoobDKP: GP (-?%d+) to (%w+)")
+    print("gp: " .. gp .. " char: " .. char)
     local main = NOOBDKP_find_main(char)
+    print("main: " .. main)
     local ep = NOOBDKP_g_raid_roster[char][3]
     local oldgp = NOOBDKP_g_raid_roster[char][4]
-    local newgp = tonumber(oldgp) + tonumber(gp)
+    local newgp = oldgp + gp
+--    local newgp = tonumber(oldgp) + tonumber(gp)
     NoobDKP_SetEPGP(main, ep, newgp)
     print("Setting GP, char: " .. char .. " ep: " .. ep .. " gp: " .. newgp)
     NoobDKP_UpdateRoster()
     NoobDKP_UpdateAuction()
   end
+end
 end
 
 SLASH_NOOBDKP1 = "/noob"

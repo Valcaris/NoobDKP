@@ -5,6 +5,10 @@ local roster_type = 1  -- 0 = guild, 1 = raid, 2 = main
 local sort_type = 0 -- 0 = name, 1 = rank, 2 = score, 3 = ep, 4 = gp
 local sort_order = 0 -- 0 = incrementing, 1 = decrementing
 
+if NOOBDKP_g_roster == nil then
+  NOOBDKP_g_roster = {}
+end
+
 -- handler for /noob member
 function NoobDKPHandleRoster(msg)
     local syntax = "roster\n-scan: scans the guild and adds members to roster\n-add [name]: adds a character name as an external\n-remove [name]: removes a character name from the roster (for externals)\n-alt [nameA] [nameB]: sets nameA as an alt of nameB\n-set [name] [Net] [Total]: Sets the values of name to Net value and Total value\n-epgp [name] [ep] [gp]"
@@ -168,7 +172,7 @@ function NoobDKP_UpdateRaidRoster()
 
   for idx = 1, 40 do
     local name, _, _, _, class = GetRaidRosterInfo(idx)
-    local score, ep, gp 
+    local score, ep, gp
 
     if name ~= nil and class ~= nil then
       if NOOBDKP_g_roster[name] == nil then
@@ -178,7 +182,8 @@ function NoobDKP_UpdateRaidRoster()
         score = 100
       else
         NOOBDKP_g_roster[name][2] = class
-        score, ep, gp = NoobDKP_ParseOfficerNote(NOOBDKP_g_roster[name][3])
+        --score, ep, gp = NoobDKP_ParseOfficerNote(NOOBDKP_g_roster[name][3])
+        score, ep, gp = NoobDKP_GetEPGP(name)
       end
 
       NOOBDKP_g_raid_roster[name] = { "", score, ep, gp }
@@ -272,7 +277,7 @@ function NoobDKP_UpdateRoster()
           if skip == false then
             local rank = value[1]
             local r, g, b, a = NoobDKP_getClassColor(NOOBDKP_g_roster[key][2])
-            local score, ep, gp = NoobDKP_ParseOfficerNote(NOOBDKP_g_roster[key][3])
+            local score, ep, gp = NoobDKP_GetEPGP(key)
             local t = {nameText, r, g, b, a, rank, score, ep, gp}
             table.insert(sorted, t)
           end

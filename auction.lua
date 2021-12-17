@@ -82,6 +82,24 @@ function NoobDKP_FinishAuction(args)
       end
 end
 
+function NoobDKP_AddAuction(name, bid)
+  if name == "" or name == nil or bid == "" or bid == nil then return end
+
+  local score, ep, gp = NoobDKP_GetEPGP(name)
+  NOOBDKP_g_auction[name] = {}
+  NOOBDKP_g_auction[name]["_score"] = score
+
+  if tonumber(ep) < NOOBDKP_g_options["min_EP"] and bid == "need" then
+    bid = "greed"
+    SendChatMessage("NoobDKP: " .. name .. " does not have " .. NOOBDKP_g_options["min_EP"] .. " EP, setting to greed bid", "RAID")
+  end
+
+  NOOBDKP_g_auction[name]["_type"] = bid
+  SendChatMessage("NoobDKP: Bid " .. name .. " " .. bid .. " for " .. score .. " accepted " .. ep .. "/" .. gp, "RAID")
+  getglobal("myTabPage3_Auction_finishAuction"):Enable()
+  NoobDKP_UpdateAuction()
+end
+
 function NoobDKP_BidAuction(args)
   if NOOBDKP_g_options["admin_mode"] == nil then return end
 
@@ -126,7 +144,6 @@ function NoobDKP_BidAuction(args)
               end
           end
     end
-    getglobal("myTabPage3_Auction_finishAuction"):Enable()
     NoobDKP_UpdateAuction()
 end
 
@@ -174,9 +191,10 @@ function NOOBDKP_break_tie(char_list)
         rolls[value] = random(1, 100)
     end
 
-    SendChatMessage("NoobDKP: Rolls are:", "RAID")
+--    SendChatMessage("NoobDKP: Rolls are:", "RAID")
     for key, value in pairs(rolls) do
-        SendChatMessage(key .. " = " .. value, "RAID")
+--        SendChatMessage(key .. " = " .. value, "RAID")
+        NoobDKP_HandleAuctionResponse("roll", key, value)
     end
 
     -- determine which roll is the highest
@@ -198,7 +216,8 @@ function NOOBDKP_break_tie(char_list)
     if num_winners == 1 then
         return winners
     else
-      SendChatMessage("NoobDKP: Tie detected. Rolling again...", "RAID")
+      NoobDKP_HandleAuctionResponse("repeat")
+--      SendChatMessage("NoobDKP: Tie detected. Rolling again...", "RAID")
         -- otherwise, take all the high rollers and roll again
         return NOOBDKP_break_tie(winners)
     end
@@ -244,7 +263,7 @@ function NoobDKP_UpdateAuction()
             priorityFrame:SetText(priority)
             scoreFrame = getglobal("myTabPage3_Auction_entry" .. pos .. "_score")
             scoreFrame:SetText(score)
-            local score, ep, gp = NoobDKP_ParseOfficerNote(NOOBDKP_g_roster[name][3])
+            local score, ep, gp = NoobDKP_GetEPGP(name)
             EPFrame = getglobal("myTabPage3_Auction_entry" .. pos .. "_EP")
             EPFrame:SetText(ep)
             GPFrame = getglobal("myTabPage3_Auction_entry" .. pos .. "_GP")
@@ -267,6 +286,19 @@ function NoobDKP_UpdateAuction()
             GPFrame:SetText("")
         end
     end
+
+    if NOOBDKP_g_options["admin_mode"] then
+      if pos >= 2 then -- if a bid is detected, allow finishing the auction
+        getglobal("myTabPage3_Auction_finishAuction"):Enable()
+        getglobal("myTabPage3_Auction_Amount"):Enable()
+        getglobal("myTabPage3_AuctionAddGP"):Enable()
+      end
+    else
+      getglobal("myTabPage3_Auction_finishAuction"):Disable()
+      getglobal("myTabPage3_Auction_Amount"):Disable()
+      getglobal("myTabPage3_AuctionAddGP"):Disable()
+    end
+
 end
 
 function auctionCompare(a, b)
@@ -315,11 +347,11 @@ function NoobDKP_GPtoWinner()
   local winner = NOOBDKP_g_auction["_winner"]
   local wingp = getglobal("myTabPage3_Auction_Amount"):GetText()
   if wingp == nil then
-    wingp = NoobDKP_defaultGP
+    wingp = NOOBDKP_g_options["defaultGP"]
   end
 
   SendChatMessage("NoobDKP: GP " .. wingp .. " to " .. winner, "RAID")
-  local score, ep, gp = NoobDKP_ParseOfficerNote(NOOBDKP_g_roster[winner][3])
+  local score, ep, gp = NoobDKP_GetEPGP(winner)
   gp = gp + wingp
   NoobDKP_SetOfficerNote(winner, ep, gp)
   NoobDKP_UpdateAuction()
@@ -328,11 +360,186 @@ end
 
 function NoobDKP_QueryReply(name)
   name = NoobDKP_FixName(name)
-  local score, ep, gp = NoobDKP_ParseOfficerNote(NOOBDKP_g_roster[name][3])
+  local score, ep, gp = NoobDKP_GetEPGP(name)
   SendChatMessage("NoobDKP: You have " .. ep .. " EP and " .. gp .. " GP for a score of " .. score, "WHISPER", nil, name)
 end
 
+function NoobDKP_HandleAuctionTab()
+  local emptyAuction = getglobal("myTabPage3_emptyAuction")
+  local fullAuction = getglobal("myTabPage3_Auction")
+  if NOOBDKP_g_auction == nil then
+      fullAuction:Hide()
+      emptyAuction:Show()
+  else
+    (getglobal("myTabPage3_Auction_Item")):SetText("Auction for: " .. NOOBDKP_g_auction["_item"])
+    emptyAuction:Hide()
+      fullAuction:Show()
+  end
+end
+
+function NoobDKP_HandleCreateAuction(item)
+  print("Creating Auction for: " .. item)
+  NOOBDKP_g_auction = nil
+  NOOBDKP_g_auction = {_item = item}
+
+  --[[
+    local name, _, _, iLvl, _, _, _, _, iSlot = GetItemInfo(item)
+    if name == nil then name = "" end
+    if iLvl == nil then iLvl = "" end
+    if iSlot == nil then iSlot = "" end
+    print("name: " .. name .. " iLvl: " .. iLvl .. " slot: " .. iSlot)
+  ]]
+end
+
+function NoobDKP_HandleAddBid(name, bid)
+  if name == "" or name == nil or bid == "" or bid == nil then return end
+
+  local score, ep, gp = NoobDKP_GetEPGP(name)
+  NOOBDKP_g_auction[name] = {}
+  NOOBDKP_g_auction[name]["_score"] = score
+
+  if tonumber(ep) < NOOBDKP_g_options["min_EP"] and bid == "need" then
+    bid = "greed"
+    NoobDKP_HandleAuctionResponse("force_greed", name)
+  end
+
+  NOOBDKP_g_auction[name]["_type"] = bid
+end
+
+function NoobDKP_HandleDeclareWinner()
+  local win_char, num_winners = NoobDKP_FindWinner()
+  if num_winners > 1 then
+    NoobDKP_HandleAuctionResponse("tie")
+    win_char = NOOBDKP_break_tie(win_char)
+  end
+  NOOBDKP_g_auction["_winner"] = win_char[1]
+  local score, ep, gp = NoobDKP_GetEPGP(win_char[1])
+  NoobDKP_HandleAuctionResponse("win", win_char[1], NOOBDKP_g_auction["_item"], score)
+  getglobal("myTabPage3_Auction_Winner"):SetText(win_char[1])
+  local r, g, b, a = NoobDKP_getClassColor(NOOBDKP_g_roster[win_char[1] ][2])
+  getglobal("myTabPage3_Auction_Winner"):SetVertexColor(r, g, b, a)
+  getglobal("myTabPage3_AuctionAddGP"):Enable()
+end
+
+function NoobDKP_HandleAuctionGP()
+  local winner = NOOBDKP_g_auction["_winner"]
+  local wingp = getglobal("myTabPage3_Auction_Amount"):GetText()
+  if wingp == nil or wingp == "" then wingp = NOOBDKP_g_options["defaultGP"] end
+
+  local score, ep, gp = NoobDKP_GetEPGP(winner)
+  gp = gp + wingp
+  NoobDKP_SetEPGP(winner, ep, gp)
+  NoobDKP_HandleUpdateAuction()
+  getglobal("myTabPage3_Auction_Amount"):ClearFocus()
+  NoobDKP_HandleAuctionResponse("gp", winner, gp)
+end
+
+function NoobDKP_HandleCloseAuction()
+  NOOBDKP_g_auction = nil
+  NoobDKP_HandleUpdateAuction()
+  NoobDKP_HandleAuctionTab()
+end
+
+function NoobDKP_HandleAuctionResponse(type, ...)
+  if NOOBDKP_g_options["admin_mode"] then
+    print("HandleAuctionResponse for " .. type)
+    if type == "item" then
+      local item = ...
+      SendChatMessage("NoobDKP: Auction starting for item " .. item, "RAID")
+    elseif type =="force_greed" then
+      local name = ...
+      SendChatMessage("NoobDKP: " .. name .. " does not have " .. NOOBDKP_g_options["min_EP"] .. " EP, setting to greed bid", "RAID")
+    elseif type == "bid" then
+      local name, bid, score, ep, gp = ...
+      SendChatMessage("NoobDKP: Bid " .. name .. " " .. bid .. " for " .. score .. " accepted " .. ep .. "/" .. gp, "RAID")
+    elseif type == "tie" then
+      SendChatMessage("NoobDKP: Breaking tie! Rolls are:", "RAID")
+    elseif type == "roll" then
+      local name, roll = ...
+      SendChatMessage(name .. " = " .. roll, "RAID")
+    elseif type == "repeat" then
+      SendChatMessage("NoobDKP: Tie detected. Rolling again...", "RAID")
+    elseif type == "win" then
+      local name, item, score = ...
+      SendChatMessage("NoobDKP: " .. name .. " wins the bid for " .. item .. " with a score of " .. score, "RAID")
+    elseif type == "gp" then
+      local name, gp = ...
+      SendChatMessage("NoobDKP: GP " .. gp .. " to " .. name, "RAID")
+    end
+  end
+end
+
+function NoobDKP_HandleUpdateAuction()
+  print("HandleUpdateAuction enter...")
+  local nameFrame, priorityFrame, scoreFrame, EPFrame, GPFrame
+  local pos = 1 -- index into the frame list
+
+  local sortedList = NoobDKP_SortAuction()    
+
+  for key, value in pairs(sortedList) do
+      local name = value[2]
+      local priority = NOOBDKP_g_auction[ value[2] ]["_type"]
+      local score = NOOBDKP_g_auction[ value[2] ]["_score"]
+      if key ~= "_item" and key ~= "_winner" then
+          nameFrame = getglobal("myTabPage3_Auction_entry" .. pos .. "_name")
+          nameFrame:SetText(name)
+          local r, g, b, a = NoobDKP_getClassColor(NOOBDKP_g_roster[name][2])
+          nameFrame:SetVertexColor(r, g, b, a)
+          priorityFrame = getglobal("myTabPage3_Auction_entry" .. pos .. "_rank")
+          priorityFrame:SetText(priority)
+          scoreFrame = getglobal("myTabPage3_Auction_entry" .. pos .. "_score")
+          scoreFrame:SetText(score)
+          local score, ep, gp = NoobDKP_GetEPGP(name)
+          EPFrame = getglobal("myTabPage3_Auction_entry" .. pos .. "_EP")
+          EPFrame:SetText(ep)
+          GPFrame = getglobal("myTabPage3_Auction_entry" .. pos .. "_GP")
+          GPFrame:SetText(gp)
+          pos = pos + 1
+      end
+  end
+
+  if pos <= 10 then
+      for j = pos, 10 do
+          nameFrame = getglobal("myTabPage3_Auction_entry" .. j .. "_name")
+          nameFrame:SetText("")
+          rankFrame = getglobal("myTabPage3_Auction_entry" .. j .. "_rank")
+          rankFrame:SetText("")
+          scoreFrame = getglobal("myTabPage3_Auction_entry" .. j .. "_score")
+          scoreFrame:SetText("")
+          EPFrame = getglobal("myTabPage3_Auction_entry" .. j .. "_EP")
+          EPFrame:SetText("")
+          GPFrame = getglobal("myTabPage3_Auction_entry" .. j .. "_GP")
+          GPFrame:SetText("")
+      end
+  end
+
+  print("HandleUpdateAuction fixing buttons...")
+  -- if a bid is detected, allow finishing the auction
+  if NOOBDKP_g_options["admin_mode"] and pos >= 2 then 
+    print("enabling...")
+    getglobal("myTabPage3_Auction_finishAuction"):Enable()
+    --    getglobal("myTabPage3_Auction_Amount"):Enable()
+    getglobal("myTabPage3_AuctionAddGP"):Enable()
+  else
+    print("disabling 1...")
+    getglobal("myTabPage3_Auction_finishAuction"):Disable()
+    print("disabling 2...")
+    --    getglobal("myTabPage3_Auction_Amount"):Disable()
+    getglobal("myTabPage3_Auction_Amount"):ClearFocus()
+    print("disabling 3...")
+    getglobal("myTabPage3_AuctionAddGP"):Disable()
+    print("disabling 4...")
+  end
+  print("HandleUpdateAuction exit!")
+end
+
 function NoobDKP_ShiftClickItem(item)
+  NoobDKP_HandleCreateAuction(item)
+  NoobDKP_HandleUpdateAuction()
+  NoobDKP_HandleAuctionTab()
+  NoobDKP_HandleAuctionResponse("item", item)
+
+  --[[
   print("Starting auction for: " .. item)
   NOOBDKP_g_auction = nil
 --  if NOOBDKP_g_auction == nil then
@@ -350,6 +557,7 @@ function NoobDKP_ShiftClickItem(item)
       SendChatMessage("NoobDKP: Auction starting for item " .. item, "RAID")
     end
  -- end
+ ]]
 end
 
 hooksecurefunc("ChatEdit_InsertLink",NoobDKP_ShiftClickItem)
