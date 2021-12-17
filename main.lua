@@ -119,9 +119,6 @@ function NoobDKP_ParseChat(text, playerName)
   -- admins listen to need/greed, non-admins listen to the admin respons
   if NOOBDKP_g_options["admin_mode"] then
     if text == "need" or text == "greed" then
-      print("Parsed: " .. text .. " player: " .. playerName)
-      --NoobDKP_AddAuction(playerName, text)
-      --NoobDKP_BidAuction(playerName .. " " .. text)
       NoobDKP_HandleAddBid(playerName, text)
       NoobDKP_HandleUpdateAuction()
       local score, ep, gp = NoobDKP_GetEPGP(playerName)
@@ -129,12 +126,9 @@ function NoobDKP_ParseChat(text, playerName)
     end
   else
 
-  print("Parsing text: " .. text)
-
   local _, _, cmd = string.find(text, "NoobDKP: (%w+)(.*)")
   if cmd == "Bid" then
     local _, _, char, val, score, ep, gp = string.find(text, "NoobDKP: Bid (%w+) (%w+) for (%d+) accepted (%d+)/(%d+)")
-    print("Found bid char: " .. char .. " val: " .. val .. " score: " .. score .. " ep: " .. ep .. " gp: " .. gp)
     NoobDKP_SetEPGP(char, ep, gp)
     NoobDKP_UpdateRoster()
     local score = NoobDKP_calculateScore(ep, gp)
@@ -146,17 +140,13 @@ function NoobDKP_ParseChat(text, playerName)
     local _, _, item = string.find(text, "NoobDKP: Auction starting for item (.*)")
     NoobDKP_ShiftClickItem(item)
   elseif cmd == "GP" then
-    print("handling GP...")
     local _, _, gp, char = string.find(text, "NoobDKP: GP (-?%d+) to (%w+)")
-    print("gp: " .. gp .. " char: " .. char)
     local main = NOOBDKP_find_main(char)
-    print("main: " .. main)
     local ep = NOOBDKP_g_raid_roster[char][3]
     local oldgp = NOOBDKP_g_raid_roster[char][4]
     local newgp = oldgp + gp
 --    local newgp = tonumber(oldgp) + tonumber(gp)
     NoobDKP_SetEPGP(main, ep, newgp)
-    print("Setting GP, char: " .. char .. " ep: " .. ep .. " gp: " .. newgp)
     NoobDKP_UpdateRoster()
     NoobDKP_UpdateAuction()
   end

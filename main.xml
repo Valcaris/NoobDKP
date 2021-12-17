@@ -853,8 +853,11 @@
                         <Size><AbsDimension x="110" y="30" /></Size>
                         <Scripts>
                             <OnClick>
+                            NoobDKP_HandleDeclareWinner()
+                            <!--
                                 NoobDKP_FinishAuction("")
                                 NoobDKP_ShowAuctionTab()
+                                -->
                             </OnClick>
                         </Scripts>
                     </Button>
