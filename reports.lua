@@ -1,6 +1,6 @@
 
 function NoobDKP_GenerateFullReport()
-  local text = " | Name | Rank | Class | EP | GP | Score |\n |---|---|---|---|---|---|"
+  local text = "Full Report:\n | Name | Rank | Class | EP | GP | Score |\n |---|---|---|---|---|---|"
   local i = 0
 
   for key, value in pairs(NOOBDKP_g_roster) do
@@ -28,25 +28,47 @@ function briefCompare(a, b)
 end
 
 function NoobDKP_GenerateBriefReport()
+  print("Generating Brief Report...")
 
   local sorted = {}
-  for key, value in pairs(NOOBDKP_g_roster) do 
-    local t, n = NoobDKP_ParseNote(value[3])
-    local score, ep, gp = NoobDKP_ParseOfficerNote(NOOBDKP_g_roster[key][3])
-    if n ~= nil and n ~= "" and t ~= nil and t ~= "" then
+  for key, value in pairs(NOOBDKP_g_roster) do
+    local main = NOOBDKP_find_main(key)
+    local score, ep, gp = NoobDKP_GetEPGP(key)
+    if ep ~= 0 and ep ~= "" and main == key then
       local t = {key, value[1], value[2], ep, gp, score}
       table.insert(sorted, t)
     end
   end
 
+  print("1")
+
   table.sort(sorted, briefCompare)
 
-  local text = " | Name | Rank | Class | EP | GP | Score |\n |---|---|---|---|---|---|"
+  print("2")
+
+  local text = "Brief Report:\n | Name | Rank | Class | EP | GP | Score |\n |---|---|---|---|---|---|"
   for key, value in ipairs(sorted) do
-    text = text .. "\n | " .. value[1] .. " | " .. value[2] .. " | " .. value[3] .. " | " .. value[4] .. " | " .. value[5] .. " | " .. value[6] .. " |"
+    local a = value[1]
+    local b = value[2]
+    local c = value[3]
+    local d = value[4]
+    local e = value[5]
+    local f = value[6]
+    if a == nil or a == "" then a = 0 end
+    if b == nil or b == "" then b = 0 end
+    if c == nil or c == "" then c = 0 end
+    if d == nil or d == "" then d = 0 end
+    if e == nil or e == "" then e = 0 end
+    if f == nil or f == "" then f = 0 end
+    print(a .. " " .. b .. " " .. c .. " " .. d .. " " .. e .. " " .. f)
+    text = text .. "\n | " .. a .. " | " .. b .. " | " .. c .. " | " .. d .. " | " .. e .. " | " .. f .. " |"
+    print(text)
   end
 
+  print("3")
+
   getglobal("myTabPage4_Text"):SetText(text)
+  print("Done!")
 end
 
 function altCompare(a, b)
@@ -54,7 +76,7 @@ function altCompare(a, b)
 end
 
 function NoobDKP_GenerateAltReport()
-  local text = "| Main | Alts |\n|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|"
+  local text = "Alt Report:\n | Main | Alts |\n |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|"
 
   local sorted = {}
   for key, value in pairs(NOOBDKP_g_roster) do 
@@ -72,7 +94,7 @@ function NoobDKP_GenerateAltReport()
     if value[2] == main then
       text = text .. value[1] .. " | "
     else
-      text = text .. "\n| " .. value[2] .. " | " .. value[1] .. " | "
+      text = text .. "\n | " .. value[2] .. " | " .. value[1] .. " | "
       main = value[2]
     end
   end
