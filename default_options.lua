@@ -11,12 +11,15 @@ if NOOBDKP_g_options == nil then
   NOOBDKP_g_options["admin_mode"] = false
   NOOBDKP_g_options["loot_table"] = false
   
+  NOOBDKP_g_options["scroll_scale"] = 5
+  
   -- score calculation options
   NOOBDKP_g_options["base_EP"] = 200
   NOOBDKP_g_options["base_GP"] = 200
   NOOBDKP_g_options["scale_EP"] = 100
   NOOBDKP_g_options["defaultGP"] = 50
   NOOBDKP_g_options["min_EP"] = 0
+  NOOBDKP_g_options["decay_percent"] = 30
 
   -- gear options by inventory slot type
   NOOBDKP_g_options["INVTYPE_HEAD"] = 50

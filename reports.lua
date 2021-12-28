@@ -1,4 +1,3 @@
-
 function NoobDKP_GenerateFullReport()
   local text = "Full Report:\n | Name | Rank | Class | EP | GP | Score |\n |---|---|---|---|---|---|"
   local i = 0
@@ -15,7 +14,10 @@ function NoobDKP_GenerateFullReport()
       if main ~= char and main ~= "" and main ~= nil then
         char = char .. "(" .. main .. ")"
       end
-      text = text .. "\n | " .. char .. " | " .. value[1] .. " | " .. value[2] .. " | " .. ep .. " | " .. gp .. " | " .. score .. " |"
+      text =
+        text ..
+        "\n | " ..
+          char .. " | " .. value[1] .. " | " .. value[2] .. " | " .. ep .. " | " .. gp .. " | " .. score .. " |"
       i = i + 1
     end
   end
@@ -54,12 +56,24 @@ function NoobDKP_GenerateBriefReport()
     local d = value[4]
     local e = value[5]
     local f = value[6]
-    if a == nil or a == "" then a = 0 end
-    if b == nil or b == "" then b = 0 end
-    if c == nil or c == "" then c = 0 end
-    if d == nil or d == "" then d = 0 end
-    if e == nil or e == "" then e = 0 end
-    if f == nil or f == "" then f = 0 end
+    if a == nil or a == "" then
+      a = 0
+    end
+    if b == nil or b == "" then
+      b = 0
+    end
+    if c == nil or c == "" then
+      c = 0
+    end
+    if d == nil or d == "" then
+      d = 0
+    end
+    if e == nil or e == "" then
+      e = 0
+    end
+    if f == nil or f == "" then
+      f = 0
+    end
     print(a .. " " .. b .. " " .. c .. " " .. d .. " " .. e .. " " .. f)
     text = text .. "\n | " .. a .. " | " .. b .. " | " .. c .. " | " .. d .. " | " .. e .. " | " .. f .. " |"
     print(text)
@@ -76,10 +90,11 @@ function altCompare(a, b)
 end
 
 function NoobDKP_GenerateAltReport()
-  local text = "Alt Report:\n | Main | Alts |\n |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|"
+  local text =
+    "Alt Report:\n | Main | Alts |\n |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|"
 
   local sorted = {}
-  for key, value in pairs(NOOBDKP_g_roster) do 
+  for key, value in pairs(NOOBDKP_g_roster) do
     local t, n = NoobDKP_ParseNote(value[3])
     if (n == nil or n == "") and value[3] ~= "" then
       local t = {key, value[3]}

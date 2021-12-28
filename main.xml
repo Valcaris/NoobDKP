@@ -1,18 +1,26 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/">
-  <Script file="main.lua"/>
+  <Script file="main.lua" />
 
   <Button name="roster_list_template" virtual="true" hidden="false">
-    <Size><AbsDimension x="400" y="14"/></Size>
+    <Size>
+      <AbsDimension x="400" y="14" />
+    </Size>
     <Layers>
       <Layer level="ARTWORK">
         <Texture name="$parent_Highlight" setAllPoints="true" hidden="true">
-          <Size><AbsDimension y="12"/></Size>
+          <Size>
+            <AbsDimension y="12" />
+          </Size>
           <Anchors>
             <Anchor point="TOPLEFT">
-              <Offset><AbsDimension x="-2" y="-1"/></Offset>
+              <Offset>
+                <AbsDimension x="-2" y="-1" />
+              </Offset>
             </Anchor>
             <Anchor point="TOPRIGHT">
-              <Offset><AbsDimension x="2"/></Offset>
+              <Offset>
+                <AbsDimension x="2" />
+              </Offset>
             </Anchor>
           </Anchors>
           <Color r="1.0" g="1.0" b="0.0" a="0.6" />
@@ -22,13 +30,19 @@
           </Gradient>
         </Texture>
         <Texture name="$parent_Background" setAllPoints="true">
-          <Size><AbsDimension y="12"/></Size>
+          <Size>
+            <AbsDimension y="12" />
+          </Size>
           <Anchors>
             <Anchor point="TOPLEFT">
-              <Offset><AbsDimension x="-2" y="-1"/></Offset>
+              <Offset>
+                <AbsDimension x="-2" y="-1" />
+              </Offset>
             </Anchor>
             <Anchor point="TOPRIGHT">
-              <Offset><AbsDimension x="2"/></Offset>
+              <Offset>
+                <AbsDimension x="2" />
+              </Offset>
             </Anchor>
           </Anchors>
           <Color r="0.5" g="0.5" b="0.5" a="1" />
@@ -38,24 +52,44 @@
           </Gradient>
         </Texture>
         <FontString name="$parent_name" inherits="GameFontHighlight" wraponspaces="false" justifyH="LEFT" enableMouse="true" text="">
-          <Size><AbsDimension x="195" y="14"/></Size>
-          <Anchors><Anchor relativePoint="LEFT" point="LEFT"/></Anchors>
+          <Size>
+            <AbsDimension x="195" y="14" />
+          </Size>
+          <Anchors>
+            <Anchor relativePoint="LEFT" point="LEFT" />
+          </Anchors>
         </FontString>
         <FontString name="$parent_rank" inherits="GameFontHighlight" wraponspaces="false" justifyH="LEFT" text="">
-          <Size><AbsDimension x="100" y="14"/></Size>
-          <Anchors><Anchor point="TOPLEFT" relativeTo="$parent_name" relativePoint="TOPRIGHT"/></Anchors>
+          <Size>
+            <AbsDimension x="100" y="14" />
+          </Size>
+          <Anchors>
+            <Anchor point="TOPLEFT" relativeTo="$parent_name" relativePoint="TOPRIGHT" />
+          </Anchors>
         </FontString>
         <FontString name="$parent_score" inherits="GameFontHighlight" wraponspaces="false" justifyH="LEFT" text="">
-          <Size><AbsDimension x="50" y="14"/></Size>
-          <Anchors><Anchor point="TOPLEFT" relativeTo="$parent_rank" relativePoint="TOPRIGHT"/></Anchors>
+          <Size>
+            <AbsDimension x="50" y="14" />
+          </Size>
+          <Anchors>
+            <Anchor point="TOPLEFT" relativeTo="$parent_rank" relativePoint="TOPRIGHT" />
+          </Anchors>
         </FontString>
         <FontString name="$parent_EP" inherits="GameFontHighlight" wraponspaces="false" justifyH="LEFT" text="">
-          <Size><AbsDimension x="50" y="14"/></Size>
-          <Anchors><Anchor point="TOPLEFT" relativeTo="$parent_score" relativePoint="TOPRIGHT"/></Anchors>
+          <Size>
+            <AbsDimension x="50" y="14" />
+          </Size>
+          <Anchors>
+            <Anchor point="TOPLEFT" relativeTo="$parent_score" relativePoint="TOPRIGHT" />
+          </Anchors>
         </FontString>
         <FontString name="$parent_GP" inherits="GameFontHighlight" wraponspaces="false" justifyH="LEFT" text="">
-          <Size><AbsDimension x="50" y="14"/></Size>
-          <Anchors><Anchor point="TOPLEFT" relativeTo="$parent_EP" relativePoint="TOPRIGHT"/></Anchors>
+          <Size>
+            <AbsDimension x="50" y="14" />
+          </Size>
+          <Anchors>
+            <Anchor point="TOPLEFT" relativeTo="$parent_EP" relativePoint="TOPRIGHT" />
+          </Anchors>
         </FontString>
       </Layer>
     </Layers>
@@ -66,33 +100,47 @@
   </Button>
 
   <Frame name="noobMainFrame" toplevel="true" frameStrata="DIALOG" movable="true" enableMouse="true" hidden="false" parent="UIParent">
-    <Size><AbsDimension x="480" y="325"/></Size>
+    <Size>
+      <AbsDimension x="480" y="325" />
+    </Size>
     <Anchors>
       <Anchor point="CENTER">
-        <Offset><AbsDimension x="-200" y="200"/></Offset>
+        <Offset>
+          <AbsDimension x="-200" y="200" />
+        </Offset>
       </Anchor>
     </Anchors>
     <Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
       <BackgroundInsets>
-        <AbsInset left="11" right="12" top="12" bottom="11"/>
+        <AbsInset left="11" right="12" top="12" bottom="11" />
       </BackgroundInsets>
-      <TileSize><AbsValue val="32"/></TileSize>
-      <EdgeSize>  <AbsValue val="32"/></EdgeSize>
+      <TileSize>
+        <AbsValue val="32" />
+      </TileSize>
+      <EdgeSize>
+        <AbsValue val="32" />
+      </EdgeSize>
     </Backdrop>
     <Layers>
       <Layer level="ARTWORK">
         <Texture name="myFrameHeader" file="Interface\DialogFrame\UI-DialogBox-Header">
-          <Size><AbsDimension x="356" y="64"/></Size>
+          <Size>
+            <AbsDimension x="356" y="64" />
+          </Size>
           <Anchors>
             <Anchor point="TOP">
-              <Offset><AbsDimension x="0" y="12"/></Offset>
+              <Offset>
+                <AbsDimension x="0" y="12" />
+              </Offset>
             </Anchor>
           </Anchors>
         </Texture>
         <FontString inherits="GameFontNormal" text="NoobDKP">
           <Anchors>
             <Anchor point="TOP" relativeTo="myFrameHeader">
-              <Offset><AbsDimension x="0" y="-14"/></Offset>
+              <Offset>
+                <AbsDimension x="0" y="-14" />
+              </Offset>
             </Anchor>
           </Anchors>
         </FontString>
@@ -102,1187 +150,1313 @@
       <Button name="$parent_ButtonClose" inherits="UIPanelCloseButton">
         <Anchors>
           <Anchor point="TOPRIGHT">
-            <Offset><AbsDimension x="2" y="2"/></Offset>
+            <Offset>
+              <AbsDimension x="2" y="2" />
+            </Offset>
           </Anchor>
         </Anchors>
         <Scripts>
           <OnClick>(this:GetParent()):Hide()</OnClick>
         </Scripts>
       </Button>
-      <Frame name="myTabPage1" hidden="false" enableMouse="true">
+      <Frame name="myTabPage1" hidden="false">
         <Anchors>
-          <Anchor point="TOPLEFT"/>
-          <Anchor point="BOTTOMRIGHT"/>
+          <Anchor point="TOPLEFT" />
+          <Anchor point="BOTTOMRIGHT" />
         </Anchors>
-      <Frames>
-                    <Button name="$parent_sort_name">
-                        <Anchors>
-                            <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$parent">
-                                <Offset><AbsDimension x="10" y="-20"/></Offset>
-                            </Anchor>
-                        </Anchors>
-                        <Size><AbsDimension x="195" y="15"/></Size>
-                        <Layers>
-                            <Layer>
-                                <FontString name="$parent_name" inherits="GameFontHighlight" wraponspaces="false" justifyH="LEFT" enableMouse="true" text="Name">
-                                    <Anchors><Anchor relativePoint="CENTER" point="CENTER"/></Anchors>
-                                </FontString>
-                            </Layer>
-                        </Layers>
-                        <Scripts>
-                            <OnClick>NoobDKP_SortBy(0);</OnClick>
-                        </Scripts>
-                    </Button>
-                    <Button name="$parent_sort_rank">
-                        <Anchors>
-                            <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="$parent_sort_name">
-                                <Offset><AbsDimension x="0" y="0"/></Offset>
-                            </Anchor>
-                        </Anchors>
-                        <Size><AbsDimension x="100" y="15"/></Size>
-                        <Layers>
-                            <Layer>
-                                <FontString name="$parent_rank" inherits="GameFontHighlight" wraponspaces="false" justifyH="LEFT" enableMouse="true" text="Rank">
-                                    <Anchors><Anchor relativePoint="CENTER" point="CENTER"/></Anchors>
-                                </FontString>
-                            </Layer>
-                        </Layers>
-                        <Scripts>
-                            <OnClick>NoobDKP_SortBy(1);</OnClick>
-                        </Scripts>
-                    </Button>
-                    <Button name="$parent_sort_score">
-                        <Anchors>
-                            <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="$parent_sort_rank">
-                                <Offset><AbsDimension x="0" y="0"/></Offset>
-                            </Anchor>
-                        </Anchors>
-                        <Size><AbsDimension x="50" y="15"/></Size>
-                        <Layers>
-                            <Layer>
-                                <FontString name="$parent_score" inherits="GameFontHighlight" wraponspaces="false" justifyH="LEFT" enableMouse="true" text="Score">
-                                    <Anchors><Anchor relativePoint="CENTER" point="CENTER"/></Anchors>
-                                </FontString>
-                            </Layer>
-                        </Layers>
-                        <Scripts>
-                            <OnClick>NoobDKP_SortBy(2);</OnClick>
-                        </Scripts>
-                    </Button>
-                    <Button name="$parent_sort_EP">
-                        <Anchors>
-                            <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="$parent_sort_score">
-                                <Offset><AbsDimension x="0" y="0"/></Offset>
-                            </Anchor>
-                        </Anchors>
-                        <Size><AbsDimension x="50" y="15"/></Size>
-                        <Layers>
-                            <Layer>
-                                <FontString name="$parent_EP" inherits="GameFontHighlight" wraponspaces="false" justifyH="LEFT" enableMouse="true" text="EP">
-                                    <Anchors><Anchor relativePoint="CENTER" point="CENTER"/></Anchors>
-                                </FontString>
-                            </Layer>
-                        </Layers>
-                        <Scripts>
-                            <OnClick>NoobDKP_SortBy(3);</OnClick>
-                        </Scripts>
-                    </Button>
-                    <Button name="$parent_sort_GP">
-                        <Anchors>
-                            <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="$parent_sort_EP">
-                                <Offset><AbsDimension x="0" y="0"/></Offset>
-                            </Anchor>
-                        </Anchors>
-                        <Size><AbsDimension x="50" y="15"/></Size>
-                        <Layers>
-                            <Layer>
-                                <FontString name="$parent_GP" inherits="GameFontHighlight" wraponspaces="false" justifyH="LEFT" enableMouse="true" text="GP">
-                                    <Anchors><Anchor relativePoint="CENTER" point="CENTER"/></Anchors>
-                                </FontString>
-                            </Layer>
-                        </Layers>
-                        <Scripts>
-                            <OnClick>NoobDKP_SortBy(4);</OnClick>
-                        </Scripts>
-                    </Button>
-                    <Button name="$parent_entry1" inherits="roster_list_template">
-                        <Anchors>
-                            <Anchor relativePoint="TOPLEFT" point="TOPLEFT" relativeTo="$parent">
-                                <Offset>
-                                    <AbsDimension x="10" y="-40" />
-                                </Offset>
-                            </Anchor>
-                        </Anchors>
-                    </Button>
-                    <Button name="$parent_entry2" inherits="roster_list_template">
-                        <Anchors>
-                            <Anchor relativePoint="BOTTOMLEFT" point="TOPLEFT" relativeTo="$parent_entry1">
-                                <Offset>
-                                    <AbsDimension x="0" y="-2" />
-                                </Offset>
-                            </Anchor>
-                        </Anchors>
-                    </Button>
-                    <Button name="$parent_entry3" inherits="roster_list_template">
-                        <Anchors>
-                            <Anchor relativePoint="BOTTOMLEFT" point="TOPLEFT" relativeTo="$parent_entry2">
-                                <Offset>
-                                    <AbsDimension x="0" y="-2" />
-                                </Offset>
-                            </Anchor>
-                        </Anchors>
-                    </Button>
-                    <Button name="$parent_entry4" inherits="roster_list_template">
-                        <Anchors>
-                            <Anchor relativePoint="BOTTOMLEFT" point="TOPLEFT" relativeTo="$parent_entry3">
-                                <Offset>
-                                    <AbsDimension x="0" y="-2" />
-                                </Offset>
-                            </Anchor>
-                        </Anchors>
-                    </Button>
-                    <Button name="$parent_entry5" inherits="roster_list_template">
-                        <Anchors>
-                            <Anchor relativePoint="BOTTOMLEFT" point="TOPLEFT" relativeTo="$parent_entry4">
-                                <Offset>
-                                    <AbsDimension x="0" y="-2" />
-                                </Offset>
-                            </Anchor>
-                        </Anchors>
-                    </Button>
-                    <Button name="$parent_entry6" inherits="roster_list_template">
-                        <Anchors>
-                            <Anchor relativePoint="BOTTOMLEFT" point="TOPLEFT" relativeTo="$parent_entry5">
-                                <Offset>
-                                    <AbsDimension x="0" y="-2" />
-                                </Offset>
-                            </Anchor>
-                        </Anchors>
-                    </Button>
-                    <Button name="$parent_entry7" inherits="roster_list_template">
-                        <Anchors>
-                            <Anchor relativePoint="BOTTOMLEFT" point="TOPLEFT" relativeTo="$parent_entry6">
-                                <Offset>
-                                    <AbsDimension x="0" y="-2" />
-                                </Offset>
-                            </Anchor>
-                        </Anchors>
-                    </Button>
-                    <Button name="$parent_entry8" inherits="roster_list_template">
-                        <Anchors>
-                            <Anchor relativePoint="BOTTOMLEFT" point="TOPLEFT" relativeTo="$parent_entry7">
-                                <Offset>
-                                    <AbsDimension x="0" y="-2" />
-                                </Offset>
-                            </Anchor>
-                        </Anchors>
-                    </Button>
-                    <Button name="$parent_entry9" inherits="roster_list_template">
-                        <Anchors>
-                            <Anchor relativePoint="BOTTOMLEFT" point="TOPLEFT" relativeTo="$parent_entry8">
-                                <Offset>
-                                    <AbsDimension x="0" y="-2" />
-                                </Offset>
-                            </Anchor>
-                        </Anchors>
-                    </Button>
-                    <Button name="$parent_entry10" inherits="roster_list_template">
-                        <Anchors>
-                            <Anchor relativePoint="BOTTOMLEFT" point="TOPLEFT" relativeTo="$parent_entry9">
-                                <Offset>
-                                    <AbsDimension x="0" y="-2" />
-                                </Offset>
-                            </Anchor>
-                        </Anchors>
-                    </Button>
-                    <Button name="$parent_entry11" inherits="roster_list_template">
-                        <Anchors>
-                            <Anchor relativePoint="BOTTOMLEFT" point="TOPLEFT" relativeTo="$parent_entry10">
-                                <Offset>
-                                    <AbsDimension x="0" y="-2" />
-                                </Offset>
-                            </Anchor>
-                        </Anchors>
-                    </Button>
-                    <Button name="$parent_entry12" inherits="roster_list_template">
-                        <Anchors>
-                            <Anchor relativePoint="BOTTOMLEFT" point="TOPLEFT" relativeTo="$parent_entry11">
-                                <Offset>
-                                    <AbsDimension x="0" y="-2" />
-                                </Offset>
-                            </Anchor>
-                        </Anchors>
-                    </Button>
-                    <Button name="$parent_entry13" inherits="roster_list_template">
-                        <Anchors>
-                            <Anchor relativePoint="BOTTOMLEFT" point="TOPLEFT" relativeTo="$parent_entry12">
-                                <Offset>
-                                    <AbsDimension x="0" y="-2" />
-                                </Offset>
-                            </Anchor>
-                        </Anchors>
-                    </Button>
-                    <Button name="$parent_entry14" inherits="roster_list_template">
-                        <Anchors>
-                            <Anchor relativePoint="BOTTOMLEFT" point="TOPLEFT" relativeTo="$parent_entry13">
-                                <Offset>
-                                    <AbsDimension x="0" y="-2" />
-                                </Offset>
-                            </Anchor>
-                        </Anchors>
-                    </Button>
-                    <Button name="$parent_entry15" inherits="roster_list_template">
-                        <Anchors>
-                            <Anchor relativePoint="BOTTOMLEFT" point="TOPLEFT" relativeTo="$parent_entry14">
-                                <Offset>
-                                    <AbsDimension x="0" y="-2" />
-                                </Offset>
-                            </Anchor>
-                        </Anchors>
-                    </Button>
-                    <Button name="$parent_scrollUp" inherits="UIPanelButtonTemplate" text="^">
-                        <Anchors>
-                            <Anchor point="RIGHT" relativePoint="RIGHT" relativeTo="$parent">
-                                <Offset><AbsDimension x="-20" y="10"/></Offset>
-                            </Anchor>
-                        </Anchors>
-                        <Size><AbsDimension x="30" y="30"/></Size>
-                        <Scripts>
-                            <OnClick>NoobDKP_VerticalScroll(this, -3)</OnClick>
-                        </Scripts>
-                    </Button>
-                    <Button name="$parent_scrollDown" inherits="UIPanelButtonTemplate" text="v">
-                        <Anchors>
-                            <Anchor point="RIGHT" relativePoint="RIGHT" relativeTo="$parent">
-                                <Offset><AbsDimension x="-20" y="-20"/></Offset>
-                            </Anchor>
-                        </Anchors>
-                        <Size><AbsDimension x="30" y="30"/></Size>
-                        <Scripts>
-                            <OnClick>NoobDKP_VerticalScroll(this, 3)</OnClick>
-                        </Scripts>
-                    </Button>
-                    <Button name="$parentGuildRoster" text="Guild Roster" inherits="UIPanelButtonTemplate">
-                        <Anchors>
-                            <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT">
-                                <Offset>
-                                    <AbsDimension x="90" y="15"/>
-                                </Offset>
-                            </Anchor>
-                        </Anchors>
-                        <Size>
-                            <AbsDimension x="90" y="25"/>
-                        </Size>
-                        <Scripts>
-                            <OnClick>NoobDKP_UpdateGuildRoster();</OnClick>
-                        </Scripts>
-                    </Button>
-                    <Button name="$parentRaidRoster" text="Raid Roster" inherits="UIPanelButtonTemplate">
-                        <Anchors>
-                            <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT">
-                                <Offset>
-                                    <AbsDimension x="180" y="15"/>
-                                </Offset>
-                            </Anchor>
-                        </Anchors>
-                        <Size>
-                            <AbsDimension x="85" y="25"/>
-                        </Size>
-                        <Scripts>
-                            <OnClick>NoobDKP_UpdateRaidRoster();</OnClick>
-                        </Scripts>
-                    </Button>
-                    <Button name="$parentMainRoster" text="Main Roster" inherits="UIPanelButtonTemplate">
-                        <Anchors>
-                            <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT">
-                                <Offset>
-                                    <AbsDimension x="265" y="15"/>
-                                </Offset>
-                            </Anchor>
-                        </Anchors>
-                        <Size>
-                            <AbsDimension x="85" y="25"/>
-                        </Size>
-                        <Scripts>
-                            <OnClick>NoobDKP_UpdateMainRoster();</OnClick>
-                        </Scripts>
-                    </Button>
-
-
-                <Scripts>
-                    <!-- Note: This doesn't work right now -->
-                    <OnVerticalScroll>NoobDKP_VerticalScroll(this, offset)</OnVerticalScroll>
-                    <OnLoad>NoobDKP_UpdateRoster()</OnLoad>
-                </Scripts>               
-               </Frames> 
-           </Frame>   
-          <Frame name="myTabPage2" hidden="true">
+        <Frames>
+          <Button name="$parent_sort_name">
             <Anchors>
-              <Anchor point="TOPLEFT"/>
-              <Anchor point="BOTTOMRIGHT"/>
+              <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$parent">
+                <Offset>
+                  <AbsDimension x="10" y="-20" />
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Size>
+              <AbsDimension x="195" y="15" />
+            </Size>
+            <Layers>
+              <Layer>
+                <FontString name="$parent_name" inherits="GameFontHighlight" wraponspaces="false" justifyH="LEFT" enableMouse="true" text="Name">
+                  <Anchors>
+                    <Anchor relativePoint="CENTER" point="CENTER" />
+                  </Anchors>
+                </FontString>
+              </Layer>
+            </Layers>
+            <Scripts>
+              <OnClick>NoobDKP_SortBy(0);</OnClick>
+            </Scripts>
+          </Button>
+          <Button name="$parent_sort_rank">
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="$parent_sort_name">
+                <Offset>
+                  <AbsDimension x="0" y="0" />
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Size>
+              <AbsDimension x="100" y="15" />
+            </Size>
+            <Layers>
+              <Layer>
+                <FontString name="$parent_rank" inherits="GameFontHighlight" wraponspaces="false" justifyH="LEFT" enableMouse="true" text="Rank">
+                  <Anchors>
+                    <Anchor relativePoint="CENTER" point="CENTER" />
+                  </Anchors>
+                </FontString>
+              </Layer>
+            </Layers>
+            <Scripts>
+              <OnClick>NoobDKP_SortBy(1);</OnClick>
+            </Scripts>
+          </Button>
+          <Button name="$parent_sort_score">
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="$parent_sort_rank">
+                <Offset>
+                  <AbsDimension x="0" y="0" />
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Size>
+              <AbsDimension x="50" y="15" />
+            </Size>
+            <Layers>
+              <Layer>
+                <FontString name="$parent_score" inherits="GameFontHighlight" wraponspaces="false" justifyH="LEFT" enableMouse="true" text="Score">
+                  <Anchors>
+                    <Anchor relativePoint="CENTER" point="CENTER" />
+                  </Anchors>
+                </FontString>
+              </Layer>
+            </Layers>
+            <Scripts>
+              <OnClick>NoobDKP_SortBy(2);</OnClick>
+            </Scripts>
+          </Button>
+          <Button name="$parent_sort_EP">
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="$parent_sort_score">
+                <Offset>
+                  <AbsDimension x="0" y="0" />
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Size>
+              <AbsDimension x="50" y="15" />
+            </Size>
+            <Layers>
+              <Layer>
+                <FontString name="$parent_EP" inherits="GameFontHighlight" wraponspaces="false" justifyH="LEFT" enableMouse="true" text="EP">
+                  <Anchors>
+                    <Anchor relativePoint="CENTER" point="CENTER" />
+                  </Anchors>
+                </FontString>
+              </Layer>
+            </Layers>
+            <Scripts>
+              <OnClick>NoobDKP_SortBy(3);</OnClick>
+            </Scripts>
+          </Button>
+          <Button name="$parent_sort_GP">
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="$parent_sort_EP">
+                <Offset>
+                  <AbsDimension x="0" y="0" />
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Size>
+              <AbsDimension x="50" y="15" />
+            </Size>
+            <Layers>
+              <Layer>
+                <FontString name="$parent_GP" inherits="GameFontHighlight" wraponspaces="false" justifyH="LEFT" enableMouse="true" text="GP">
+                  <Anchors>
+                    <Anchor relativePoint="CENTER" point="CENTER" />
+                  </Anchors>
+                </FontString>
+              </Layer>
+            </Layers>
+            <Scripts>
+              <OnClick>NoobDKP_SortBy(4);</OnClick>
+            </Scripts>
+          </Button>
+          <Button name="$parent_entry1" inherits="roster_list_template">
+            <Anchors>
+              <Anchor relativePoint="TOPLEFT" point="TOPLEFT" relativeTo="$parent">
+                <Offset>
+                  <AbsDimension x="10" y="-40" />
+                </Offset>
+              </Anchor>
+            </Anchors>
+          </Button>
+          <Button name="$parent_entry2" inherits="roster_list_template">
+            <Anchors>
+              <Anchor relativePoint="BOTTOMLEFT" point="TOPLEFT" relativeTo="$parent_entry1">
+                <Offset>
+                  <AbsDimension x="0" y="-2" />
+                </Offset>
+              </Anchor>
+            </Anchors>
+          </Button>
+          <Button name="$parent_entry3" inherits="roster_list_template">
+            <Anchors>
+              <Anchor relativePoint="BOTTOMLEFT" point="TOPLEFT" relativeTo="$parent_entry2">
+                <Offset>
+                  <AbsDimension x="0" y="-2" />
+                </Offset>
+              </Anchor>
+            </Anchors>
+          </Button>
+          <Button name="$parent_entry4" inherits="roster_list_template">
+            <Anchors>
+              <Anchor relativePoint="BOTTOMLEFT" point="TOPLEFT" relativeTo="$parent_entry3">
+                <Offset>
+                  <AbsDimension x="0" y="-2" />
+                </Offset>
+              </Anchor>
+            </Anchors>
+          </Button>
+          <Button name="$parent_entry5" inherits="roster_list_template">
+            <Anchors>
+              <Anchor relativePoint="BOTTOMLEFT" point="TOPLEFT" relativeTo="$parent_entry4">
+                <Offset>
+                  <AbsDimension x="0" y="-2" />
+                </Offset>
+              </Anchor>
+            </Anchors>
+          </Button>
+          <Button name="$parent_entry6" inherits="roster_list_template">
+            <Anchors>
+              <Anchor relativePoint="BOTTOMLEFT" point="TOPLEFT" relativeTo="$parent_entry5">
+                <Offset>
+                  <AbsDimension x="0" y="-2" />
+                </Offset>
+              </Anchor>
+            </Anchors>
+          </Button>
+          <Button name="$parent_entry7" inherits="roster_list_template">
+            <Anchors>
+              <Anchor relativePoint="BOTTOMLEFT" point="TOPLEFT" relativeTo="$parent_entry6">
+                <Offset>
+                  <AbsDimension x="0" y="-2" />
+                </Offset>
+              </Anchor>
+            </Anchors>
+          </Button>
+          <Button name="$parent_entry8" inherits="roster_list_template">
+            <Anchors>
+              <Anchor relativePoint="BOTTOMLEFT" point="TOPLEFT" relativeTo="$parent_entry7">
+                <Offset>
+                  <AbsDimension x="0" y="-2" />
+                </Offset>
+              </Anchor>
+            </Anchors>
+          </Button>
+          <Button name="$parent_entry9" inherits="roster_list_template">
+            <Anchors>
+              <Anchor relativePoint="BOTTOMLEFT" point="TOPLEFT" relativeTo="$parent_entry8">
+                <Offset>
+                  <AbsDimension x="0" y="-2" />
+                </Offset>
+              </Anchor>
+            </Anchors>
+          </Button>
+          <Button name="$parent_entry10" inherits="roster_list_template">
+            <Anchors>
+              <Anchor relativePoint="BOTTOMLEFT" point="TOPLEFT" relativeTo="$parent_entry9">
+                <Offset>
+                  <AbsDimension x="0" y="-2" />
+                </Offset>
+              </Anchor>
+            </Anchors>
+          </Button>
+          <Button name="$parent_entry11" inherits="roster_list_template">
+            <Anchors>
+              <Anchor relativePoint="BOTTOMLEFT" point="TOPLEFT" relativeTo="$parent_entry10">
+                <Offset>
+                  <AbsDimension x="0" y="-2" />
+                </Offset>
+              </Anchor>
+            </Anchors>
+          </Button>
+          <Button name="$parent_entry12" inherits="roster_list_template">
+            <Anchors>
+              <Anchor relativePoint="BOTTOMLEFT" point="TOPLEFT" relativeTo="$parent_entry11">
+                <Offset>
+                  <AbsDimension x="0" y="-2" />
+                </Offset>
+              </Anchor>
+            </Anchors>
+          </Button>
+          <Button name="$parent_entry13" inherits="roster_list_template">
+            <Anchors>
+              <Anchor relativePoint="BOTTOMLEFT" point="TOPLEFT" relativeTo="$parent_entry12">
+                <Offset>
+                  <AbsDimension x="0" y="-2" />
+                </Offset>
+              </Anchor>
+            </Anchors>
+          </Button>
+          <Button name="$parent_entry14" inherits="roster_list_template">
+            <Anchors>
+              <Anchor relativePoint="BOTTOMLEFT" point="TOPLEFT" relativeTo="$parent_entry13">
+                <Offset>
+                  <AbsDimension x="0" y="-2" />
+                </Offset>
+              </Anchor>
+            </Anchors>
+          </Button>
+          <Button name="$parent_entry15" inherits="roster_list_template">
+            <Anchors>
+              <Anchor relativePoint="BOTTOMLEFT" point="TOPLEFT" relativeTo="$parent_entry14">
+                <Offset>
+                  <AbsDimension x="0" y="-2" />
+                </Offset>
+              </Anchor>
+            </Anchors>
+          </Button>
+          <Button name="$parentGuildRoster" text="Guild Roster" inherits="UIPanelButtonTemplate">
+            <Anchors>
+              <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT">
+                <Offset>
+                  <AbsDimension x="90" y="15" />
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Size>
+              <AbsDimension x="90" y="25" />
+            </Size>
+            <Scripts>
+              <OnClick>NoobDKP_UpdateGuildRoster();</OnClick>
+            </Scripts>
+          </Button>
+          <Button name="$parentRaidRoster" text="Raid Roster" inherits="UIPanelButtonTemplate">
+            <Anchors>
+              <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT">
+                <Offset>
+                  <AbsDimension x="180" y="15" />
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Size>
+              <AbsDimension x="85" y="25" />
+            </Size>
+            <Scripts>
+              <OnClick>NoobDKP_UpdateRaidRoster();</OnClick>
+            </Scripts>
+          </Button>
+          <Button name="$parentMainRoster" text="Main Roster" inherits="UIPanelButtonTemplate">
+            <Anchors>
+              <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT">
+                <Offset>
+                  <AbsDimension x="265" y="15" />
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Size>
+              <AbsDimension x="85" y="25" />
+            </Size>
+            <Scripts>
+              <OnClick>NoobDKP_UpdateMainRoster();</OnClick>
+            </Scripts>
+          </Button>
+        </Frames>
+        <Scripts>
+          <OnLoad>NoobDKP_UpdateRaidRoster();</OnLoad>
+          <OnShow>NoobDKP_UpdateRoster();</OnShow>
+          
+          <OnMouseWheel>NoobDKP_VerticalScroll(arg1 * -1)</OnMouseWheel>
+        </Scripts>
+      </Frame>
+      <Frame name="myTabPage2" hidden="true">
+        <Anchors>
+          <Anchor point="TOPLEFT" />
+          <Anchor point="BOTTOMRIGHT" />
+        </Anchors>
+        <Layers>
+          <Layer level="ARTWORK">
+            <FontString inherits="GameFontNormal" text="EP Amount: ">
+              <Anchors>
+                <Anchor point="BOTTOMLEFT" relativeTo="$parent">
+                  <Offset>
+                    <AbsDimension x="20" y="30" />
+                  </Offset>
+                </Anchor>
+              </Anchors>
+            </FontString>
+            <FontString inherits="GameFontNormal" text="Reason: ">
+              <Anchors>
+                <Anchor point="BOTTOMLEFT" relativeTo="$parent">
+                  <Offset>
+                    <AbsDimension x="155" y="30" />
+                  </Offset>
+                </Anchor>
+              </Anchors>
+            </FontString>
+          </Layer>
+        </Layers>
+        <Frames>
+          <Frame name="$parent_emptyEvent" hidden="false">
+            <Anchors>
+              <Anchor point="TOPLEFT" />
+              <Anchor point="BOTTOMRIGHT" />
             </Anchors>
             <Layers>
               <Layer level="ARTWORK">
-
-
-                       <FontString inherits="GameFontNormal" text="EP Amount: ">
-                           <Anchors>
-                               <Anchor point="BOTTOMLEFT" relativeTo="$parent">
-                                   <Offset>
-                                       <AbsDimension x="20" y="30"/>
-                                   </Offset>
-                               </Anchor>
-                           </Anchors>
-                       </FontString>
-                       <FontString inherits="GameFontNormal" text="Reason: ">
-                           <Anchors>
-                               <Anchor point="BOTTOMLEFT" relativeTo="$parent">
-                                   <Offset>
-                                       <AbsDimension x="155" y="30"/>
-                                   </Offset>
-                               </Anchor>
-                           </Anchors>
-                       </FontString>
-
+                <FontString name="$parent_Text" inherits="GameFontNormal" text="No Active Event/Raid Found!">
+                  <Anchors>
+                    <Anchor point="CENTER" relativePoint="CENTER" relativeTo="$parent"></Anchor>
+                  </Anchors>
+                </FontString>
               </Layer>
             </Layers>
             <Frames>
-              <Frame name="$parent_emptyEvent" hidden="false">
+              <Button name="$parent_createEvent" inherits="UIPanelButtonTemplate" text="Create Event">
                 <Anchors>
-                  <Anchor point="TOPLEFT"/>
-                  <Anchor point="BOTTOMRIGHT"/>
+                  <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="$parent_Text">
+                    <Offset>
+                      <AbsDimension x="0" y="-10" />
+                    </Offset>
+                  </Anchor>
                 </Anchors>
+                <Size>
+                  <AbsDimension x="110" y="30" />
+                </Size>
+                <Scripts>
+                  <OnClick>
+                    local eventText = getglobal("myTabPage2_emptyEvent_EventLocation")
+                    NoobDKP_AddEvent(eventText:GetText())
+                    NoobDKP_ShowEventTab()
+                    eventText:ClearFocus()
+                  </OnClick>
+                </Scripts>
+              </Button>
+              <EditBox name="$parent_EventLocation" inherits="InputBoxTemplate" autoFocus="false">
+                <Size>
+                  <AbsDimension x="200" y="25" />
+                </Size>
+                <Anchors>
+                  <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="$parent_createEvent" />
+                </Anchors>
+              </EditBox>
+            </Frames>
+          </Frame>
+          <Frame name="$parent_Event" hidden="true">
+            <Anchors>
+              <Anchor point="TOPLEFT" />
+              <Anchor point="BOTTOMRIGHT" />
+            </Anchors>
+            <Layers>
+              <Layer level="ARTWORK">
+                <FontString name="$parent_Name" inherits="GameFontNormal" text="Invalid Event Name">
+                  <Anchors>
+                    <Anchor point="CENTER" relativeTo="$parent" />
+                  </Anchors>
+                </FontString>
+              </Layer>
+            </Layers>
+            <Frames>
+              <Button name="$parent_CloseEvent" text="Close Event" inherits="UIPanelButtonTemplate">
+                <Anchors>
+                  <Anchor point="BOTTOMLEFT" relativeTo="$parent">
+                    <Offset>
+                      <AbsDimension x="200" y="50" />
+                    </Offset>
+                  </Anchor>
+                </Anchors>
+                <Size>
+                  <AbsDimension x="80" y="25" />
+                </Size>
+                <Scripts>
+                  <OnClick>NoobDKP_CloseEvent();</OnClick>
+                </Scripts>
+              </Button>
+            </Frames>
+          </Frame>
+          <EditBox name="$parent_Amount" inherits="InputBoxTemplate" autoFocus="false">
+            <Size>
+              <AbsDimension x="50" y="25" />
+            </Size>
+            <Anchors>
+              <Anchor point="BOTTOMLEFT" relativeTo="$parent">
+                <Offset>
+                  <AbsDimension x="100" y="20" />
+                </Offset>
+              </Anchor>
+            </Anchors>
+          </EditBox>
+          <EditBox name="$parent_Reason" inherits="InputBoxTemplate" autoFocus="false">
+            <Size>
+              <AbsDimension x="215" y="25" />
+            </Size>
+            <Anchors>
+              <Anchor point="BOTTOMLEFT" relativeTo="$parent">
+                <Offset>
+                  <AbsDimension x="210" y="20" />
+                </Offset>
+              </Anchor>
+            </Anchors>
+          </EditBox>
+          <Button name="$parentAddEP" text="Add" inherits="UIPanelButtonTemplate">
+            <Anchors>
+              <Anchor point="BOTTOMLEFT" relativeTo="$parent">
+                <Offset>
+                  <AbsDimension x="430" y="20" />
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Size>
+              <AbsDimension x="35" y="25" />
+            </Size>
+            <Scripts>
+              <OnClick>NoobDKP_AddRaidEP();</OnClick>
+            </Scripts>
+          </Button>
+        </Frames>
+        <Scripts>
+          <OnShow>
+            NoobDKP_ShowEventTab()
+          </OnShow>
+        </Scripts>
+      </Frame>
+      <Frame name="myTabPage3" hidden="true">
+        <Anchors>
+          <Anchor point="TOPLEFT" />
+          <Anchor point="BOTTOMRIGHT" />
+        </Anchors>
+        <Frames>
+          <Frame name="$parent_emptyAuction" hidden="false">
+            <Anchors>
+              <Anchor point="TOPLEFT" />
+              <Anchor point="BOTTOMRIGHT" />
+            </Anchors>
+            <Layers>
+              <Layer level="ARTWORK">
+                <FontString name="$parent_Text" inherits="GameFontNormal" text="No Active Auction Found!">
+                  <Anchors>
+                    <Anchor point="CENTER" relativePoint="CENTER" relativeTo="$parent"></Anchor>
+                  </Anchors>
+                </FontString>
+              </Layer>
+            </Layers>
+            <Frames>
+              <Button name="$parent_createAuction" inherits="UIPanelButtonTemplate" text="Create Auction">
+                <Anchors>
+                  <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="$parent_Text">
+                    <Offset>
+                      <AbsDimension x="0" y="-10" />
+                    </Offset>
+                  </Anchor>
+                </Anchors>
+                <Size>
+                  <AbsDimension x="110" y="30" />
+                </Size>
+                <Scripts>
+                  <OnClick>
+                    local itemText = getglobal("myTabPage3_emptyAuction_AuctionItem")
+                    NoobDKP_CreateAuction(itemText:GetText())
+                    NoobDKP_ShowAuctionTab()
+                    itemText:ClearFocus()
+                  </OnClick>
+                </Scripts>
+              </Button>
+              <EditBox name="$parent_AuctionItem" inherits="InputBoxTemplate" autoFocus="false">
+                <Size>
+                  <AbsDimension x="200" y="25" />
+                </Size>
+                <Anchors>
+                  <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="$parent_createAuction" />
+                </Anchors>
+              </EditBox>
+            </Frames>
+          </Frame>
+          <Frame name="$parent_Auction" hidden="true">
+            <Anchors>
+              <Anchor point="TOPLEFT" />
+              <Anchor point="BOTTOMRIGHT" />
+            </Anchors>
+            <Layers>
+              <Layer level="ARTWORK">
+                <FontString name="$parent_Item" inherits="GameFontNormal" text="No Item Found!">
+                  <Anchors>
+                    <Anchor point="TOP" relativePoint="TOP" relativeTo="$parent">
+                      <Offset>
+                        <AbsDimension x="0" y="-30" />
+                      </Offset>
+                    </Anchor>
+                  </Anchors>
+                </FontString>
+                <FontString name="$parent_Winner" inherits="GameFontNormal" text="No Winner">
+                  <Anchors>
+                    <Anchor point="BOTTOM" relativePoint="BOTTOM" relativeTo="$parent">
+                      <Offset>
+                        <AbsDimension x="50" y="25" />
+                      </Offset>
+                    </Anchor>
+                  </Anchors>
+                </FontString>
+              </Layer>
+            </Layers>
+            <Frames>
+              <Button name="$parent_sort_name">
+                <Anchors>
+                  <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$parent">
+                    <Offset>
+                      <AbsDimension x="0" y="-45" />
+                    </Offset>
+                  </Anchor>
+                </Anchors>
+                <Size>
+                  <AbsDimension x="195" y="15" />
+                </Size>
                 <Layers>
-                  <Layer level="ARTWORK">
-                    <FontString name="$parent_Text" inherits="GameFontNormal" text="No Active Event/Raid Found!">
+                  <Layer>
+                    <FontString name="$parent_name" inherits="GameFontHighlight" wraponspaces="false" justifyH="LEFT" enableMouse="true" text="Name">
                       <Anchors>
-                        <Anchor point="CENTER" relativePoint="CENTER" relativeTo="$parent">
-                        </Anchor>
+                        <Anchor relativePoint="CENTER" point="CENTER" />
                       </Anchors>
                     </FontString>
                   </Layer>
                 </Layers>
-                <Frames>
-                  <Button name="$parent_createEvent" inherits="UIPanelButtonTemplate" text="Create Event" >
-                    <Anchors>
-                      <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="$parent_Text" >
-                        <Offset><AbsDimension x="0" y="-10"/></Offset>
-                      </Anchor>
-                    </Anchors>
-                    <Size><AbsDimension x="110" y="30" /></Size>
-                    <Scripts>
-                      <OnClick>
-                                local eventText = getglobal("myTabPage2_emptyEvent_EventLocation")
-                                NoobDKP_AddEvent(eventText:GetText())
-                                NoobDKP_ShowEventTab()
-                                eventText:ClearFocus()
-                      </OnClick>
-                    </Scripts>
-                  </Button>
-                  <EditBox name="$parent_EventLocation" inherits="InputBoxTemplate" autoFocus="false">
-                    <Size><AbsDimension x="200" y="25"/></Size>
-                    <Anchors>
-                      <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="$parent_createEvent" />
-                    </Anchors>
-                  </EditBox>
-
-                </Frames>
-              </Frame>
-              <Frame name="$parent_Event" hidden="true">
+                <Scripts>
+                  <OnClick>NoobDKP_SortbyName(this);</OnClick>
+                </Scripts>
+              </Button>
+              <Button name="$parent_sort_priority">
                 <Anchors>
-                  <Anchor point="TOPLEFT"/>
-                  <Anchor point="BOTTOMRIGHT"/>
+                  <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="$parent_sort_name">
+                    <Offset>
+                      <AbsDimension x="0" y="0" />
+                    </Offset>
+                  </Anchor>
                 </Anchors>
+                <Size>
+                  <AbsDimension x="100" y="15" />
+                </Size>
                 <Layers>
-                  <Layer level="ARTWORK">
-                    <FontString name="$parent_Name" inherits="GameFontNormal" text="Invalid Event Name">
+                  <Layer>
+                    <FontString name="$parent_rank" inherits="GameFontHighlight" wraponspaces="false" justifyH="LEFT" enableMouse="true" text="Priority">
                       <Anchors>
-                        <Anchor point="CENTER" relativeTo="$parent" />
+                        <Anchor relativePoint="CENTER" point="CENTER" />
                       </Anchors>
                     </FontString>
-
-                   </Layer>
-               </Layers>
-
-               
-
-              <Frames>
-                    <Button name="$parent_CloseEvent" text="Close Event" inherits="UIPanelButtonTemplate">
-                        <Anchors>
-                            <Anchor point="BOTTOMLEFT" relativeTo="$parent">
-                                <Offset>
-                                    <AbsDimension x="200" y="50"/>
-                                </Offset>
-                            </Anchor>
-                        </Anchors>
-                        <Size>
-                            <AbsDimension x="80" y="25"/>
-                        </Size>
-                        <Scripts>
-                            <OnClick>NoobDKP_CloseEvent();</OnClick>
-                        </Scripts>
-                    </Button>
-
-                    
-
-              </Frames>
-                    </Frame>
-                    <EditBox name="$parent_Amount" inherits="InputBoxTemplate" autoFocus="false" >
-                        <Size>
-                            <AbsDimension x="50" y="25"/>
-                        </Size>
-                        <Anchors>
-                            <Anchor point="BOTTOMLEFT" relativeTo="$parent">
-                                <Offset>
-                                    <AbsDimension x="100" y="20"/>
-                                </Offset>
-                            </Anchor>
-                        </Anchors>
-                    </EditBox>
-                    
-                    <EditBox name="$parent_Reason" inherits="InputBoxTemplate" autoFocus="false" >
-                        <Size>
-                            <AbsDimension x="215" y="25"/>
-                        </Size>
-                        <Anchors>
-                            <Anchor point="BOTTOMLEFT" relativeTo="$parent">
-                                <Offset>
-                                    <AbsDimension x="210" y="20"/>
-                                </Offset>
-                            </Anchor>
-                        </Anchors>
-                    </EditBox>
-                    
-                    <Button name="$parentAddEP" text="Add" inherits="UIPanelButtonTemplate">
-                        <Anchors>
-                            <Anchor point="BOTTOMLEFT" relativeTo="$parent">
-                                <Offset>
-                                    <AbsDimension x="430" y="20"/>
-                                </Offset>
-                            </Anchor>
-                        </Anchors>
-                        <Size>
-                            <AbsDimension x="35" y="25"/>
-                        </Size>
-                        <Scripts>
-                            <OnClick>NoobDKP_AddRaidEP();</OnClick>
-                        </Scripts>
-                    </Button>
-
-               </Frames> 
-               <Scripts>
-                    <OnShow>
-                      NoobDKP_ShowEventTab()
-                    </OnShow>
-               </Scripts> 
-           </Frame>
-           <Frame name="myTabPage3" hidden="true">
-               <Anchors>
-                   <Anchor point="TOPLEFT"/>
-                   <Anchor point="BOTTOMRIGHT"/>
-               </Anchors>
-               <Frames>
-                <Frame name="$parent_emptyAuction" hidden="false">
-                  <Anchors>
-                   <Anchor point="TOPLEFT"/>
-                   <Anchor point="BOTTOMRIGHT"/>
-                  </Anchors>
-                    <Layers>
-                        <Layer level="ARTWORK">
-                            <FontString name="$parent_Text" inherits="GameFontNormal" text="No Active Auction Found!">
-                                <Anchors>
-                                    <Anchor point="CENTER" relativePoint="CENTER" relativeTo="$parent">
-                                    </Anchor>
-                                </Anchors>
-                            </FontString>
-                        </Layer>
-                    </Layers>
-
-                    <Frames>
-                    <Button name="$parent_createAuction" inherits="UIPanelButtonTemplate" text="Create Auction" >
-                        <Anchors>
-                            <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="$parent_Text" >
-                                <Offset><AbsDimension x="0" y="-10"/></Offset>
-                            </Anchor>
-                        </Anchors>
-                        <Size><AbsDimension x="110" y="30" /></Size>
-                        <Scripts>
-                            <OnClick>
-                                local itemText = getglobal("myTabPage3_emptyAuction_AuctionItem")
-                                NoobDKP_CreateAuction(itemText:GetText())
-                                NoobDKP_ShowAuctionTab()
-                                itemText:ClearFocus()
-                            </OnClick>
-                        </Scripts>
-                    </Button>
-                    <EditBox name="$parent_AuctionItem" inherits="InputBoxTemplate" autoFocus="false">
-                        <Size>
-                            <AbsDimension x="200" y="25"/>
-                        </Size>
-                        <Anchors>
-                            <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="$parent_createAuction" />
-                        </Anchors>
-                    </EditBox>
-                    </Frames>
-                </Frame>
-                <Frame name="$parent_Auction" hidden="true">
-               <Anchors>
-                   <Anchor point="TOPLEFT"/>
-                   <Anchor point="BOTTOMRIGHT"/>
-               </Anchors>
-                    <Layers>
-                        <Layer level="ARTWORK">
-                            <FontString name="$parent_Item" inherits="GameFontNormal" text="No Item Found!">
-                                <Anchors>
-                                    <Anchor point="TOP" relativePoint="TOP" relativeTo="$parent">
-                                        <Offset><AbsDimension x="0" y="-30"/></Offset>
-                                    </Anchor>
-                                </Anchors>
-                            </FontString>
-                            <FontString name="$parent_Winner" inherits="GameFontNormal" text="No Winner">
-                                <Anchors>
-                                    <Anchor point="BOTTOM" relativePoint="BOTTOM" relativeTo="$parent">
-                                        <Offset><AbsDimension x="50" y="25"/></Offset>
-                                    </Anchor>
-                                </Anchors>
-                            </FontString>
-                        </Layer>
-                    </Layers>
-                    <Frames>
-
-                    <Button name="$parent_sort_name">
-                        <Anchors>
-                            <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$parent">
-                                <Offset><AbsDimension x="0" y="-45"/></Offset>
-                            </Anchor>
-                        </Anchors>
-                        <Size><AbsDimension x="195" y="15"/></Size>
-                        <Layers>
-                            <Layer>
-                                <FontString name="$parent_name" inherits="GameFontHighlight" wraponspaces="false" justifyH="LEFT" enableMouse="true" text="Name">
-                                    <Anchors><Anchor relativePoint="CENTER" point="CENTER"/></Anchors>
-                                </FontString>
-                            </Layer>
-                        </Layers>
-                        <Scripts>
-                            <OnClick>NoobDKP_SortbyName(this);</OnClick>
-                        </Scripts>
-                    </Button>
-                    <Button name="$parent_sort_priority">
-                        <Anchors>
-                            <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="$parent_sort_name">
-                                <Offset><AbsDimension x="0" y="0"/></Offset>
-                            </Anchor>
-                        </Anchors>
-                        <Size><AbsDimension x="100" y="15"/></Size>
-                        <Layers>
-                            <Layer>
-                                <FontString name="$parent_rank" inherits="GameFontHighlight" wraponspaces="false" justifyH="LEFT" enableMouse="true" text="Priority">
-                                    <Anchors><Anchor relativePoint="CENTER" point="CENTER"/></Anchors>
-                                </FontString>
-                            </Layer>
-                        </Layers>
-                        <Scripts>
-                            <OnClick>NoobDKP_SortbyRank(this);</OnClick>
-                        </Scripts>
-                    </Button>
-                    <Button name="$parent_sort_score">
-                        <Anchors>
-                            <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="$parent_sort_priority">
-                                <Offset><AbsDimension x="0" y="0"/></Offset>
-                            </Anchor>
-                        </Anchors>
-                        <Size><AbsDimension x="50" y="15"/></Size>
-                        <Layers>
-                            <Layer>
-                                <FontString name="$parent_score" inherits="GameFontHighlight" wraponspaces="false" justifyH="LEFT" enableMouse="true" text="Score">
-                                    <Anchors><Anchor relativePoint="CENTER" point="CENTER"/></Anchors>
-                                </FontString>
-                            </Layer>
-                        </Layers>
-                        <Scripts>
-                            <OnClick>NoobDKP_SortbyScore(this);</OnClick>
-                        </Scripts>
-                    </Button>
-                    <Button name="$parent_sort_EP">
-                        <Anchors>
-                            <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="$parent_sort_score">
-                                <Offset><AbsDimension x="0" y="0"/></Offset>
-                            </Anchor>
-                        </Anchors>
-                        <Size><AbsDimension x="50" y="15"/></Size>
-                        <Layers>
-                            <Layer>
-                                <FontString name="$parent_EP" inherits="GameFontHighlight" wraponspaces="false" justifyH="LEFT" enableMouse="true" text="EP">
-                                    <Anchors><Anchor relativePoint="CENTER" point="CENTER"/></Anchors>
-                                </FontString>
-                            </Layer>
-                        </Layers>
-                        <Scripts>
-                            <OnClick>NoobDKP_SortbyEP(this);</OnClick>
-                        </Scripts>
-                    </Button>
-                    <Button name="$parent_sort_GP">
-                        <Anchors>
-                            <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="$parent_sort_EP">
-                                <Offset><AbsDimension x="0" y="0"/></Offset>
-                            </Anchor>
-                        </Anchors>
-                        <Size><AbsDimension x="50" y="15"/></Size>
-                        <Layers>
-                            <Layer>
-                                <FontString name="$parent_GP" inherits="GameFontHighlight" wraponspaces="false" justifyH="LEFT" enableMouse="true" text="GP">
-                                    <Anchors><Anchor relativePoint="CENTER" point="CENTER"/></Anchors>
-                                </FontString>
-                            </Layer>
-                        </Layers>
-                        <Scripts>
-                            <OnClick>NoobDKP_SortbyGP(this);</OnClick>
-                        </Scripts>
-                    </Button>
-                    <Button name="$parent_entry1" inherits="roster_list_template">
-                        <Anchors>
-                            <Anchor relativePoint="TOPLEFT" point="TOPLEFT" relativeTo="$parent">
-                                <Offset>
-                                    <AbsDimension x="10" y="-65" />
-                                </Offset>
-                            </Anchor>
-                        </Anchors>
-                    </Button>
-                    <Button name="$parent_entry2" inherits="roster_list_template">
-                        <Anchors>
-                            <Anchor relativePoint="BOTTOMLEFT" point="TOPLEFT" relativeTo="$parent_entry1">
-                                <Offset>
-                                    <AbsDimension x="0" y="-2" />
-                                </Offset>
-                            </Anchor>
-                        </Anchors>
-                    </Button>
-                    <Button name="$parent_entry3" inherits="roster_list_template">
-                        <Anchors>
-                            <Anchor relativePoint="BOTTOMLEFT" point="TOPLEFT" relativeTo="$parent_entry2">
-                                <Offset>
-                                    <AbsDimension x="0" y="-2" />
-                                </Offset>
-                            </Anchor>
-                        </Anchors>
-                    </Button>
-                    <Button name="$parent_entry4" inherits="roster_list_template">
-                        <Anchors>
-                            <Anchor relativePoint="BOTTOMLEFT" point="TOPLEFT" relativeTo="$parent_entry3">
-                                <Offset>
-                                    <AbsDimension x="0" y="-2" />
-                                </Offset>
-                            </Anchor>
-                        </Anchors>
-                    </Button>
-                    <Button name="$parent_entry5" inherits="roster_list_template">
-                        <Anchors>
-                            <Anchor relativePoint="BOTTOMLEFT" point="TOPLEFT" relativeTo="$parent_entry4">
-                                <Offset>
-                                    <AbsDimension x="0" y="-2" />
-                                </Offset>
-                            </Anchor>
-                        </Anchors>
-                    </Button>
-                    <Button name="$parent_entry6" inherits="roster_list_template">
-                        <Anchors>
-                            <Anchor relativePoint="BOTTOMLEFT" point="TOPLEFT" relativeTo="$parent_entry5">
-                                <Offset>
-                                    <AbsDimension x="0" y="-2" />
-                                </Offset>
-                            </Anchor>
-                        </Anchors>
-                    </Button>
-                    <Button name="$parent_entry7" inherits="roster_list_template">
-                        <Anchors>
-                            <Anchor relativePoint="BOTTOMLEFT" point="TOPLEFT" relativeTo="$parent_entry6">
-                                <Offset>
-                                    <AbsDimension x="0" y="-2" />
-                                </Offset>
-                            </Anchor>
-                        </Anchors>
-                    </Button>
-                    <Button name="$parent_entry8" inherits="roster_list_template">
-                        <Anchors>
-                            <Anchor relativePoint="BOTTOMLEFT" point="TOPLEFT" relativeTo="$parent_entry7">
-                                <Offset>
-                                    <AbsDimension x="0" y="-2" />
-                                </Offset>
-                            </Anchor>
-                        </Anchors>
-                    </Button>
-                    <Button name="$parent_entry9" inherits="roster_list_template">
-                        <Anchors>
-                            <Anchor relativePoint="BOTTOMLEFT" point="TOPLEFT" relativeTo="$parent_entry8">
-                                <Offset>
-                                    <AbsDimension x="0" y="-2" />
-                                </Offset>
-                            </Anchor>
-                        </Anchors>
-                    </Button>
-                    <Button name="$parent_entry10" inherits="roster_list_template">
-                        <Anchors>
-                            <Anchor relativePoint="BOTTOMLEFT" point="TOPLEFT" relativeTo="$parent_entry9">
-                                <Offset>
-                                    <AbsDimension x="0" y="-2" />
-                                </Offset>
-                            </Anchor>
-                        </Anchors>
-                    </Button>
-                    <Button name="$parent_cancelAuction" inherits="UIPanelButtonTemplate" text="Close Auction" >
-                        <Anchors>
-                            <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent" >
-                                <Offset><AbsDimension x="10" y="15"/></Offset>
-                            </Anchor>
-                        </Anchors>
-                        <Size><AbsDimension x="110" y="30" /></Size>
-                        <Scripts>
-                            <OnClick>
-                                NoobDKP_CancelAuction()
-                                NoobDKP_ShowAuctionTab()
-                            </OnClick>
-                        </Scripts>
-                    </Button>
-                    <Button name="$parent_finishAuction" inherits="UIPanelButtonTemplate" text="Declare Winner" >
-                        <Anchors>
-                            <Anchor point="LEFT" relativePoint="RIGHT" relativeTo="$parent_cancelAuction" >
-                                <Offset><AbsDimension x="10" y="0"/></Offset>
-                            </Anchor>
-                        </Anchors>
-                        <Size><AbsDimension x="110" y="30" /></Size>
-                        <Scripts>
-                            <OnClick>
-                            NoobDKP_HandleDeclareWinner()
-                            <!--
-                                NoobDKP_FinishAuction("")
-                                NoobDKP_ShowAuctionTab()
-                                -->
-                            </OnClick>
-                        </Scripts>
-                    </Button>
-                    <EditBox name="$parent_Amount" inherits="InputBoxTemplate" autoFocus="false" >
-                        <Size>
-                            <AbsDimension x="50" y="30"/>
-                        </Size>
-                        <Anchors>
-                            <Anchor point="BOTTOMLEFT" relativeTo="$parent">
-                                <Offset>
-                                    <AbsDimension x="360" y="15"/>
-                                </Offset>
-                            </Anchor>
-                        </Anchors>
-                        <Scripts>
-                          <OnEnterPressed>this:ClearFocus();</OnEnterPressed>
-                        </Scripts>
-                    </EditBox>
-                    <Button name="$parentAddGP" text="Add GP" inherits="UIPanelButtonTemplate">
-                        <Anchors>
-                            <Anchor point="BOTTOMLEFT" relativeTo="$parent">
-                                <Offset>
-                                    <AbsDimension x="415" y="15"/>
-                                </Offset>
-                            </Anchor>
-                        </Anchors>
-                        <Size>
-                            <AbsDimension x="55" y="30"/>
-                        </Size>
-                        <Scripts>
-                            <OnClick>NoobDKP_GPtoWinner();</OnClick>
-                        </Scripts>
-                    </Button>
-
-                    </Frames>
-                </Frame>
-               </Frames>
-               <Scripts>
-                    <OnShow>NoobDKP_ShowAuctionTab()</OnShow>
-               </Scripts> 
-           </Frame>
-           <Frame name="myTabPage4" hidden="true">
-               <Anchors>
-                   <Anchor point="TOPLEFT"/>
-                   <Anchor point="BOTTOMRIGHT"/>
-               </Anchors>
-               <Frames>
-               <Anchors>
-                   <Anchor point="TOPLEFT"/>
-                   <Anchor point="BOTTOMRIGHT"/>
-               </Anchors>
-                    <Button text="Full Report" inherits="UIPanelButtonTemplate">
-                        <Anchors>
-                            <Anchor point="BOTTOMLEFT" relativeTo="$parent">
-                                <Offset>
-                                    <AbsDimension x="15" y="15"/>
-                                </Offset>
-                            </Anchor>
-                        </Anchors>
-                        <Size>
-                            <AbsDimension x="80" y="30"/>
-                        </Size>
-                        <Scripts>
-                            <OnClick>NoobDKP_GenerateFullReport();</OnClick>
-                        </Scripts>
-                    </Button>
-                    <Button text="Brief Report" inherits="UIPanelButtonTemplate">
-                        <Anchors>
-                            <Anchor point="BOTTOMLEFT" relativeTo="$parent">
-                                <Offset>
-                                    <AbsDimension x="100" y="15"/>
-                                </Offset>
-                            </Anchor>
-                        </Anchors>
-                        <Size>
-                            <AbsDimension x="95" y="30"/>
-                        </Size>
-                        <Scripts>
-                            <OnClick>NoobDKP_GenerateBriefReport();</OnClick>
-                        </Scripts>
-                    </Button>
-                    <Button text="Alt Report" inherits="UIPanelButtonTemplate">
-                        <Anchors>
-                            <Anchor point="BOTTOMLEFT" relativeTo="$parent">
-                                <Offset>
-                                    <AbsDimension x="200" y="15"/>
-                                </Offset>
-                            </Anchor>
-                        </Anchors>
-                        <Size>
-                            <AbsDimension x="90" y="30"/>
-                        </Size>
-                        <Scripts>
-                            <OnClick>NoobDKP_GenerateAltReport();</OnClick>
-                        </Scripts>
-                    </Button>
-                    <EditBox name="$parent_Text" inherits="InputBoxTemplate" autoFocus="false">
-                      <Size><AbsDimension x="450" y="30"/></Size>
-                      <Anchors>
-                        <Anchor point="TOPLEFT" relativeTo="$parent">
-                          <Offset><AbsDimension x="15" y="-20"/></Offset>
-                        </Anchor>
-                      </Anchors>
-                      <Scripts>
-                        <OnTextChanged>
-                          if this:GetText() ~= "" then
-                            this:HighlightText()
-                            this:SetFocus()
-                          end
-                        </OnTextChanged>
-                          <OnEnterPressed>this:ClearFocus();</OnEnterPressed>
-                          <OnEscapePressed>this:ClearFocus();</OnEscapePressed>
-                      </Scripts>
-                    </EditBox>
-               </Frames> 
-           </Frame>
-           <Frame name="myTabPage5" hidden="true">
-               <Anchors>
-                   <Anchor point="TOPLEFT"/>
-                   <Anchor point="BOTTOMRIGHT"/>
-               </Anchors>
-               <Frames>
-                    <Button name="$parentPush" text="Push Data Back to Guild" inherits="UIPanelButtonTemplate">
-                        <Anchors>
-                            <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT">
-                                <Offset>
-                                    <AbsDimension x="10" y="15"/>
-                                </Offset>
-                            </Anchor>
-                        </Anchors>
-                        <Size>
-                            <AbsDimension x="160" y="25"/>
-                        </Size>
-                        <Scripts>
-                            <OnClick>NoobDKP_PushRoster();</OnClick>
-                        </Scripts>
-                    </Button>
-               </Frames> 
-           </Frame>
-           <Frame name="myTabPage6" hidden="true">
+                  </Layer>
+                </Layers>
+                <Scripts>
+                  <OnClick>NoobDKP_SortbyRank(this);</OnClick>
+                </Scripts>
+              </Button>
+              <Button name="$parent_sort_score">
+                <Anchors>
+                  <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="$parent_sort_priority">
+                    <Offset>
+                      <AbsDimension x="0" y="0" />
+                    </Offset>
+                  </Anchor>
+                </Anchors>
+                <Size>
+                  <AbsDimension x="50" y="15" />
+                </Size>
                 <Layers>
-                  <Layer level="ARTWORK">
-                    <FontString name="$parent_AdminText" inherits="GameFontNormal" text="Admin Mode">
+                  <Layer>
+                    <FontString name="$parent_score" inherits="GameFontHighlight" wraponspaces="false" justifyH="LEFT" enableMouse="true" text="Score">
                       <Anchors>
-                        <Anchor point="TOPLEFT" relativeTo="$parent">
-                          <Offset><AbsDimension x="15" y="-50"/> </Offset>
-                        </Anchor>
+                        <Anchor relativePoint="CENTER" point="CENTER" />
                       </Anchors>
                     </FontString>
-                    <FontString name="$parent_LootTableText" inherits="GameFontNormal" text="Populate Loot Table?">
+                  </Layer>
+                </Layers>
+                <Scripts>
+                  <OnClick>NoobDKP_SortbyScore(this);</OnClick>
+                </Scripts>
+              </Button>
+              <Button name="$parent_sort_EP">
+                <Anchors>
+                  <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="$parent_sort_score">
+                    <Offset>
+                      <AbsDimension x="0" y="0" />
+                    </Offset>
+                  </Anchor>
+                </Anchors>
+                <Size>
+                  <AbsDimension x="50" y="15" />
+                </Size>
+                <Layers>
+                  <Layer>
+                    <FontString name="$parent_EP" inherits="GameFontHighlight" wraponspaces="false" justifyH="LEFT" enableMouse="true" text="EP">
                       <Anchors>
-                        <Anchor point="TOPLEFT" relativeTo="$parent">
-                          <Offset><AbsDimension x="15" y="-75"/> </Offset>
-                        </Anchor>
+                        <Anchor relativePoint="CENTER" point="CENTER" />
                       </Anchors>
                     </FontString>
-                   </Layer>
-               </Layers>
-               <Anchors>
-                   <Anchor point="TOPLEFT"/>
-                   <Anchor point="BOTTOMRIGHT"/>
-               </Anchors>
-               <Frames>
-                    <Button name="$parentScan" text="Guild Scan" inherits="UIPanelButtonTemplate">
-                        <Anchors>
-                            <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT">
-                                <Offset>
-                                    <AbsDimension x="10" y="15"/>
-                                </Offset>
-                            </Anchor>
-                        </Anchors>
-                        <Size>
-                            <AbsDimension x="80" y="25"/>
-                        </Size>
-                        <Scripts>
-                            <OnClick>NoobDKP_ScanRoster();</OnClick>
-                        </Scripts>
-                    </Button>
-                    <Button name="$parentAuditRoster" text="Audit Guild Roster" inherits="UIPanelButtonTemplate">
-                        <Anchors>
-                            <Anchor point="TOPLEFT" relativeTo="$parent">
-                                <Offset>
-                                    <AbsDimension x="15" y="-20"/>
-                                </Offset>
-                            </Anchor>
-                        </Anchors>
-                        <Size>
-                            <AbsDimension x="130" y="25"/>
-                        </Size>
-                        <Scripts>
-                            <OnClick>NoobDKP_AuditRoster();</OnClick>
-                        </Scripts>
-                    </Button>
-                    <EditBox name="$parentExternalName" inherits="InputBoxTemplate" autoFocus="false">
-                        <Size>
-                            <AbsDimension x="90" y="25"/>
-                        </Size>
-                        <Anchors>
-                            <Anchor relativePoint="TOP" point="TOP">
-                                <Offset>
-                                    <AbsDimension x="85" y="-20"/>
-                                </Offset>
-                            </Anchor>
-                        </Anchors>
-                    </EditBox>
-                   <Button name="$parentAddExternal" text="Add External" inherits="UIPanelButtonTemplate">
-                        <Anchors>
-                            <Anchor point="TOPRIGHT" relativePoint="TOPRIGHT">
-                                <Offset>
-                                    <AbsDimension x="-10" y="-20"/>
-                                </Offset>
-                            </Anchor>
-                        </Anchors>
-                        <Size>
-                            <AbsDimension x="100" y="25"/>
-                        </Size>
-                        <Scripts>
-                            <OnClick>
-                                local nameText = getglobal("myTabPage1ExternalName")
-                                NoobDKP_AddRoster(nameText:GetText())
-                                NoobDKP_VerticalScroll(this, 1)
-                                nameText:ClearFocus()
-                            </OnClick>
-                        </Scripts>
-                    </Button>
-                   <CheckButton name="$parentAdmin" inherits="UICheckButtonTemplate">
-                        <Anchors>
-                            <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="$parent_AdminText">
-                                <Offset>
-                                    <AbsDimension x="5" y="5"/>
-                                </Offset>
-                            </Anchor>
-                        </Anchors>
-                        <Size>
-                            <AbsDimension x="25" y="25"/>
-                        </Size>
-                        <Scripts>
-                            <OnClick>
-                                NOOBDKP_g_options["admin_mode"] = this:GetChecked()
-                            </OnClick>
-                            <OnShow>
-                              if NOOBDKP_g_options["admin_mode"] then
-                                this:SetChecked(true)
-                              end
-                            </OnShow>
-                        </Scripts>
-                    </CheckButton>
-                   <CheckButton name="$parentLootTable" inherits="UICheckButtonTemplate">
-                        <Anchors>
-                            <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="$parent_LootTableText">
-                                <Offset>
-                                    <AbsDimension x="5" y="5"/>
-                                </Offset>
-                            </Anchor>
-                        </Anchors>
-                        <Size>
-                            <AbsDimension x="25" y="25"/>
-                        </Size>
-                        <Scripts>
-                            <OnClick>
-                                NOOBDKP_g_options["loot_table"] = this:GetChecked()
-                            </OnClick>
-                            <OnShow>
-                              if NOOBDKP_g_options["loot_table"] then
-                                this:SetChecked(true)
-                              end
-                            </OnShow>
-                        </Scripts>
-                    </CheckButton>
-               </Frames> 
-           </Frame>
-           <Button name="$parentTab1" inherits="CharacterFrameTabButtonTemplate" id="1" text="Roster">
-               <Anchors>
-                   <Anchor point="CENTER" relativePoint="BOTTOMLEFT">
-                       <Offset>
-                           <AbsDimension x="60" y="-12"/>
-                       </Offset>
-                   </Anchor>
-               </Anchors>
-               <Scripts>
-                   <OnClick>
-                       PanelTemplates_SetTab(noobMainFrame, 1);
-                       myTabPage1:Show();
-                       myTabPage2:Hide();
-                       myTabPage3:Hide();
-                       myTabPage4:Hide();
-                       myTabPage5:Hide();
-                       myTabPage6:Hide();
-                   </OnClick>
-               </Scripts>
-           </Button>
-           <Button name="$parentTab2" inherits="CharacterFrameTabButtonTemplate" id="2" text="Events">
-               <Anchors>
-                   <Anchor point="LEFT" relativeTo="$parentTab1" relativePoint="RIGHT">
-                       <Offset>
-                           <AbsDimension x="-16" y="0"/>
-                       </Offset>
-                   </Anchor>
-               </Anchors>
-               <Scripts>
-                   <OnClick>
-                       PanelTemplates_SetTab(noobMainFrame, 2);
-                       myTabPage1:Hide();
-                       myTabPage2:Show();
-                       myTabPage3:Hide();
-                       myTabPage4:Hide();
-                       myTabPage5:Hide();
-                       myTabPage6:Hide();
-                   </OnClick>
-               </Scripts>
-           </Button>
-           <Button name="$parentTab3" inherits="CharacterFrameTabButtonTemplate" id="3" text="Auctions">
-               <Anchors>
-                   <Anchor point="LEFT" relativeTo="$parentTab2" relativePoint="RIGHT">
-                       <Offset>
-                           <AbsDimension x="-16" y="0"/>
-                       </Offset>
-                   </Anchor>
-               </Anchors>
-               <Scripts>
-                   <OnClick>
-                       PanelTemplates_SetTab(noobMainFrame, 3);
-                       myTabPage1:Hide();
-                       myTabPage2:Hide();
-                       myTabPage3:Show();
-                       myTabPage4:Hide();
-                       myTabPage5:Hide();
-                       myTabPage6:Hide();
-                   </OnClick>
-               </Scripts>
-           </Button>
-           <Button name="$parentTab4" inherits="CharacterFrameTabButtonTemplate" id="4" text="Reports">
-               <Anchors>
-                   <Anchor point="LEFT" relativeTo="$parentTab3" relativePoint="RIGHT">
-                       <Offset>
-                           <AbsDimension x="-16" y="0"/>
-                       </Offset>
-                   </Anchor>
-               </Anchors>
-               <Scripts>
-                   <OnClick>
-                       PanelTemplates_SetTab(noobMainFrame, 4);
-                       myTabPage1:Hide();
-                       myTabPage2:Hide();
-                       myTabPage3:Hide();
-                       myTabPage4:Show();
-                       myTabPage5:Hide();
-                       myTabPage6:Hide();
-                   </OnClick>
-               </Scripts>
-           </Button>
-           <Button name="$parentTab5" inherits="CharacterFrameTabButtonTemplate" id="5" text="Sync">
-               <Anchors>
-                   <Anchor point="LEFT" relativeTo="$parentTab4" relativePoint="RIGHT">
-                       <Offset>
-                           <AbsDimension x="-16" y="0"/>
-                       </Offset>
-                   </Anchor>
-               </Anchors>
-               <Scripts>
-                   <OnClick>
-                       PanelTemplates_SetTab(noobMainFrame, 5);
-                       myTabPage1:Hide();
-                       myTabPage2:Hide();
-                       myTabPage3:Hide();
-                       myTabPage4:Hide();
-                       myTabPage5:Show();
-                       myTabPage6:Hide();
-                   </OnClick>
-               </Scripts>
-           </Button>
-           <Button name="$parentTab6" inherits="CharacterFrameTabButtonTemplate" id="6" text="Options">
-               <Anchors>
-                   <Anchor point="LEFT" relativeTo="$parentTab5" relativePoint="RIGHT">
-                       <Offset>
-                           <AbsDimension x="-16" y="0"/>
-                       </Offset>
-                   </Anchor>
-               </Anchors>
-               <Scripts>
-                   <OnClick>
-                       PanelTemplates_SetTab(noobMainFrame, 6);
-                       myTabPage1:Hide();
-                       myTabPage2:Hide();
-                       myTabPage3:Hide();
-                       myTabPage4:Hide();
-                       myTabPage5:Hide();
-                       myTabPage6:Show();
-                   </OnClick>
-               </Scripts>
-           </Button>
-       </Frames>
-       <Scripts>
-        <OnEvent function="NoobDKP_OnEvent"/>
-           <OnLoad>
-               this.elapsed = 0;
-               PanelTemplates_SetNumTabs(noobMainFrame, 6);
-               PanelTemplates_SetTab(noobMainFrame, 1);
-               this:RegisterForDrag("LeftButton");
-               this:RegisterEvent("CHAT_MSG_RAID");
-               this:RegisterEvent("CHAT_MSG_RAID_LEADER");
-               this:RegisterEvent("CHAT_MSG_WHISPER");
-               this:RegisterEvent("RAID_ROSTER_UPDATE");
-           </OnLoad>
-           <OnShow>
-               PlaySound("UChatScrollButton");
-               PanelTemplates_SetTab(noobMainFrame, 1);
-               myTabPage1:Show()
-               myTabPage2:Hide()
-               myTabPage3:Hide()
-               myTabPage4:Hide()
-               myTabPage5:Hide()
-               myTabPage6:Hide()
-           </OnShow>
-           <OnHide>
-               PlaySound("UChatScrollButton");
-           </OnHide>
-           <OnDragStart>
-            this:StartMoving();
-            this.isMoving = true;
-        </OnDragStart>
+                  </Layer>
+                </Layers>
+                <Scripts>
+                  <OnClick>NoobDKP_SortbyEP(this);</OnClick>
+                </Scripts>
+              </Button>
+              <Button name="$parent_sort_GP">
+                <Anchors>
+                  <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="$parent_sort_EP">
+                    <Offset>
+                      <AbsDimension x="0" y="0" />
+                    </Offset>
+                  </Anchor>
+                </Anchors>
+                <Size>
+                  <AbsDimension x="50" y="15" />
+                </Size>
+                <Layers>
+                  <Layer>
+                    <FontString name="$parent_GP" inherits="GameFontHighlight" wraponspaces="false" justifyH="LEFT" enableMouse="true" text="GP">
+                      <Anchors>
+                        <Anchor relativePoint="CENTER" point="CENTER" />
+                      </Anchors>
+                    </FontString>
+                  </Layer>
+                </Layers>
+                <Scripts>
+                  <OnClick>NoobDKP_SortbyGP(this);</OnClick>
+                </Scripts>
+              </Button>
+              <Button name="$parent_entry1" inherits="roster_list_template">
+                <Anchors>
+                  <Anchor relativePoint="TOPLEFT" point="TOPLEFT" relativeTo="$parent">
+                    <Offset>
+                      <AbsDimension x="10" y="-65" />
+                    </Offset>
+                  </Anchor>
+                </Anchors>
+              </Button>
+              <Button name="$parent_entry2" inherits="roster_list_template">
+                <Anchors>
+                  <Anchor relativePoint="BOTTOMLEFT" point="TOPLEFT" relativeTo="$parent_entry1">
+                    <Offset>
+                      <AbsDimension x="0" y="-2" />
+                    </Offset>
+                  </Anchor>
+                </Anchors>
+              </Button>
+              <Button name="$parent_entry3" inherits="roster_list_template">
+                <Anchors>
+                  <Anchor relativePoint="BOTTOMLEFT" point="TOPLEFT" relativeTo="$parent_entry2">
+                    <Offset>
+                      <AbsDimension x="0" y="-2" />
+                    </Offset>
+                  </Anchor>
+                </Anchors>
+              </Button>
+              <Button name="$parent_entry4" inherits="roster_list_template">
+                <Anchors>
+                  <Anchor relativePoint="BOTTOMLEFT" point="TOPLEFT" relativeTo="$parent_entry3">
+                    <Offset>
+                      <AbsDimension x="0" y="-2" />
+                    </Offset>
+                  </Anchor>
+                </Anchors>
+              </Button>
+              <Button name="$parent_entry5" inherits="roster_list_template">
+                <Anchors>
+                  <Anchor relativePoint="BOTTOMLEFT" point="TOPLEFT" relativeTo="$parent_entry4">
+                    <Offset>
+                      <AbsDimension x="0" y="-2" />
+                    </Offset>
+                  </Anchor>
+                </Anchors>
+              </Button>
+              <Button name="$parent_entry6" inherits="roster_list_template">
+                <Anchors>
+                  <Anchor relativePoint="BOTTOMLEFT" point="TOPLEFT" relativeTo="$parent_entry5">
+                    <Offset>
+                      <AbsDimension x="0" y="-2" />
+                    </Offset>
+                  </Anchor>
+                </Anchors>
+              </Button>
+              <Button name="$parent_entry7" inherits="roster_list_template">
+                <Anchors>
+                  <Anchor relativePoint="BOTTOMLEFT" point="TOPLEFT" relativeTo="$parent_entry6">
+                    <Offset>
+                      <AbsDimension x="0" y="-2" />
+                    </Offset>
+                  </Anchor>
+                </Anchors>
+              </Button>
+              <Button name="$parent_entry8" inherits="roster_list_template">
+                <Anchors>
+                  <Anchor relativePoint="BOTTOMLEFT" point="TOPLEFT" relativeTo="$parent_entry7">
+                    <Offset>
+                      <AbsDimension x="0" y="-2" />
+                    </Offset>
+                  </Anchor>
+                </Anchors>
+              </Button>
+              <Button name="$parent_entry9" inherits="roster_list_template">
+                <Anchors>
+                  <Anchor relativePoint="BOTTOMLEFT" point="TOPLEFT" relativeTo="$parent_entry8">
+                    <Offset>
+                      <AbsDimension x="0" y="-2" />
+                    </Offset>
+                  </Anchor>
+                </Anchors>
+              </Button>
+              <Button name="$parent_entry10" inherits="roster_list_template">
+                <Anchors>
+                  <Anchor relativePoint="BOTTOMLEFT" point="TOPLEFT" relativeTo="$parent_entry9">
+                    <Offset>
+                      <AbsDimension x="0" y="-2" />
+                    </Offset>
+                  </Anchor>
+                </Anchors>
+              </Button>
+              <Button name="$parent_cancelAuction" inherits="UIPanelButtonTemplate" text="Close Auction">
+                <Anchors>
+                  <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent">
+                    <Offset>
+                      <AbsDimension x="10" y="15" />
+                    </Offset>
+                  </Anchor>
+                </Anchors>
+                <Size>
+                  <AbsDimension x="110" y="30" />
+                </Size>
+                <Scripts>
+                  <OnClick>
+                    NoobDKP_CancelAuction()
+                    NoobDKP_ShowAuctionTab()
+                  </OnClick>
+                </Scripts>
+              </Button>
+              <Button name="$parent_finishAuction" inherits="UIPanelButtonTemplate" text="Declare Winner">
+                <Anchors>
+                  <Anchor point="LEFT" relativePoint="RIGHT" relativeTo="$parent_cancelAuction">
+                    <Offset>
+                      <AbsDimension x="10" y="0" />
+                    </Offset>
+                  </Anchor>
+                </Anchors>
+                <Size>
+                  <AbsDimension x="110" y="30" />
+                </Size>
+                <Scripts>
+                  <OnClick>
+                    NoobDKP_HandleDeclareWinner()
+                  </OnClick>
+                </Scripts>
+              </Button>
+              <EditBox name="$parent_Amount" inherits="InputBoxTemplate" autoFocus="false">
+                <Size>
+                  <AbsDimension x="50" y="30" />
+                </Size>
+                <Anchors>
+                  <Anchor point="BOTTOMLEFT" relativeTo="$parent">
+                    <Offset>
+                      <AbsDimension x="360" y="15" />
+                    </Offset>
+                  </Anchor>
+                </Anchors>
+                <Scripts>
+                  <OnEnterPressed>this:ClearFocus();</OnEnterPressed>
+                </Scripts>
+              </EditBox>
+              <Button name="$parentAddGP" text="Add GP" inherits="UIPanelButtonTemplate">
+                <Anchors>
+                  <Anchor point="BOTTOMLEFT" relativeTo="$parent">
+                    <Offset>
+                      <AbsDimension x="415" y="15" />
+                    </Offset>
+                  </Anchor>
+                </Anchors>
+                <Size>
+                  <AbsDimension x="55" y="30" />
+                </Size>
+                <Scripts>
+                  <OnClick>NoobDKP_GPtoWinner();</OnClick>
+                </Scripts>
+              </Button>
+            </Frames>
+          </Frame>
+        </Frames>
+        <Scripts>
+          <OnShow>NoobDKP_ShowAuctionTab()</OnShow>
+        </Scripts>
+      </Frame>
+      <Frame name="myTabPage4" hidden="true">
+        <Anchors>
+          <Anchor point="TOPLEFT" />
+          <Anchor point="BOTTOMRIGHT" />
+        </Anchors>
+        <Frames>
+          <Anchors>
+            <Anchor point="TOPLEFT" />
+            <Anchor point="BOTTOMRIGHT" />
+          </Anchors>
+          <Button text="Full Report" inherits="UIPanelButtonTemplate">
+            <Anchors>
+              <Anchor point="BOTTOMLEFT" relativeTo="$parent">
+                <Offset>
+                  <AbsDimension x="15" y="15" />
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Size>
+              <AbsDimension x="80" y="30" />
+            </Size>
+            <Scripts>
+              <OnClick>NoobDKP_GenerateFullReport();</OnClick>
+            </Scripts>
+          </Button>
+          <Button text="Brief Report" inherits="UIPanelButtonTemplate">
+            <Anchors>
+              <Anchor point="BOTTOMLEFT" relativeTo="$parent">
+                <Offset>
+                  <AbsDimension x="100" y="15" />
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Size>
+              <AbsDimension x="95" y="30" />
+            </Size>
+            <Scripts>
+              <OnClick>NoobDKP_GenerateBriefReport();</OnClick>
+            </Scripts>
+          </Button>
+          <Button text="Alt Report" inherits="UIPanelButtonTemplate">
+            <Anchors>
+              <Anchor point="BOTTOMLEFT" relativeTo="$parent">
+                <Offset>
+                  <AbsDimension x="200" y="15" />
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Size>
+              <AbsDimension x="90" y="30" />
+            </Size>
+            <Scripts>
+              <OnClick>NoobDKP_GenerateAltReport();</OnClick>
+            </Scripts>
+          </Button>
+          <EditBox name="$parent_Text" inherits="InputBoxTemplate" autoFocus="false">
+            <Size>
+              <AbsDimension x="450" y="30" />
+            </Size>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativeTo="$parent">
+                <Offset>
+                  <AbsDimension x="15" y="-20" />
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnTextChanged>
+                if this:GetText() ~= "" then
+                  this:HighlightText()
+                  this:SetFocus()
+                end
+              </OnTextChanged>
+              <OnEnterPressed>this:ClearFocus();</OnEnterPressed>
+              <OnEscapePressed>this:ClearFocus();</OnEscapePressed>
+            </Scripts>
+          </EditBox>
+        </Frames>
+      </Frame>
+      <Frame name="myTabPage5" hidden="true">
+        <Anchors>
+          <Anchor point="TOPLEFT" />
+          <Anchor point="BOTTOMRIGHT" />
+        </Anchors>
+        <Frames>
+          <Button name="$parentPush" text="Push Data Back to Guild" inherits="UIPanelButtonTemplate">
+            <Anchors>
+              <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT">
+                <Offset>
+                  <AbsDimension x="10" y="15" />
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Size>
+              <AbsDimension x="160" y="25" />
+            </Size>
+            <Scripts>
+              <OnClick>NoobDKP_PushRoster();</OnClick>
+            </Scripts>
+          </Button>
+        </Frames>
+      </Frame>
+      <Frame name="myTabPage6" hidden="true">
+        <Layers>
+          <Layer level="ARTWORK">
+            <FontString name="$parent_AdminText" inherits="GameFontNormal" text="Admin Mode">
+              <Anchors>
+                <Anchor point="TOPLEFT" relativeTo="$parent">
+                  <Offset>
+                    <AbsDimension x="15" y="-50" />
+                  </Offset>
+                </Anchor>
+              </Anchors>
+            </FontString>
+            <FontString name="$parent_LootTableText" inherits="GameFontNormal" text="Populate Loot Table?">
+              <Anchors>
+                <Anchor point="TOPLEFT" relativeTo="$parent">
+                  <Offset>
+                    <AbsDimension x="15" y="-75" />
+                  </Offset>
+                </Anchor>
+              </Anchors>
+            </FontString>
+            <FontString name="$parent_LootNeedGreedText" inherits="GameFontNormal" text="Show Need/Greed for Auctions?">
+              <Anchors>
+                <Anchor point="TOPLEFT" relativeTo="$parent">
+                  <Offset>
+                    <AbsDimension x="15" y="-100" />
+                  </Offset>
+                </Anchor>
+              </Anchors>
+            </FontString>
+            <FontString name="$parent_DecayPercentText" inherits="GameFontNormal" text="Decay Percentage:">
+              <Anchors>
+                <Anchor point="TOPLEFT" relativeTo="$parent">
+                  <Offset>
+                    <AbsDimension x="15" y="-125" />
+                  </Offset>
+                </Anchor>
+              </Anchors>
+            </FontString>
+          </Layer>
+        </Layers>
+        <Anchors>
+          <Anchor point="TOPLEFT" />
+          <Anchor point="BOTTOMRIGHT" />
+        </Anchors>
+        <Frames>
+          <Button name="$parentScan" text="Guild Scan" inherits="UIPanelButtonTemplate">
+            <Anchors>
+              <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT">
+                <Offset>
+                  <AbsDimension x="10" y="15" />
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Size>
+              <AbsDimension x="80" y="25" />
+            </Size>
+            <Scripts>
+              <OnClick>NoobDKP_ScanRoster();</OnClick>
+            </Scripts>
+          </Button>
+          <Button name="$parentAuditRoster" text="Audit Guild Roster" inherits="UIPanelButtonTemplate">
+            <Anchors>
+              <Anchor point="TOPLEFT" relativeTo="$parent">
+                <Offset>
+                  <AbsDimension x="15" y="-20" />
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Size>
+              <AbsDimension x="130" y="25" />
+            </Size>
+            <Scripts>
+              <OnClick>NoobDKP_AuditRoster();</OnClick>
+            </Scripts>
+          </Button>
+          <EditBox name="$parentExternalName" inherits="InputBoxTemplate" autoFocus="false">
+            <Size>
+              <AbsDimension x="90" y="25" />
+            </Size>
+            <Anchors>
+              <Anchor relativePoint="TOP" point="TOP">
+                <Offset>
+                  <AbsDimension x="85" y="-20" />
+                </Offset>
+              </Anchor>
+            </Anchors>
+          </EditBox>
+          <Button name="$parentAddExternal" text="Add External" inherits="UIPanelButtonTemplate">
+            <Anchors>
+              <Anchor point="TOPRIGHT" relativePoint="TOPRIGHT">
+                <Offset>
+                  <AbsDimension x="-10" y="-20" />
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Size>
+              <AbsDimension x="100" y="25" />
+            </Size>
+            <Scripts>
+              <OnClick>
+                local nameText = getglobal("myTabPage1ExternalName")
+                NoobDKP_AddRoster(nameText:GetText())
+                NoobDKP_VerticalScroll(this, 1)
+                nameText:ClearFocus()
+              </OnClick>
+            </Scripts>
+          </Button>
+          <CheckButton name="$parentAdmin" inherits="UICheckButtonTemplate">
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="$parent_AdminText">
+                <Offset>
+                  <AbsDimension x="5" y="5" />
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Size>
+              <AbsDimension x="25" y="25" />
+            </Size>
+            <Scripts>
+              <OnClick>
+                NOOBDKP_g_options["admin_mode"] = this:GetChecked()
+              </OnClick>
+              <OnShow>
+                if NOOBDKP_g_options["admin_mode"] then
+                  this:SetChecked(true)
+                end
+              </OnShow>
+            </Scripts>
+          </CheckButton>
+          <CheckButton name="$parentLootTable" inherits="UICheckButtonTemplate">
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="$parent_LootTableText">
+                <Offset>
+                  <AbsDimension x="5" y="5" />
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Size>
+              <AbsDimension x="25" y="25" />
+            </Size>
+            <Scripts>
+              <OnClick>
+                NOOBDKP_g_options["loot_table"] = this:GetChecked()
+              </OnClick>
+              <OnShow>
+                if NOOBDKP_g_options["loot_table"] then
+                  this:SetChecked(true)
+                end
+              </OnShow>
+            </Scripts>
+          </CheckButton>
+          <CheckButton name="$parentLootNeedGreed" inherits="UICheckButtonTemplate">
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="$parent_LootNeedGreedText">
+                <Offset>
+                  <AbsDimension x="5" y="5" />
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Size>
+              <AbsDimension x="25" y="25" />
+            </Size>
+            <Scripts>
+              <OnClick>
+                NOOBDKP_g_options["loot_need_greed"] = this:GetChecked()
+              </OnClick>
+              <OnShow>
+                if NOOBDKP_g_options["loot_need_greed"] then
+                  this:SetChecked(true)
+                end
+              </OnShow>
+            </Scripts>
+          </CheckButton>
+          <EditBox name="$parentDecayPercent" inherits="InputBoxTemplate" autoFocus="false">
+            <Size>
+              <AbsDimension x="40" y="25" />
+            </Size>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="$parent_DecayPercentText">
+                <Offset>
+                  <AbsDimension x="5" y="5" />
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnShow>this:SetText(NOOBDKP_g_options["decay_percent"]);</OnShow>
+              <OnEnterPressed>
+                NOOBDKP_g_options["decay_percent"] = tonumber(this:GetText())
+                this:ClearFocus();
+              </OnEnterPressed>
+            </Scripts>
+          </EditBox>
+          <Button name="$parentDecay" text="Run Decay Now" inherits="UIPanelButtonTemplate">
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="$parentDecayPercent">
+                <Offset>
+                  <AbsDimension x="5" y="0" />
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Size>
+              <AbsDimension x="110" y="25" />
+            </Size>
+            <Scripts>
+              <OnClick>
+                local textbox = getglobal("myTabPage6DecayPercent");
+                local decay = tonumber(textbox:GetText());
+                NOOBDKP_g_options["decay_percent"] = decay;
+                textbox:ClearFocus();
+                NoobDKP_Decay();
+              </OnClick>
+            </Scripts>
+          </Button>
+        </Frames>
+      </Frame>
+      <Button name="$parentTab1" inherits="CharacterFrameTabButtonTemplate" id="1" text="Roster">
+        <Anchors>
+          <Anchor point="CENTER" relativePoint="BOTTOMLEFT">
+            <Offset>
+              <AbsDimension x="60" y="-12" />
+            </Offset>
+          </Anchor>
+        </Anchors>
+        <Scripts>
+          <OnClick>
+            PanelTemplates_SetTab(noobMainFrame, 1);
+            myTabPage1:Show();
+            myTabPage2:Hide();
+            myTabPage3:Hide();
+            myTabPage4:Hide();
+            myTabPage5:Hide();
+            myTabPage6:Hide();
+          </OnClick>
+        </Scripts>
+      </Button>
+      <Button name="$parentTab2" inherits="CharacterFrameTabButtonTemplate" id="2" text="Events">
+        <Anchors>
+          <Anchor point="LEFT" relativeTo="$parentTab1" relativePoint="RIGHT">
+            <Offset>
+              <AbsDimension x="-16" y="0" />
+            </Offset>
+          </Anchor>
+        </Anchors>
+        <Scripts>
+          <OnClick>
+            PanelTemplates_SetTab(noobMainFrame, 2);
+            myTabPage1:Hide();
+            myTabPage2:Show();
+            myTabPage3:Hide();
+            myTabPage4:Hide();
+            myTabPage5:Hide();
+            myTabPage6:Hide();
+          </OnClick>
+        </Scripts>
+      </Button>
+      <Button name="$parentTab3" inherits="CharacterFrameTabButtonTemplate" id="3" text="Auctions">
+        <Anchors>
+          <Anchor point="LEFT" relativeTo="$parentTab2" relativePoint="RIGHT">
+            <Offset>
+              <AbsDimension x="-16" y="0" />
+            </Offset>
+          </Anchor>
+        </Anchors>
+        <Scripts>
+          <OnClick>
+            PanelTemplates_SetTab(noobMainFrame, 3);
+            myTabPage1:Hide();
+            myTabPage2:Hide();
+            myTabPage3:Show();
+            myTabPage4:Hide();
+            myTabPage5:Hide();
+            myTabPage6:Hide();
+          </OnClick>
+        </Scripts>
+      </Button>
+      <Button name="$parentTab4" inherits="CharacterFrameTabButtonTemplate" id="4" text="Reports">
+        <Anchors>
+          <Anchor point="LEFT" relativeTo="$parentTab3" relativePoint="RIGHT">
+            <Offset>
+              <AbsDimension x="-16" y="0" />
+            </Offset>
+          </Anchor>
+        </Anchors>
+        <Scripts>
+          <OnClick>
+            PanelTemplates_SetTab(noobMainFrame, 4);
+            myTabPage1:Hide();
+            myTabPage2:Hide();
+            myTabPage3:Hide();
+            myTabPage4:Show();
+            myTabPage5:Hide();
+            myTabPage6:Hide();
+          </OnClick>
+        </Scripts>
+      </Button>
+      <Button name="$parentTab5" inherits="CharacterFrameTabButtonTemplate" id="5" text="Sync">
+        <Anchors>
+          <Anchor point="LEFT" relativeTo="$parentTab4" relativePoint="RIGHT">
+            <Offset>
+              <AbsDimension x="-16" y="0" />
+            </Offset>
+          </Anchor>
+        </Anchors>
+        <Scripts>
+          <OnClick>
+            PanelTemplates_SetTab(noobMainFrame, 5);
+            myTabPage1:Hide();
+            myTabPage2:Hide();
+            myTabPage3:Hide();
+            myTabPage4:Hide();
+            myTabPage5:Show();
+            myTabPage6:Hide();
+          </OnClick>
+        </Scripts>
+      </Button>
+      <Button name="$parentTab6" inherits="CharacterFrameTabButtonTemplate" id="6" text="Options">
+        <Anchors>
+          <Anchor point="LEFT" relativeTo="$parentTab5" relativePoint="RIGHT">
+            <Offset>
+              <AbsDimension x="-16" y="0" />
+            </Offset>
+          </Anchor>
+        </Anchors>
+        <Scripts>
+          <OnClick>
+            PanelTemplates_SetTab(noobMainFrame, 6);
+            myTabPage1:Hide();
+            myTabPage2:Hide();
+            myTabPage3:Hide();
+            myTabPage4:Hide();
+            myTabPage5:Hide();
+            myTabPage6:Show();
+          </OnClick>
+        </Scripts>
+      </Button>
+    </Frames>
+    <Scripts>
+      <OnEvent function="NoobDKP_OnEvent" />
+      <OnLoad>
+        this.elapsed = 0;
+        PanelTemplates_SetNumTabs(noobMainFrame, 6);
+        PanelTemplates_SetTab(noobMainFrame, 1);
+        this:RegisterForDrag("LeftButton");
+        this:RegisterEvent("CHAT_MSG_RAID");
+        this:RegisterEvent("CHAT_MSG_RAID_LEADER");
+        this:RegisterEvent("CHAT_MSG_WHISPER");
+        this:RegisterEvent("RAID_ROSTER_UPDATE");
+      </OnLoad>
+      <OnShow>
+        PlaySound("UChatScrollButton");
+        PanelTemplates_SetTab(noobMainFrame, 1);
+        myTabPage1:Show()
+        myTabPage2:Hide()
+        myTabPage3:Hide()
+        myTabPage4:Hide()
+        myTabPage5:Hide()
+        myTabPage6:Hide()
+      </OnShow>
+      <OnHide>
+        PlaySound("UChatScrollButton");
+      </OnHide>
+      <OnDragStart>
+        this:StartMoving();
+        this.isMoving = true;
+      </OnDragStart>
       <OnDragStop>
         this:StopMovingOrSizing();
         this.isMoving = false;
       </OnDragStop>
-       </Scripts>
-   </Frame>
+    </Scripts>
+  </Frame>
 </Ui>
