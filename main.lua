@@ -21,6 +21,7 @@
         - Add countdown to window when auction started, possibly broadcast to raid (with checkbox)
         - Option to have Declare Winner set GP and close auction all at once (or have separate actions)
         - trim need/greed of whitespace
+        - Add a "disqualify" function and checkbox to exclude someome from a auction
     - Reports Tab
     - Sync Tab
         - Show who else has addon and what version

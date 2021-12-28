@@ -491,6 +491,16 @@ function NoobDKP_HandleAuctionResponse(type, ...)
     if type == "item" then
       local item = ...
       SendChatMessage("NoobDKP: Auction starting for item " .. item, "RAID")
+      if NOOBDKP_g_loot_table[item] ~= nil then
+        local need = NOOBDKP_g_loot_table[item]["need"]
+        if need ~= nil and need ~= "" then
+          SendChatMessage("NoobDKP: Need = " .. need, "RAID")
+        end
+        local greed = NOOBDKP_g_loot_table[item]["greed"]
+        if greed ~= nil and greed ~= "" then
+          SendChatMessage("NoobDKP: Greed = " .. greed, "RAID")
+        end
+      end
     elseif type =="force_greed" then
       local name = ...
       SendChatMessage("NoobDKP: " .. name .. " does not have " .. NOOBDKP_g_options["min_EP"] .. " EP, setting to greed bid", "RAID")
@@ -570,31 +580,25 @@ function NoobDKP_HandleUpdateAuction()
   end
 end
 
+function NoobDKP_PopulateLootTable(item)
+  if NOOBDKP_g_loot_table[item] == nil or NOOBDKP_g_loot_table[item] == "" then
+    print("Populating Loot Table with " .. item)
+    NOOBDKP_g_loot_table[item] = {}
+    NOOBDKP_g_loot_table[item]["need"] = {}
+    NOOBDKP_g_loot_table[item]["greed"] = {}
+  end
+end
+
 function NoobDKP_ShiftClickItem(item)
-  NoobDKP_HandleCreateAuction(item)
-  NoobDKP_HandleUpdateAuction()
-  NoobDKP_HandleAuctionTab()
-  NoobDKP_HandleAuctionResponse("item", item)
-
-  --[[
-  print("Starting auction for: " .. item)
-  NOOBDKP_g_auction = nil
---  if NOOBDKP_g_auction == nil then
-    NOOBDKP_g_auction = {_item = item}
-    NoobDKP_ShowAuctionTab()
-
-    local name, _, _, iLvl, _, _, _, _, iSlot = GetItemInfo(item)
-    if name == nil then name = "" end
-    if iLvl == nil then iLvl = "" end
-    if iSlot == nil then iSlot = "" end
-    print("name: " .. name .. " iLvl: " .. iLvl .. " slot: " .. iSlot)
-    -- todo: construct option name, get from option table, set GP
-
-    if NOOBDKP_g_options["admin_mode"] then
-      SendChatMessage("NoobDKP: Auction starting for item " .. item, "RAID")
-    end
- -- end
- ]]
+  if getglobal("noobMainFrame"):IsShown() then
+    NoobDKP_HandleCreateAuction(item)
+    NoobDKP_HandleUpdateAuction()
+    NoobDKP_HandleAuctionTab()
+    NoobDKP_HandleAuctionResponse("item", item)
+  end
+  if NOOBDKP_g_options["loot_table"] then
+    NoobDKP_PopulateLootTable(item)
+  end
 end
 
 hooksecurefunc("ChatEdit_InsertLink",NoobDKP_ShiftClickItem)
