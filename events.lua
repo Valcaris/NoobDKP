@@ -127,5 +127,5 @@ function NoobDKP_AddRaidEP()
   getglobal("myTabPage2_Amount"):ClearFocus()
   getglobal("myTabPage2_Reason"):ClearFocus()
   NoobDKP_UpdateRoster()
-  NoobDKP_UpdateAuction()
+  NoobDKP_HandleUpdateAuction()
 end

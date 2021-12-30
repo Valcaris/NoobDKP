@@ -64,7 +64,7 @@ local function NoobDKPAddonCommands(msg, editbox)
 
   if cmd == "version" then
     -- prints the current addon's version
-    print("NoobDKP Version: " .. noobversion)
+    print(NoobDKP_color .. "NoobDKP Version: " .. noobversion)
   elseif cmd == "roster" then
     -- member roster manipulation
     NoobDKPHandleRoster(args)
@@ -129,7 +129,7 @@ function NoobDKP_ParseChat(text, playerName)
       NOOBDKP_g_auction[char] = {}
       NOOBDKP_g_auction[char]["_score"] = score
       NOOBDKP_g_auction[char]["_type"] = val
-      NoobDKP_UpdateAuction()
+      NoobDKP_HandleUpdateAuction()
     elseif cmd == "Auction" then
       local _, _, item = string.find(text, "NoobDKP: Auction starting for item (.*)")
       NoobDKP_ShiftClickItem(item)
@@ -141,7 +141,7 @@ function NoobDKP_ParseChat(text, playerName)
       local newgp = oldgp + gp
       NoobDKP_SetEPGP(main, ep, newgp)
       NoobDKP_UpdateRoster()
-      NoobDKP_UpdateAuction()
+      NoobDKP_HandleUpdateAuction()
     end
   end
 end

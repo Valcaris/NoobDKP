@@ -53,7 +53,7 @@
         </Texture>
         <FontString name="$parent_name" inherits="GameFontHighlight" wraponspaces="false" justifyH="LEFT" enableMouse="true" text="">
           <Size>
-            <AbsDimension x="195" y="14" />
+            <AbsDimension x="195" y="15" />
           </Size>
           <Anchors>
             <Anchor relativePoint="LEFT" point="LEFT" />
@@ -93,6 +93,27 @@
         </FontString>
       </Layer>
     </Layers>
+    <Frames>
+      <CheckButton name="$parent_DQ" inherits="UICheckButtonTemplate" hidden="true">
+        <Anchors>
+          <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="$parent_GP">
+            <Offset>
+              <AbsDimension x="-15" y="5" />
+            </Offset>
+          </Anchor>
+        </Anchors>
+        <Size>
+          <AbsDimension x="25" y="25" />
+        </Size>
+        <Scripts>
+          <OnClick>
+            NoobDKP_Disqualify(this);
+          </OnClick>
+          <OnShow>
+          </OnShow>
+        </Scripts>
+      </CheckButton>
+    </Frames>
     <Scripts>
       <OnClick>NoobDKP_RosterItemOnClick(this);</OnClick>
       <OnLoad>this:RegisterForClicks("LeftButtonDown", "RightButtonDown")</OnLoad>
@@ -180,7 +201,11 @@
               <Layer>
                 <FontString name="$parent_name" inherits="GameFontHighlight" wraponspaces="false" justifyH="LEFT" enableMouse="true" text="Name">
                   <Anchors>
-                    <Anchor relativePoint="CENTER" point="CENTER" />
+                    <Anchor relativePoint="LEFT" point="LEFT">
+                      <Offset>
+                        <AbsDimension x="10" y="0"/>
+                      </Offset>
+                    </Anchor>
                   </Anchors>
                 </FontString>
               </Layer>
@@ -204,7 +229,11 @@
               <Layer>
                 <FontString name="$parent_rank" inherits="GameFontHighlight" wraponspaces="false" justifyH="LEFT" enableMouse="true" text="Rank">
                   <Anchors>
-                    <Anchor relativePoint="CENTER" point="CENTER" />
+                    <Anchor relativePoint="LEFT" point="LEFT">
+                      <Offset>
+                        <AbsDimension x="10" y="0"/>
+                      </Offset>
+                    </Anchor>
                   </Anchors>
                 </FontString>
               </Layer>
@@ -228,7 +257,11 @@
               <Layer>
                 <FontString name="$parent_score" inherits="GameFontHighlight" wraponspaces="false" justifyH="LEFT" enableMouse="true" text="Score">
                   <Anchors>
-                    <Anchor relativePoint="CENTER" point="CENTER" />
+                    <Anchor relativePoint="LEFT" point="LEFT">
+                      <Offset>
+                        <AbsDimension x="10" y="0"/>
+                      </Offset>
+                    </Anchor>
                   </Anchors>
                 </FontString>
               </Layer>
@@ -252,7 +285,11 @@
               <Layer>
                 <FontString name="$parent_EP" inherits="GameFontHighlight" wraponspaces="false" justifyH="LEFT" enableMouse="true" text="EP">
                   <Anchors>
-                    <Anchor relativePoint="CENTER" point="CENTER" />
+                    <Anchor relativePoint="LEFT" point="LEFT">
+                      <Offset>
+                        <AbsDimension x="10" y="0"/>
+                      </Offset>
+                    </Anchor>
                   </Anchors>
                 </FontString>
               </Layer>
@@ -276,7 +313,11 @@
               <Layer>
                 <FontString name="$parent_GP" inherits="GameFontHighlight" wraponspaces="false" justifyH="LEFT" enableMouse="true" text="GP">
                   <Anchors>
-                    <Anchor relativePoint="CENTER" point="CENTER" />
+                    <Anchor relativePoint="LEFT" point="LEFT">
+                      <Offset>
+                        <AbsDimension x="10" y="0"/>
+                      </Offset>
+                    </Anchor>
                   </Anchors>
                 </FontString>
               </Layer>
@@ -660,7 +701,7 @@
                   <OnClick>
                     local itemText = getglobal("myTabPage3_emptyAuction_AuctionItem")
                     NoobDKP_CreateAuction(itemText:GetText())
-                    NoobDKP_ShowAuctionTab()
+                    NoobDKP_HandleAuctionTab()
                     itemText:ClearFocus()
                   </OnClick>
                 </Scripts>
@@ -716,9 +757,13 @@
                 </Size>
                 <Layers>
                   <Layer>
-                    <FontString name="$parent_name" inherits="GameFontHighlight" wraponspaces="false" justifyH="LEFT" enableMouse="true" text="Name">
+                    <FontString name="$parent_name" inherits="GameFontHighlight" wraponspaces="false" enableMouse="true" text="Name">
                       <Anchors>
-                        <Anchor relativePoint="CENTER" point="CENTER" />
+                        <Anchor relativePoint="LEFT" point="LEFT">
+                          <Offset>
+                            <AbsDimension x="10" y="0"/>
+                          </Offset>
+                        </Anchor>
                       </Anchors>
                     </FontString>
                   </Layer>
@@ -740,9 +785,13 @@
                 </Size>
                 <Layers>
                   <Layer>
-                    <FontString name="$parent_rank" inherits="GameFontHighlight" wraponspaces="false" justifyH="LEFT" enableMouse="true" text="Priority">
+                    <FontString name="$parent_rank" inherits="GameFontHighlight" wraponspaces="false" enableMouse="true" text="Priority">
                       <Anchors>
-                        <Anchor relativePoint="CENTER" point="CENTER" />
+                        <Anchor relativePoint="LEFT" point="LEFT">
+                          <Offset>
+                            <AbsDimension x="10" y="0"/>
+                          </Offset>
+                        </Anchor>
                       </Anchors>
                     </FontString>
                   </Layer>
@@ -766,7 +815,11 @@
                   <Layer>
                     <FontString name="$parent_score" inherits="GameFontHighlight" wraponspaces="false" justifyH="LEFT" enableMouse="true" text="Score">
                       <Anchors>
-                        <Anchor relativePoint="CENTER" point="CENTER" />
+                        <Anchor relativePoint="LEFT" point="LEFT">
+                          <Offset>
+                            <AbsDimension x="10" y="0"/>
+                          </Offset>
+                        </Anchor>
                       </Anchors>
                     </FontString>
                   </Layer>
@@ -790,7 +843,11 @@
                   <Layer>
                     <FontString name="$parent_EP" inherits="GameFontHighlight" wraponspaces="false" justifyH="LEFT" enableMouse="true" text="EP">
                       <Anchors>
-                        <Anchor relativePoint="CENTER" point="CENTER" />
+                        <Anchor relativePoint="LEFT" point="LEFT">
+                          <Offset>
+                            <AbsDimension x="10" y="0"/>
+                          </Offset>
+                        </Anchor>
                       </Anchors>
                     </FontString>
                   </Layer>
@@ -814,7 +871,11 @@
                   <Layer>
                     <FontString name="$parent_GP" inherits="GameFontHighlight" wraponspaces="false" justifyH="LEFT" enableMouse="true" text="GP">
                       <Anchors>
-                        <Anchor relativePoint="CENTER" point="CENTER" />
+                        <Anchor relativePoint="LEFT" point="LEFT">
+                          <Offset>
+                            <AbsDimension x="10" y="0"/>
+                          </Offset>
+                        </Anchor>
                       </Anchors>
                     </FontString>
                   </Layer>
@@ -822,6 +883,31 @@
                 <Scripts>
                   <OnClick>NoobDKP_SortbyGP(this);</OnClick>
                 </Scripts>
+              </Button>
+              <Button name="$parent_sort_DQ">
+                <Anchors>
+                  <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="$parent_sort_GP">
+                    <Offset>
+                      <AbsDimension x="0" y="0" />
+                    </Offset>
+                  </Anchor>
+                </Anchors>
+                <Size>
+                  <AbsDimension x="25" y="15" />
+                </Size>
+                <Layers>
+                  <Layer>
+                    <FontString name="$parent_DQ" inherits="GameFontHighlight" wraponspaces="false" enableMouse="true" text="DQ">
+                      <Anchors>
+                        <Anchor relativePoint="LEFT" point="LEFT">
+                          <Offset>
+                            <AbsDimension x="0" y="0"/>
+                          </Offset>
+                        </Anchor>
+                      </Anchors>
+                    </FontString>
+                  </Layer>
+                </Layers>
               </Button>
               <Button name="$parent_entry1" inherits="roster_list_template">
                 <Anchors>
@@ -926,8 +1012,7 @@
                 </Size>
                 <Scripts>
                   <OnClick>
-                    NoobDKP_CancelAuction()
-                    NoobDKP_ShowAuctionTab()
+                    NoobDKP_HandleCloseAuction()
                   </OnClick>
                 </Scripts>
               </Button>
@@ -975,14 +1060,14 @@
                   <AbsDimension x="55" y="30" />
                 </Size>
                 <Scripts>
-                  <OnClick>NoobDKP_GPtoWinner();</OnClick>
+                  <OnClick>NoobDKP_HandleAuctionGP();</OnClick>
                 </Scripts>
               </Button>
             </Frames>
           </Frame>
         </Frames>
         <Scripts>
-          <OnShow>NoobDKP_ShowAuctionTab()</OnShow>
+          <OnShow>NoobDKP_HandleAuctionTab()</OnShow>
         </Scripts>
       </Frame>
       <Frame name="myTabPage4" hidden="true">
