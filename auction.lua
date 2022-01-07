@@ -338,6 +338,8 @@ function NoobDKP_HandleAuctionGP()
   NoobDKP_HandleUpdateAuction()
   getglobal("myTabPage3_Auction_Amount"):ClearFocus()
   NoobDKP_HandleAuctionResponse("gp", winner, wingp)
+  local item = NOOBDKP_g_auction["_item"]
+  NoobDKP_Event_AddGP(winner, wingp, item)
 end
 
 

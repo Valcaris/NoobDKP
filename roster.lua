@@ -152,7 +152,7 @@ function NoobDKP_SortBy(type)
   NoobDKP_UpdateRoster()
 end
 
-function NoobDKP_VerticalScroll(offset)
+function NoobDKP_RosterVerticalScroll(offset)
   offset = offset * NOOBDKP_g_options["scroll_scale"]
 
   roster_index = roster_index + offset

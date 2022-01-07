@@ -7,10 +7,10 @@
             - @see Roster functions
         - Give sort headers a background that is used on mouseover
         - Last update timestamp
-        - Refresh raid view (to force people in/out of raid)
     - Events Tab
         - ** Current Raid description, action list
         - List of raids in history
+        - Add color to event listings
         - Detect people in the raid (and when they leave the raid)
     - Auctions Tab
         - Detect Loot Window, queue up auctions?
@@ -18,7 +18,6 @@
         - Add countdown to window when auction started, possibly broadcast to raid (with checkbox)
         - Option to have Declare Winner set GP and close auction all at once (or have separate actions)
         - trim need/greed of whitespace
-        - Add a "disqualify" function and checkbox to exclude someome from a auction
     - Reports Tab
     - Sync Tab
         - Show who else has addon and what version
@@ -26,9 +25,7 @@
         - ** Event updates in real time to read-only users
         - Sync Externals (guildies are just in notes)
     - Options Tab
-          - Make Options table in SavedVariables
           - Various widgets for the options, may need mulitple pages or scrolling page
-          - ** Decay function
     - Create a Help tab with basic instructions or a ? button at the top
     - Communications
     - Minimap Icon

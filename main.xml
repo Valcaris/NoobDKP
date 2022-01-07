@@ -120,6 +120,66 @@
     </Scripts>
   </Button>
 
+  <Button name="event_container_list_template" virtual="true" hidden="false">
+    <Size>
+      <AbsDimension x="400" y="15" />      
+    </Size>
+    <Layers>
+      <Layer level="ARTWORK">
+        <FontString name="$parent_text" inherits="GameFontHighlight" wraponspaces="false" justifyH="LEFT" text="1">
+          <Size>
+            <AbsDimension x="400" y="25" />
+          </Size>
+        </FontString>
+      </Layer>
+    </Layers>
+    <Frames>
+      <Button name="$parent_Open" inherits="UIPanelButtonTemplate" text="+">
+        <Anchors>
+          <Anchor point="RIGHT" relativePoint="LEFT" relativeTo="$parent">
+          </Anchor>
+        </Anchors>
+        <Size>
+          <AbsDimension x="15" y="15"/>
+        </Size>
+        <Scripts>
+          <OnClick>
+            NoobDKP_HandleOpenEvent(self)
+          </OnClick>
+        </Scripts>
+      </Button>
+      <Button name="$parent_Delete" inherits="UIPanelButtonTemplate" text="X">
+        <Anchors>
+          <Anchor point="LEFT" relativePoint="RIGHT" relativeTo="$parent">
+          </Anchor>
+        </Anchors>
+        <Size>
+          <AbsDimension x="15" y="15"/>
+        </Size>
+        <Scripts>
+          <OnClick>
+            NoobDKP_HandleDeleteEvent(self)
+          </OnClick>
+        </Scripts>
+      </Button>
+    </Frames>
+  </Button>
+
+  <Button name="event_list_template" virtual="true" hidden="false">
+    <Size>
+      <AbsDimension x="400" y="15"/>
+    </Size>
+    <Layers>
+      <Layer level="ARTWORK">
+        <FontString name="$parent_text" inherits="GameFontHighlight" wraponspaces="false" justifyH="LEFT" text="1">
+          <Size>
+            <AbsDimension x="400" y="25" />
+          </Size>
+        </FontString>
+      </Layer>
+    </Layers>
+  </Button>
+
   <Frame name="noobMainFrame" toplevel="true" frameStrata="DIALOG" movable="true" enableMouse="true" hidden="false" parent="UIParent">
     <Size>
       <AbsDimension x="480" y="325" />
@@ -511,7 +571,7 @@
           <OnLoad>NoobDKP_UpdateRaidRoster();</OnLoad>
           <OnShow>NoobDKP_UpdateRoster();</OnShow>
           
-          <OnMouseWheel>NoobDKP_VerticalScroll(arg1 * -1)</OnMouseWheel>
+          <OnMouseWheel>NoobDKP_RosterVerticalScroll(arg1 * -1)</OnMouseWheel>
         </Scripts>
       </Frame>
       <Frame name="myTabPage2" hidden="true">
@@ -551,22 +611,128 @@
               <Layer level="ARTWORK">
                 <FontString name="$parent_Text" inherits="GameFontNormal" text="No Active Event/Raid Found!">
                   <Anchors>
-                    <Anchor point="CENTER" relativePoint="CENTER" relativeTo="$parent"></Anchor>
+                    <Anchor point="CENTER" relativePoint="CENTER" relativeTo="$parent">
+                      <Offset>
+                        <AbsDimension x="0" y="-75"/>
+                      </Offset>
+                    </Anchor>
                   </Anchors>
                 </FontString>
               </Layer>
             </Layers>
             <Frames>
+              <Button name="$parent_1" inherits="event_container_list_template">
+                <Anchors>
+                  <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$parent">
+                    <Offset>
+                      <AbsDimension x="30" y="-25"/>
+                    </Offset>
+                  </Anchor>
+                </Anchors>
+              </Button>
+              <Button name="$parent_2" inherits="event_container_list_template">
+                <Anchors>
+                  <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_1">
+                    <Offset>
+                      <AbsDimension x="0" y="-5" />
+                    </Offset>
+                  </Anchor>
+                </Anchors>
+              </Button>
+              <Button name="$parent_3" inherits="event_container_list_template">
+                <Anchors>
+                  <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_2">
+                    <Offset>
+                      <AbsDimension x="0" y="-5" />
+                    </Offset>
+                  </Anchor>
+                </Anchors>
+              </Button>
+              <Button name="$parent_4" inherits="event_container_list_template">
+                <Anchors>
+                  <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_3" >
+                    <Offset>
+                      <AbsDimension x="0" y="-5" />
+                    </Offset>
+                  </Anchor>
+                </Anchors>
+              </Button>
+              <Button name="$parent_5" inherits="event_container_list_template">
+                <Anchors>
+                  <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_4" >
+                    <Offset>
+                      <AbsDimension x="0" y="-5" />
+                    </Offset>
+                  </Anchor>
+                </Anchors>
+              </Button>
+              <Button name="$parent_6" inherits="event_container_list_template">
+                <Anchors>
+                  <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_5" >
+                    <Offset>
+                      <AbsDimension x="0" y="-5" />
+                    </Offset>
+                  </Anchor>
+                </Anchors>
+              </Button>
+              <Button name="$parent_7" inherits="event_container_list_template">
+                <Anchors>
+                  <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_6" >
+                    <Offset>
+                      <AbsDimension x="0" y="-5" />
+                    </Offset>
+                  </Anchor>
+                </Anchors>
+              </Button>
+              <Button name="$parent_8" inherits="event_container_list_template">
+                <Anchors>
+                  <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_7" >
+                    <Offset>
+                      <AbsDimension x="0" y="-5" />
+                    </Offset>
+                  </Anchor>
+                </Anchors>
+              </Button>
+              <Button name="$parent_9" inherits="event_container_list_template">
+                <Anchors>
+                  <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_8" >
+                    <Offset>
+                      <AbsDimension x="0" y="-5" />
+                    </Offset>
+                  </Anchor>
+                </Anchors>
+              </Button>
+              <Button name="$parent_10" inherits="event_container_list_template">
+                <Anchors>
+                  <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_9" >
+                    <Offset>
+                      <AbsDimension x="0" y="-5" />
+                    </Offset>
+                  </Anchor>
+                </Anchors>
+              </Button>
+              <EditBox name="$parent_EventLocation" inherits="InputBoxTemplate" autoFocus="false">
+                <Size>
+                  <AbsDimension x="200" y="25" />
+                </Size>
+                <Anchors>
+                  <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="$parent_Text" >
+                    <Offset>
+                      <AbsDimension x="-100" y="-10" />
+                    </Offset>
+                  </Anchor>
+                </Anchors>
+              </EditBox>
               <Button name="$parent_createEvent" inherits="UIPanelButtonTemplate" text="Create Event">
                 <Anchors>
-                  <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="$parent_Text">
+                  <Anchor point="LEFT" relativePoint="RIGHT" relativeTo="$parent_EventLocation">
                     <Offset>
-                      <AbsDimension x="0" y="-10" />
+                      <AbsDimension x="10" y="0" />
                     </Offset>
                   </Anchor>
                 </Anchors>
                 <Size>
-                  <AbsDimension x="110" y="30" />
+                  <AbsDimension x="90" y="25" />
                 </Size>
                 <Scripts>
                   <OnClick>
@@ -577,15 +743,10 @@
                   </OnClick>
                 </Scripts>
               </Button>
-              <EditBox name="$parent_EventLocation" inherits="InputBoxTemplate" autoFocus="false">
-                <Size>
-                  <AbsDimension x="200" y="25" />
-                </Size>
-                <Anchors>
-                  <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="$parent_createEvent" />
-                </Anchors>
-              </EditBox>
             </Frames>
+            <Scripts>
+              <OnMouseWheel>NoobDKP_EmptyEventVerticalScroll(arg1 * -1)</OnMouseWheel>
+            </Scripts>
           </Frame>
           <Frame name="$parent_Event" hidden="true">
             <Anchors>
@@ -596,12 +757,106 @@
               <Layer level="ARTWORK">
                 <FontString name="$parent_Name" inherits="GameFontNormal" text="Invalid Event Name">
                   <Anchors>
-                    <Anchor point="CENTER" relativeTo="$parent" />
+                    <Anchor point="TOP" relativeTo="$parent">
+                      <Offset>
+                        <AbsDimension x="0" y="-25"/>
+                      </Offset>
+                    </Anchor>
                   </Anchors>
                 </FontString>
               </Layer>
             </Layers>
             <Frames>
+              <Button name="$parent_event_1" inherits="event_list_template">
+                <Anchors>
+                  <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$parent">
+                    <Offset>
+                      <AbsDimension x="10" y="-50" />
+                    </Offset>
+                  </Anchor>
+                </Anchors>
+              </Button>
+              <Button name="$parent_event_2" inherits="event_list_template">
+                <Anchors>
+                  <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_event_1">
+                    <Offset>
+                      <AbsDimension x="0" y="-5" />
+                    </Offset>
+                  </Anchor>
+                </Anchors>
+              </Button>
+              <Button name="$parent_event_3" inherits="event_list_template">
+                <Anchors>
+                  <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_event_2">
+                    <Offset>
+                      <AbsDimension x="0" y="-5" />
+                    </Offset>
+                  </Anchor>
+                </Anchors>
+              </Button>
+              <Button name="$parent_event_4" inherits="event_list_template">
+                <Anchors>
+                  <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_event_3">
+                    <Offset>
+                      <AbsDimension x="0" y="-5" />
+                    </Offset>
+                  </Anchor>
+                </Anchors>
+              </Button>
+              <Button name="$parent_event_5" inherits="event_list_template">
+                <Anchors>
+                  <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_event_4">
+                    <Offset>
+                      <AbsDimension x="0" y="-5" />
+                    </Offset>
+                  </Anchor>
+                </Anchors>
+              </Button>
+              <Button name="$parent_event_6" inherits="event_list_template">
+                <Anchors>
+                  <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_event_5">
+                    <Offset>
+                      <AbsDimension x="0" y="-5" />
+                    </Offset>
+                  </Anchor>
+                </Anchors>
+              </Button>
+              <Button name="$parent_event_7" inherits="event_list_template">
+                <Anchors>
+                  <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_event_6">
+                    <Offset>
+                      <AbsDimension x="0" y="-5" />
+                    </Offset>
+                  </Anchor>
+                </Anchors>
+              </Button>
+              <Button name="$parent_event_8" inherits="event_list_template">
+                <Anchors>
+                  <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_event_7">
+                    <Offset>
+                      <AbsDimension x="0" y="-5" />
+                    </Offset>
+                  </Anchor>
+                </Anchors>
+              </Button>
+              <Button name="$parent_event_9" inherits="event_list_template">
+                <Anchors>
+                  <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_event_8">
+                    <Offset>
+                      <AbsDimension x="0" y="-5" />
+                    </Offset>
+                  </Anchor>
+                </Anchors>
+              </Button>
+              <Button name="$parent_event_10" inherits="event_list_template">
+                <Anchors>
+                  <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_event_9">
+                    <Offset>
+                      <AbsDimension x="0" y="-5" />
+                    </Offset>
+                  </Anchor>
+                </Anchors>
+              </Button>
               <Button name="$parent_CloseEvent" text="Close Event" inherits="UIPanelButtonTemplate">
                 <Anchors>
                   <Anchor point="BOTTOMLEFT" relativeTo="$parent">
@@ -663,6 +918,7 @@
           <OnShow>
             NoobDKP_ShowEventTab()
           </OnShow>
+          <OnMouseWheel>NoobDKP_FullEventVerticalScroll(arg1 * -1)</OnMouseWheel>
         </Scripts>
       </Frame>
       <Frame name="myTabPage3" hidden="true">
@@ -1125,7 +1381,22 @@
               <OnClick>NoobDKP_GenerateAltReport();</OnClick>
             </Scripts>
           </Button>
-          <EditBox name="$parent_Text" inherits="InputBoxTemplate" autoFocus="false">
+          <Button text="Event Report" inherits="UIPanelButtonTemplate">
+            <Anchors>
+              <Anchor point="BOTTOMLEFT" relativeTo="$parent">
+                <Offset>
+                  <AbsDimension x="300" y="15" />
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Size>
+              <AbsDimension x="90" y="30" />
+            </Size>
+            <Scripts>
+              <OnClick>NoobDKP_GenerateEventReport();</OnClick>
+            </Scripts>
+          </Button>
+          <EditBox name="$parent_Text" inherits="InputBoxTemplate" autoFocus="false" >
             <Size>
               <AbsDimension x="450" y="30" />
             </Size>
@@ -1136,6 +1407,7 @@
                 </Offset>
               </Anchor>
             </Anchors>
+            <TextInsets top="1" bottom="1"/>
             <Scripts>
               <OnTextChanged>
                 if this:GetText() ~= "" then

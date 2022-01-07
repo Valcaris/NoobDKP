@@ -30,8 +30,6 @@ function briefCompare(a, b)
 end
 
 function NoobDKP_GenerateBriefReport()
-  print("Generating Brief Report...")
-
   local sorted = {}
   for key, value in pairs(NOOBDKP_g_roster) do
     local main = NOOBDKP_find_main(key)
@@ -42,11 +40,7 @@ function NoobDKP_GenerateBriefReport()
     end
   end
 
-  print("1")
-
   table.sort(sorted, briefCompare)
-
-  print("2")
 
   local text = "Brief Report:\n | Name | Rank | Class | EP | GP | Score |\n |---|---|---|---|---|---|"
   for key, value in ipairs(sorted) do
@@ -74,15 +68,10 @@ function NoobDKP_GenerateBriefReport()
     if f == nil or f == "" then
       f = 0
     end
-    print(a .. " " .. b .. " " .. c .. " " .. d .. " " .. e .. " " .. f)
     text = text .. "\n | " .. a .. " | " .. b .. " | " .. c .. " | " .. d .. " | " .. e .. " | " .. f .. " |"
-    print(text)
   end
 
-  print("3")
-
   getglobal("myTabPage4_Text"):SetText(text)
-  print("Done!")
 end
 
 function altCompare(a, b)
@@ -111,6 +100,21 @@ function NoobDKP_GenerateAltReport()
     else
       text = text .. "\n | " .. value[2] .. " | " .. value[1] .. " | "
       main = value[2]
+    end
+  end
+  getglobal("myTabPage4_Text"):SetText(text)
+end
+
+function NoobDKP_GenerateEventReport()
+  local text = "Event Report:\n"
+  for s, t in pairs(NOOBDKP_g_events) do
+    if s ~= "active_raid" then
+      text = text .. "\nEvent: " .. t["description"]
+      for g, h in pairs(t) do
+        if g ~= "description" then
+          text = text .. "\n\t" .. h
+        end
+      end
     end
   end
   getglobal("myTabPage4_Text"):SetText(text)
