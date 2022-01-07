@@ -106,7 +106,6 @@ function NoobDKP_ShowEventTab()
   local emptyFrame = getglobal("myTabPage2_emptyEvent")
   local fullFrame = getglobal("myTabPage2_Event")
   if NOOBDKP_g_events == nil or NOOBDKP_g_events["active_raid"] == nil then
-    print("event tab empty show")
     if NOOBDKP_g_options["admin_mode"] then
       getglobal("myTabPage2_emptyEvent_createEvent"):Enable()
       getglobal("myTabPage2AddEP"):Enable()
@@ -124,9 +123,7 @@ function NoobDKP_ShowEventTab()
     fullFrame:Hide()
     emptyFrame:Show()
     NoobDKP_HandleUpdateEmptyEvent()
-    print("end event tab empty show")
   else
-    print("event tab full show")
     local activeRaid = NOOBDKP_g_events["active_raid"]
     local eventName = NOOBDKP_g_events[activeRaid]["description"]
     getglobal("myTabPage2_Event_Name"):SetText("Event: " .. eventName)
