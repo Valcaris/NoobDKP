@@ -87,7 +87,6 @@ function NoobDKP_HandleDeclareWinner()
   getglobal("myTabPage3_AuctionAddGP"):Enable()
 end
 
-
 -- Adds a bid to an auction (GUI version)
 function NoobDKP_AddAuction(name, bid)
   if name == "" or name == nil or bid == "" or bid == nil then
@@ -303,7 +302,6 @@ function NoobDKP_HandleAuctionTab()
   end
 end
 
-
 -- handles adding a bid to the auction
 function NoobDKP_HandleAddBid(name, bid)
   if name == "" or name == nil or bid == "" or bid == nil then
@@ -321,7 +319,6 @@ function NoobDKP_HandleAddBid(name, bid)
 
   NOOBDKP_g_auction[name]["_type"] = bid
 end
-
 
 -- handles adding GP to the winner of an auction
 function NoobDKP_HandleAuctionGP()
@@ -341,7 +338,6 @@ function NoobDKP_HandleAuctionGP()
   local item = NOOBDKP_g_auction["_item"]
   NoobDKP_Event_AddGP(winner, wingp, item)
 end
-
 
 -- handles sending messages to the raid during an auction
 function NoobDKP_HandleAuctionResponse(type, ...)
@@ -483,6 +479,37 @@ function NoobDKP_Disqualify(button)
   NoobDKP_HandleAuctionResponse("DQ", char)
 end
 
+function NoobDKP_PrePopulateGP(item)
+  local _, _, _, _, _, itemType, itemSubType, _, equipLoc = GetItemInfo(item)
+
+  -- determine if the item is a mark. Note this is probably not the best
+  -- method, but it seems to work since looking at a miscellaneous
+  -- item type may be a lot of things.
+  if equipLoc == nil or equipLoc == "" and itemType == "Miscellaneous" then
+    equipLoc = "MARK"
+  end
+
+  -- determine if item is heroic version. Would be nice if there was a 
+  -- way to get this from the item or WoW, but having the user handle it
+  -- seems to work for now
+  if getglobal("myTabPage3_AuctionIsHeroic"):GetChecked() then
+    equipLoc = "HC_" .. equipLoc
+  end
+
+  local gp = NOOBDKP_g_options[equipLoc]
+
+  if gp == nil then
+    gp = ""
+  end
+
+  getglobal("myTabPage3_Auction_Amount"):SetText(gp)
+end
+
+function NoobDKP_IsHeroicChanged()
+  local item = NOOBDKP_g_auction["_item"]
+  NoobDKP_PrePopulateGP(item)
+end
+
 -- handler when an item is shift-clicked (creates auction if valid)
 function NoobDKP_ShiftClickItem(item)
   if getglobal("noobMainFrame"):IsShown() then
@@ -492,6 +519,7 @@ function NoobDKP_ShiftClickItem(item)
     NoobDKP_HandleUpdateAuction()
     NoobDKP_HandleAuctionTab()
     NoobDKP_HandleAuctionResponse("item", item)
+    NoobDKP_PrePopulateGP(item)
   end
   if NOOBDKP_g_options["loot_table"] then
     NoobDKP_PopulateLootTable(item)

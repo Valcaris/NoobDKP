@@ -997,6 +997,15 @@
                     </Anchor>
                   </Anchors>
                 </FontString>
+                <FontString name="$parent_IsHeroicText" inherits="GameFontNormal" text="Heroic?">
+                  <Anchors>
+                    <Anchor point="BOTTOMRIGHT" relativePoint="BOTTOMRIGHT" relativeTo="$parent">
+                      <Offset>
+                        <AbsDimension x="-35" y="55" />
+                      </Offset>
+                    </Anchor>
+                  </Anchors>
+                </FontString>
               </Layer>
             </Layers>
             <Frames>
@@ -1319,6 +1328,21 @@
                   <OnClick>NoobDKP_HandleAuctionGP();</OnClick>
                 </Scripts>
               </Button>
+              <CheckButton name="$parentIsHeroic" inherits="UICheckButtonTemplate">
+                <Anchors>
+                  <Anchor point="BOTTOMRIGHT" relativePoint="TOPRIGHT" relativeTo="$parentAddGP">
+                    <Offset>
+                      <AbsDimension x="0" y="0" />
+                    </Offset>
+                  </Anchor>
+                </Anchors>
+                <Size>
+                  <AbsDimension x="25" y="25" />
+                </Size>
+                <Scripts>
+                  <OnClick>NoobDKP_IsHeroicChanged();</OnClick>
+                </Scripts>
+              </CheckButton>
             </Frames>
           </Frame>
         </Frames>

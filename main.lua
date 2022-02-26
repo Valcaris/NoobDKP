@@ -9,10 +9,14 @@
         - Last update timestamp
     - Events Tab
         - ** Current Raid description, action list
+        - Detect boss death, offer to add EP to raid (have auto option)
         - List of raids in history
         - Add color to event listings
         - Detect people in the raid (and when they leave the raid)
     - Auctions Tab
+        - Add loot type to NOOBDKP_g_loot_table (head, hc_head, etc)
+          - heroic has different ID from normal
+          - auto populate Add GP field from default option for loot type
         - Detect Loot Window, queue up auctions?
         - Set GP according to Loot detection
         - Add countdown to window when auction started, possibly broadcast to raid (with checkbox)
@@ -26,6 +30,7 @@
         - Sync Externals (guildies are just in notes)
     - Options Tab
           - Various widgets for the options, may need mulitple pages or scrolling page
+          - Force refresh: delete all tables and pull from guild/defaults
     - Create a Help tab with basic instructions or a ? button at the top
     - Communications
     - Minimap Icon
