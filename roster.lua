@@ -361,6 +361,7 @@ function NoobDKP_AuditRoster()
     tempTable[name] = 1
   end
 
+  -- set rank to external if no longer in the guild
   for key, value in pairs(NOOBDKP_g_roster) do
     if value[1] ~= "*external*" then
       if tempTable[key] ~= 1 then
@@ -371,25 +372,35 @@ function NoobDKP_AuditRoster()
   end
 
   -- find characters whose main left the guild
-  for key, value in pairs(NOOBDKP_g_roster) do
-    local main = NOOBDKP_find_main(key)
-    if main == "" or main == nil then
-      print("Found " .. key .. "'s main left the guild!")
-      NOOBDKP_g_roster[key][3] = ""
-    end
-  end
+--  for key, value in pairs(NOOBDKP_g_roster) do
+--    local main = NOOBDKP_find_main(key)
+--    if main == "" or main == nil then
+--      print("Found " .. key .. "'s main left the guild!")
+--      NOOBDKP_g_roster[key][3] = ""
+--    end
+--  end
 
   -- remove all characters with 0 EP
-  for key, value in pairs(NOOBDKP_g_roster) do
-    local score, ep, gp = NoobDKP_ParseOfficerNote(value[3])
-    if ep == 0 or ep == "0" then
-      print("Found " .. key .. " has no EP, removing!")
-      NOOBDKP_g_roster[key] = nil
-    end
-  end
+--  for key, value in pairs(NOOBDKP_g_roster) do
+--    local score, ep, gp = NoobDKP_ParseOfficerNote(value[3])
+--    if ep == 0 or ep == "0" then
+--      print("Found " .. key .. " has no EP, removing!")
+--      NOOBDKP_g_roster[key] = nil
+--    end
+--  end
 
   SetGuildRosterShowOffline(false)
   NoobDKP_UpdateRoster()
+end
+
+function NoobDKP_PurgeNoEPRoster()
+  for key, value in pairs(NOOBDKP_g_roster) do
+    local score, ep, gp = NoobDKP_GetEPGP(key)
+    if ep == nil or ep == 0 or gp == nil or gp == 0 then
+      print("Purging " .. key .. " for having no values!")
+      NOOBDKP_g_roster[key] = nil
+    end
+  end
 end
 
 function NoobDKP_PushRoster()

@@ -126,6 +126,9 @@ end
 
 function NoobDKP_GetEPGP(char)
   local main = NOOBDKP_find_main(char)
+  if main == nil or main == "" then
+    return 100, 0, 0
+  end
   local t, n = NoobDKP_ParseNote(NOOBDKP_g_roster[main][3])
   if t == "" or t == nil then
     t = 0

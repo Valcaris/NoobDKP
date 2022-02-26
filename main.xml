@@ -1520,6 +1520,21 @@
               <OnClick>NoobDKP_AuditRoster();</OnClick>
             </Scripts>
           </Button>
+          <Button name="$parentPurgeNoEPRoster" text="Purge 0 EP from Roster" inherits="UIPanelButtonTemplate">
+            <Anchors>
+              <Anchor point="TOPLEFT" relativeTo="$parentAuditRoster" relativePoint="TOPRIGHT">
+                <Offset>
+                  <AbsDimension x="0" y="0" />
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Size>
+              <AbsDimension x="145" y="25" />
+            </Size>
+            <Scripts>
+              <OnClick>NoobDKP_PurgeNoEPRoster();</OnClick>
+            </Scripts>
+          </Button>
           <EditBox name="$parentExternalName" inherits="InputBoxTemplate" autoFocus="false">
             <Size>
               <AbsDimension x="90" y="25" />
