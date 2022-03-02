@@ -279,6 +279,17 @@ function NoobDKP_QueryReply(name)
   )
 end
 
+-- Sends a reply when someone asks for EPGP help
+function NoobDKP_HelpReply(name)
+  name = NoobDKP_FixName(name)
+  SendChatMessage(
+    "NoobDKP: Whsiper me \"noob\" for your EPGP information. When a bid starts, say in raid chat \"need\" or \"greed\". You can say \"pass\" to clear your bid",
+    "WHISPER",
+    nil,
+    name
+  )
+end
+
 -- handles switching between an empty and an active auction tab in the GUI
 function NoobDKP_HandleAuctionTab()
   local emptyAuction = getglobal("myTabPage3_emptyAuction")
@@ -305,6 +316,11 @@ end
 -- handles adding a bid to the auction
 function NoobDKP_HandleAddBid(name, bid)
   if name == "" or name == nil or bid == "" or bid == nil then
+    return
+  end
+
+  if bid == "pass" then
+    NOOBDKP_g_auction[name] = {}
     return
   end
 
@@ -359,6 +375,12 @@ function NoobDKP_HandleAuctionResponse(type, ...)
       local name = ...
       SendChatMessage(
         "NoobDKP: " .. name .. " does not have " .. NOOBDKP_g_options["min_EP"] .. " EP, setting to greed bid",
+        "RAID"
+      )
+    elseif type == "bid_pass" then
+      local name = ...
+      SendChatMessage(
+        "NoobDKP: Pass " .. name .. " is passing this roll",
         "RAID"
       )
     elseif type == "bid" then

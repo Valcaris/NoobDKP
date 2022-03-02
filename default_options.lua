@@ -72,6 +72,31 @@ if NOOBDKP_g_options == nil then
   NOOBDKP_g_options["HC_INVTYPE_RELIC"] = 0
 end
 
+if NOOBDKP_g_boss_table == nil then
+  NOOBDKP_g_boss_table = {}
+  NOOBDKP_g_boss_table["Lord Marrowgar"] = 10
+  NOOBDKP_g_boss_table["Lady Deathwhisper"] = 10
+  --NOOBDKP_g_boss_table["Lord Marrowgar"] = 10 -- Gunship Battle
+  NOOBDKP_g_boss_table["Deathbringer Saurfang"] = 10
+  NOOBDKP_g_boss_table["Festergut"] = 10
+  NOOBDKP_g_boss_table["Rotface"] = 10
+  NOOBDKP_g_boss_table["Professor Putricide"] = 10
+  NOOBDKP_g_boss_table["Prince Valanar"] = 10 -- Blood Prince Council
+  NOOBDKP_g_boss_table["Blood-Queen Lana'thel"] = 10
+  --NOOBDKP_g_boss_table["Lord Marrowgar"] = 10 -- Valithria Dreamwalker
+  NOOBDKP_g_boss_table["Sindragosa"] = 10
+  NOOBDKP_g_boss_table["The Lich King"] = 50
+  NOOBDKP_g_boss_table["Hallion"] = 50
+
+  NOOBDKP_g_boss_table["Targorr the Dread"] = 10
+  NOOBDKP_g_boss_table["Kam Deepfury"] = 10
+  NOOBDKP_g_boss_table["Bazil Thredd"] = 10
+  NOOBDKP_g_boss_table["Bruegal Ironknuckle"] = 10
+  NOOBDKP_g_boss_table["Dextren Ward"] = 10
+  NOOBDKP_g_boss_table["Hamhock"] = 10
+
+end
+
 if NOOBDKP_g_loot_table == nil then
 
   NOOBDKP_g_loot_table = {

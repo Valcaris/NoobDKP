@@ -590,6 +590,15 @@
                 </Anchor>
               </Anchors>
             </FontString>
+            <FontString inherits="GameFontNormal" text="EP Multiplier:">
+              <Anchors>
+                <Anchor point="BOTTOMLEFT" relativeTo="$parent">
+                  <Offset>
+                    <AbsDimension x="20" y="52" />
+                  </Offset>
+                </Anchor>
+              </Anchors>
+            </FontString>
             <FontString inherits="GameFontNormal" text="Reason: ">
               <Anchors>
                 <Anchor point="BOTTOMLEFT" relativeTo="$parent">
@@ -718,7 +727,7 @@
                 <Anchors>
                   <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="$parent_Text" >
                     <Offset>
-                      <AbsDimension x="-100" y="-10" />
+                      <AbsDimension x="30" y="-10" />
                     </Offset>
                   </Anchor>
                 </Anchors>
@@ -740,6 +749,23 @@
                     NoobDKP_AddEvent(eventText:GetText())
                     NoobDKP_ShowEventTab()
                     eventText:ClearFocus()
+                  </OnClick>
+                </Scripts>
+              </Button>
+              <Button name="$parent_generateEventName" inherits="UIPanelButtonTemplate" text="Generate Name">
+                <Anchors>
+                  <Anchor point="BOTTOMRIGHT" relativePoint="TOPRIGHT" relativeTo="$parent_createEvent">
+                    <Offset>
+                      <AbsDimension x="0" y="5" />
+                    </Offset>
+                  </Anchor>
+                </Anchors>
+                <Size>
+                  <AbsDimension x="110" y="25" />
+                </Size>
+                <Scripts>
+                  <OnClick>
+                    NoobDKP_GenerateEventName()
                   </OnClick>
                 </Scripts>
               </Button>
@@ -874,6 +900,18 @@
               </Button>
             </Frames>
           </Frame>
+          <EditBox name="$parent_Multiplier" inherits="InputBoxTemplate" autoFocus="false">
+            <Size>
+              <AbsDimension x="40" y="25" />
+            </Size>
+            <Anchors>
+              <Anchor point="BOTTOMLEFT" relativeTo="$parent">
+                <Offset>
+                  <AbsDimension x="110" y="45" />
+                </Offset>
+              </Anchor>
+            </Anchors>
+          </EditBox>
           <EditBox name="$parent_Amount" inherits="InputBoxTemplate" autoFocus="false">
             <Size>
               <AbsDimension x="50" y="25" />
@@ -1527,6 +1565,13 @@
             </Size>
             <Scripts>
               <OnClick>NoobDKP_ScanRoster();</OnClick>
+              <OnEnter>
+                GameTooltip:SetOwner(this, "ANCHOR_RIGHT");
+                GameTooltip:SetText('Searches through the guild for any characters\nwho are level 80 and adds to the guild roster if necessary');
+              </OnEnter>
+              <OnLeave>
+                GameTooltip:Hide();
+              </OnLeave>
             </Scripts>
           </Button>
           <Button name="$parentAuditRoster" text="Audit Guild Roster" inherits="UIPanelButtonTemplate">
@@ -1542,8 +1587,15 @@
             </Size>
             <Scripts>
               <OnClick>NoobDKP_AuditRoster();</OnClick>
+              <OnEnter>
+                GameTooltip:SetOwner(this, "ANCHOR_RIGHT");
+                GameTooltip:SetText('Finds anyone on the roster who is \nno longer in the guild and marks as external');
+              </OnEnter>
+              <OnLeave>
+                GameTooltip:Hide();
+              </OnLeave>
             </Scripts>
-          </Button>
+        </Button>
           <Button name="$parentPurgeNoEPRoster" text="Purge 0 EP from Roster" inherits="UIPanelButtonTemplate">
             <Anchors>
               <Anchor point="TOPLEFT" relativeTo="$parentAuditRoster" relativePoint="TOPRIGHT">
@@ -1589,6 +1641,13 @@
                 NoobDKP_VerticalScroll(this, 1)
                 nameText:ClearFocus()
               </OnClick>
+              <OnEnter>
+                GameTooltip:SetOwner(this, "ANCHOR_RIGHT");
+                GameTooltip:SetText('Adds given character to the roster\nas a character that is external to the guild');
+              </OnEnter>
+              <OnLeave>
+                GameTooltip:Hide();
+              </OnLeave>
             </Scripts>
           </Button>
           <CheckButton name="$parentAdmin" inherits="UICheckButtonTemplate">
@@ -1611,6 +1670,13 @@
                   this:SetChecked(true)
                 end
               </OnShow>
+              <OnEnter>
+                GameTooltip:SetOwner(this, "ANCHOR_RIGHT");
+                GameTooltip:SetText('Turns on Admin Mode.\nShould only be used by the raid leader.');
+              </OnEnter>
+              <OnLeave>
+                GameTooltip:Hide();
+              </OnLeave>
             </Scripts>
           </CheckButton>
           <CheckButton name="$parentLootTable" inherits="UICheckButtonTemplate">
@@ -1633,6 +1699,13 @@
                   this:SetChecked(true)
                 end
               </OnShow>
+              <OnEnter>
+                GameTooltip:SetOwner(this, "ANCHOR_RIGHT");
+                GameTooltip:SetText('Shift-Right-Click will add item\ninfo into internal loot table');
+              </OnEnter>
+              <OnLeave>
+                GameTooltip:Hide();
+              </OnLeave>
             </Scripts>
           </CheckButton>
           <CheckButton name="$parentLootNeedGreed" inherits="UICheckButtonTemplate">
@@ -1655,6 +1728,13 @@
                   this:SetChecked(true)
                 end
               </OnShow>
+              <OnEnter>
+                GameTooltip:SetOwner(this, "ANCHOR_RIGHT");
+                GameTooltip:SetText('Addon will present need/greed text\nwhen an item auction starts');
+              </OnEnter>
+              <OnLeave>
+                GameTooltip:Hide();
+              </OnLeave>
             </Scripts>
           </CheckButton>
           <EditBox name="$parentDecayPercent" inherits="InputBoxTemplate" autoFocus="false">
@@ -1831,6 +1911,7 @@
         this:RegisterEvent("CHAT_MSG_RAID_LEADER");
         this:RegisterEvent("CHAT_MSG_WHISPER");
         this:RegisterEvent("RAID_ROSTER_UPDATE");
+        this:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED");
       </OnLoad>
       <OnShow>
         PlaySound("UChatScrollButton");

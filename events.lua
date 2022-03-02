@@ -29,6 +29,10 @@ function NoobDKP_AddEvent(msg)
   local timestamp = time()
   print("Add Event: " .. desc .. ", " .. timestamp)
 
+  if NOOBDKP_g_options["admin_mode"] then
+    SendChatMessage("NoobDKP has started a new raid. Whisper me \"noob help\" for options!", "RAID")
+  end
+
   if NOOBDKP_g_events == nil then
     NOOBDKP_g_events = {}
   end
@@ -136,9 +140,15 @@ end
 function NoobDKP_AddRaidEP()
   local amount = getglobal("myTabPage2_Amount"):GetText()
   local reason = getglobal("myTabPage2_Reason"):GetText()
+  local multiplier = getglobal("myTabPage2_Multiplier"):GetText()
   if reason == nil or reason == "" then
     reason = "no reason"
   end
+  if tonumber(multiplier) == nil or tonumber(multiplier) == 0 then
+    multiplier = 1
+  end
+
+  amount = amount * multiplier
   SendChatMessage("NoobDKP: Adding " .. amount .. " EP to the raid for " .. reason, "RAID")
   for key, value in pairs(NOOBDKP_g_raid_roster) do
     local ep = value[3] + amount
@@ -288,4 +298,24 @@ function NoobDKP_HandleDeleteEvent(button)
     end
   end
   NoobDKP_HandleUpdateEmptyEvent()
+end
+
+function NoobDKP_GenerateEventName()
+  local name = GetInstanceInfo()
+  local d = date("%b %d, %Y %H:%M")
+  local text = name .. " on " .. d
+  getglobal("myTabPage2_emptyEvent_EventLocation"):SetText(text)
+end
+
+function NoobDKP_CombatLog(v1, subEvent, v3, v4, sourceName, v6, flags)
+  if subEvent == "UNIT_DIED" and flags then
+    print(NoobDKP_color .. "NoobDKP Detected kill: " .. sourceName)
+    print(NoobDKP_color .. "NoobDKP_CombatLog: " .. flags)    
+
+    if NOOBDKP_g_boss_table[flags] ~= nil then
+      print("Found boss kill: " .. flags)
+      getglobal("myTabPage2_Amount"):SetText(NOOBDKP_g_boss_table[flags])
+      getglobal("myTabPage2_Reason"):SetText("Boss kill: " .. flags)
+    end
+  end
 end

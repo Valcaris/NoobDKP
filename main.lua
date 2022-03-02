@@ -103,18 +103,28 @@ function NoobDKP_OnEvent(self, event, ...)
     NoobDKP_ParseChat(text, playerName)
   elseif event == "CHAT_MSG_WHISPER" then
     local text, playerName = ...
-    if text == "noob" then
+    if text == "noob help" then
+      NoobDKP_HelpReply(playerName)
+    elseif text == "noob" then
       NoobDKP_QueryReply(playerName)
     end
   elseif event == "RAID_ROSTER_UPDATE" then
     NoobDKP_UpdateRaidRoster()
+  elseif event == "COMBAT_LOG_EVENT_UNFILTERED" then
+    local v1, subEvent, v3, v4, sourceName, v6, flags = ...
+--    NoobDKP_CombatLog(subEvent, sourceName, flags)
+    NoobDKP_CombatLog(v1, subEvent, v3, v4, sourceName, v6, flags)
   end
 end
 
 function NoobDKP_ParseChat(text, playerName)
   -- admins listen to need/greed, non-admins listen to the admin respons
   if NOOBDKP_g_options["admin_mode"] then
-    if text == "need" or text == "greed" then
+    if text == "pass" then
+      NoobDKP_HandleAddBid(playerName, text)
+      NoobDKP_HandleAuctionResponse("bid_pass", playerName)
+      NoobDKP_HandleUpdateAuction()
+    elseif text == "need" or text == "greed" then
       NoobDKP_HandleAddBid(playerName, text)
       NoobDKP_HandleUpdateAuction()
       local score, ep, gp = NoobDKP_GetEPGP(playerName)
@@ -131,6 +141,11 @@ function NoobDKP_ParseChat(text, playerName)
       NOOBDKP_g_auction[char] = {}
       NOOBDKP_g_auction[char]["_score"] = score
       NOOBDKP_g_auction[char]["_type"] = val
+      NoobDKP_HandleUpdateAuction()
+    elseif cmd == "Pass" then
+      local _, _, char =
+        string.find(text, "NoobDKP: Pass (%w+) is passing this roll")
+      NOOBDKP_g_auction[char] = {}
       NoobDKP_HandleUpdateAuction()
     elseif cmd == "Auction" then
       local _, _, item = string.find(text, "NoobDKP: Auction starting for item (.*)")
