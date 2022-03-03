@@ -1,24 +1,18 @@
 --[[
     TODO list
     - ** initial add to empty roster not working on first time setup!
+    - function wrapper to all uses of option table entries
     - Roster Tab
-        - Guild vs Raid checkbox
         - Right-Click Context menu on List buttons
             - @see Roster functions
         - Give sort headers a background that is used on mouseover
         - Last update timestamp
+        - Virtual rosters to allow events without being in a raid
     - Events Tab
-        - ** Current Raid description, action list
-        - Detect boss death, offer to add EP to raid (have auto option)
-        - List of raids in history
         - Add color to event listings
-        - Detect people in the raid (and when they leave the raid)
+        - sync event sends raid roster values to raid for syncing
+        - add indicators when events scroll off the page up or down
     - Auctions Tab
-        - Add loot type to NOOBDKP_g_loot_table (head, hc_head, etc)
-          - heroic has different ID from normal
-          - auto populate Add GP field from default option for loot type
-        - Detect Loot Window, queue up auctions?
-        - Set GP according to Loot detection
         - Add countdown to window when auction started, possibly broadcast to raid (with checkbox)
         - Option to have Declare Winner set GP and close auction all at once (or have separate actions)
         - trim need/greed of whitespace
@@ -26,8 +20,8 @@
     - Sync Tab
         - Show who else has addon and what version
         - Permissions based on guild rank for who can set what
-        - ** Event updates in real time to read-only users
         - Sync Externals (guildies are just in notes)
+        - Master arbitration
     - Options Tab
           - Various widgets for the options, may need mulitple pages or scrolling page
           - Force refresh: delete all tables and pull from guild/defaults
@@ -75,16 +69,16 @@ local function NoobDKPAddonCommands(msg, editbox)
     NoobDKPHandleEvents(args)
   elseif cmd == "options" then
     -- options dialog
-    print("Options")
+    print(NoobDKP_color .. "Options")
   elseif cmd == "sync" then
     -- attempts to sync this data with other found addons
-    print("Sync")
+    print(NoobDKP_color .. "Sync")
   elseif cmd == "report" and args ~= "" then
     -- creates various reports
-    print("Report, args: " .. args)
+    print(NoobDKP_color .. "Report, args: " .. args)
   elseif cmd == "value" and args ~= "" then
     -- manipulates DKP values directly
-    print("Values, args: " .. args)
+    print(NoobDKP_color .. "Values, args: " .. args)
   elseif cmd == "auction" and args ~= "" then
     NoobDKPHandleAuction(args)
   elseif cmd == "show" then
@@ -98,9 +92,11 @@ local function NoobDKPAddonCommands(msg, editbox)
 end
 
 function NoobDKP_OnEvent(self, event, ...)
+  -- handle raid chat messages
   if event == "CHAT_MSG_RAID" or event == "CHAT_MSG_RAID_LEADER" then
     local text, playerName = ...
     NoobDKP_ParseChat(text, playerName)
+  -- handle whispers
   elseif event == "CHAT_MSG_WHISPER" then
     local text, playerName = ...
     if text == "noob help" then
@@ -108,22 +104,25 @@ function NoobDKP_OnEvent(self, event, ...)
     elseif text == "noob" then
       NoobDKP_QueryReply(playerName)
     end
+  -- handle changes in the raid roster
   elseif event == "RAID_ROSTER_UPDATE" then
     NoobDKP_UpdateRaidRoster()
+  -- handle unit deaths (to detect boss kills)
   elseif event == "COMBAT_LOG_EVENT_UNFILTERED" then
-    local v1, subEvent, v3, v4, sourceName, v6, flags = ...
---    NoobDKP_CombatLog(subEvent, sourceName, flags)
-    NoobDKP_CombatLog(v1, subEvent, v3, v4, sourceName, v6, flags)
+    local _, subEvent, _, _, _, _, name = ...
+    NoobDKP_CombatLog(subEvent, name)
   end
 end
 
 function NoobDKP_ParseChat(text, playerName)
   -- admins listen to need/greed, non-admins listen to the admin respons
   if NOOBDKP_g_options["admin_mode"] then
+    -- pass will remove character from bidding (if they bid)
     if text == "pass" then
       NoobDKP_HandleAddBid(playerName, text)
       NoobDKP_HandleAuctionResponse("bid_pass", playerName)
       NoobDKP_HandleUpdateAuction()
+    -- need or greed will add character to bidding
     elseif text == "need" or text == "greed" then
       NoobDKP_HandleAddBid(playerName, text)
       NoobDKP_HandleUpdateAuction()
@@ -131,7 +130,9 @@ function NoobDKP_ParseChat(text, playerName)
       NoobDKP_HandleAuctionResponse("bid", playerName, text, score, ep, gp)
     end
   else
+    -- if not admin, just listen to the admin to keep updated
     local _, _, cmd = string.find(text, "NoobDKP: (%w+)(.*)")
+    -- handle a new bid
     if cmd == "Bid" then
       local _, _, char, val, score, ep, gp =
         string.find(text, "NoobDKP: Bid (%w+) (%w+) for (%d+) accepted (%d+)/(%d+)")
@@ -142,14 +143,17 @@ function NoobDKP_ParseChat(text, playerName)
       NOOBDKP_g_auction[char]["_score"] = score
       NOOBDKP_g_auction[char]["_type"] = val
       NoobDKP_HandleUpdateAuction()
+    -- handle removing a bid
     elseif cmd == "Pass" then
       local _, _, char =
         string.find(text, "NoobDKP: Pass (%w+) is passing this roll")
       NOOBDKP_g_auction[char] = {}
       NoobDKP_HandleUpdateAuction()
+    -- handle a new auction
     elseif cmd == "Auction" then
       local _, _, item = string.find(text, "NoobDKP: Auction starting for item (.*)")
       NoobDKP_ShiftClickItem(item)
+    -- handle GP being added
     elseif cmd == "GP" then
       local _, _, gp, char = string.find(text, "NoobDKP: GP (-?%d+) to (%w+)")
       local main = NOOBDKP_find_main(char)
@@ -159,6 +163,13 @@ function NoobDKP_ParseChat(text, playerName)
       NoobDKP_SetEPGP(main, ep, newgp)
       NoobDKP_UpdateRoster()
       NoobDKP_HandleUpdateAuction()
+    elseif cmd == "EP" then
+      print(NoobDKP_color .. "EP event detected!")
+      local _, _, ep, reason = string.find(text, "NoobDKP: EP Adding (-?%d+) EP to the raid for (.*)")
+      print(NoobDKP_color .. "EP event results: " .. ep .. " reasons: " .. reason)
+      getglobal("noobDKP_page2_amount"):SetText(ep)
+      getglobal("noobDKP_page2_reason"):SetText(reason)
+      NoobDKP_AddRaidEP()
     end
   end
 end

@@ -2,14 +2,14 @@ local event_index = 1
 local event_container_index = 1
 
 function NoobDKPHandleEvents(msg)
-  print("Handle Events: " .. msg)
+  print(NoobDKP_color .. "Handle Events: " .. msg)
   local syntax =
     "/noob event\n-add [timestamp][description]: adds an event/raid by the name of description created at timestamp. Creates new if not found. Timestamp defaults to now if creating. Find first raid if no timestamp and multiple same descriptions are found.\n-remove [description]: deletes an event/raid with the name description\n-raid [dkp]([description]): applies dkp to the raid (can be negative) with an optional description\n-char [dkp][name]([description]): applies dkp to a character (can be negative) with an optional description (can be an item ID)"
 
   local _, _, cmd, args = string.find(msg, "%s?(%w+)%s?(.*)")
   if cmd == "add" then
     if args == "" then
-      print("No description found!")
+      print(NoobDKP_color .. "No description found!")
     else
       NoobDKP_AddEvent(args)
     end
@@ -27,7 +27,7 @@ end
 function NoobDKP_AddEvent(msg)
   local _, _, desc = string.find(msg, "%s?(.*)")
   local timestamp = time()
-  print("Add Event: " .. desc .. ", " .. timestamp)
+  print(NoobDKP_color .. "Add Event: " .. desc .. ", " .. timestamp)
 
   if NOOBDKP_g_options["admin_mode"] then
     SendChatMessage("NoobDKP has started a new raid. Whisper me \"noob help\" for options!", "RAID")
@@ -44,11 +44,11 @@ end
 function NoobDKP_RemoveEvent(msg)
   local a = NOOBDKP_g_events["active_raid"]
   local _, _, desc = string.find(msg, "%s?(.*)")
-  print("Remove event: " .. desc)
+  print(NoobDKP_color .. "Remove event: " .. desc)
   for key, value in pairs(NOOBDKP_g_events) do
-    print("Found " .. key)
+    print(NoobDKP_color .. "Found " .. key)
     if value ~= nil and value["description"] == desc then
-      print("Found and removing " .. key)
+      print(NoobDKP_color .. "Found and removing " .. key)
       NOOBDKP_g_events[key] = nil
     end
     if a == key then
@@ -67,23 +67,23 @@ function NoobDKP_RaidEvent(msg)
     NOOBDKP_g_events = {}
   end
   local _, _, d, desc = string.find(msg, "%s?(-?%d+)%s?(.*)")
-  print("Raid event: " .. d .. " " .. desc)
+  print(NoobDKP_color .. "Raid event: " .. d .. " " .. desc)
   local a = NOOBDKP_g_events["active_raid"]
-  print(" active raid: " .. a)
+  print(NoobDKP_color .. " active raid: " .. a)
   local t = {char = "raid", dkp = d, description = desc}
   table.insert(NOOBDKP_g_events[a], t)
 end
 
 function NoobDKP_CharEvent(msg)
-  print("Char event " .. msg)
+  print(NoobDKP_color .. "Char event " .. msg)
   if NOOBDKP_g_events == nil then
     NOOBDKP_g_events = {}
   end
   local _, _, d, c, desc = string.find(msg, "%s?(-?%d+)%s?(%w+)%s?(.*)")
   c = NoobDKP_FixName(c)
-  print("Character event: " .. d .. " " .. c .. " " .. desc)
+  print(NoobDKP_color .. "Character event: " .. d .. " " .. c .. " " .. desc)
   local a = NOOBDKP_g_events["active_raid"]
-  print(" active raid: " .. a)
+  print(NoobDKP_color .. " active raid: " .. a)
   local t = {char = c, dkp = d, description = desc}
   table.insert(NOOBDKP_g_events[a], t)
 end
@@ -107,21 +107,21 @@ function NoobDKP_Event_AddEP(EP, reason)
 end
 
 function NoobDKP_ShowEventTab()
-  local emptyFrame = getglobal("myTabPage2_emptyEvent")
-  local fullFrame = getglobal("myTabPage2_Event")
+  local emptyFrame = getglobal("noobDKP_page2_empty_event")
+  local fullFrame = getglobal("noobDKP_page2_event")
   if NOOBDKP_g_events == nil or NOOBDKP_g_events["active_raid"] == nil then
     if NOOBDKP_g_options["admin_mode"] then
-      getglobal("myTabPage2_emptyEvent_createEvent"):Enable()
-      getglobal("myTabPage2AddEP"):Enable()
-      --getglobal("myTabPage2_emptyEvent_EventLocation"):Enable()
-      --getglobal("myTabPage2_Amount"):Enable()
-      --getglobal("myTabPage2_Reason"):Enable()
+      getglobal("noobDKP_page2_empty_event_create_event"):Enable()
+      getglobal("noobDKP_page2_add_EP"):Enable()
+      --getglobal("noobDKP_page2_empty_event_event_location"):Enable()
+      --getglobal("noobDKP_page2_amount"):Enable()
+      --getglobal("noobDKP_page2_reason"):Enable()
     else
-      getglobal("myTabPage2_emptyEvent_createEvent"):Disable()
-      getglobal("myTabPage2AddEP"):Disable()
-      --getglobal("myTabPage2_emptyEvent_EventLocation"):Disable()
-      --getglobal("myTabPage2_Amount"):Disable()
-      --getglobal("myTabPage2_Reason"):Disable()
+      getglobal("noobDKP_page2_empty_event_create_event"):Disable()
+      getglobal("noobDKP_page2_add_EP"):Disable()
+      --getglobal("noobDKP_page2_empty_event_event_location"):Disable()
+      --getglobal("noobDKP_page2_amount"):Disable()
+      --getglobal("noobDKP_page2_reason"):Disable()
     end
 
     fullFrame:Hide()
@@ -130,7 +130,7 @@ function NoobDKP_ShowEventTab()
   else
     local activeRaid = NOOBDKP_g_events["active_raid"]
     local eventName = NOOBDKP_g_events[activeRaid]["description"]
-    getglobal("myTabPage2_Event_Name"):SetText("Event: " .. eventName)
+    getglobal("noobDKP_page2_event_name"):SetText("Event: " .. eventName)
     emptyFrame:Hide()
     fullFrame:Show()
     NoobDKP_HandleUpdateFullEvent()
@@ -138,9 +138,9 @@ function NoobDKP_ShowEventTab()
 end
 
 function NoobDKP_AddRaidEP()
-  local amount = getglobal("myTabPage2_Amount"):GetText()
-  local reason = getglobal("myTabPage2_Reason"):GetText()
-  local multiplier = getglobal("myTabPage2_Multiplier"):GetText()
+  local amount = getglobal("noobDKP_page2_amount"):GetText()
+  local reason = getglobal("noobDKP_page2_reason"):GetText()
+  local multiplier = getglobal("noobDKP_page2_multiplier"):GetText()
   if reason == nil or reason == "" then
     reason = "no reason"
   end
@@ -149,7 +149,9 @@ function NoobDKP_AddRaidEP()
   end
 
   amount = amount * multiplier
-  SendChatMessage("NoobDKP: Adding " .. amount .. " EP to the raid for " .. reason, "RAID")
+  if NOOBDKP_g_options["admin_mode"] then
+    SendChatMessage("NoobDKP: EP Adding " .. amount .. " EP to the raid for " .. reason, "RAID")
+  end
   for key, value in pairs(NOOBDKP_g_raid_roster) do
     local ep = value[3] + amount
     local gp = value[4]
@@ -157,8 +159,8 @@ function NoobDKP_AddRaidEP()
     value[2] = NoobDKP_calculateScore(ep, gp)
     NoobDKP_SetOfficerNote(key, ep, gp)
   end
-  getglobal("myTabPage2_Amount"):ClearFocus()
-  getglobal("myTabPage2_Reason"):ClearFocus()
+  getglobal("noobDKP_page2_amount"):ClearFocus()
+  getglobal("noobDKP_page2_reason"):ClearFocus()
   NoobDKP_UpdateRoster()
   NoobDKP_HandleUpdateAuction()
   NoobDKP_Event_AddEP(amount, reason)
@@ -170,7 +172,7 @@ function event_helper(i, pos)
   for s, t in pairs(NOOBDKP_g_events[raid]) do
     if s ~= "description" then
       if i >= event_index then
-        widget = getglobal("myTabPage2_Event_event_" .. pos .. "_text")
+        widget = getglobal("noobDKP_page2_event_event_" .. pos .. "_text")
         widget:SetText(t)
         pos = pos + 1
         if pos > 10 then
@@ -191,9 +193,9 @@ function NoobDKP_HandleUpdateEmptyEvent()
   for s, t in pairs(NOOBDKP_g_events) do
     if s ~= "active_raid" then
       if i >= event_container_index then
-        widget = getglobal("myTabPage2_emptyEvent_" .. pos)
+        widget = getglobal("noobDKP_page2_empty_event_" .. pos)
         widget:Show()
-        widget = getglobal("myTabPage2_emptyEvent_" .. pos .. "_text")
+        widget = getglobal("noobDKP_page2_empty_event_" .. pos .. "_text")
         widget:SetText(t["description"])
         pos = pos + 1
         if pos > 10 then
@@ -206,7 +208,7 @@ function NoobDKP_HandleUpdateEmptyEvent()
 
   if pos <= 10 then
     for j = pos, 10 do
-      widget = getglobal("myTabPage2_emptyEvent_" .. j)
+      widget = getglobal("noobDKP_page2_empty_event_" .. j)
       widget:Hide()
     end
   end
@@ -224,7 +226,7 @@ function NoobDKP_HandleUpdateFullEvent()
 
   if pos <= 10 then
     for j = pos, 10 do
-      widget = getglobal("myTabPage2_Event_event_" .. j .. "_text")
+      widget = getglobal("noobDKP_page2_event_event_" .. j .. "_text")
       widget:SetText("")
     end
   end
@@ -271,8 +273,8 @@ function NoobDKP_EmptyEventVerticalScroll(offset)
 end
 
 function NoobDKP_HandleOpenEvent(button)
-  local _, _, i = string.find(button:GetName(), "myTabPage2_emptyEvent_(%w+)(.*)")
-  local text = getglobal("myTabPage2_emptyEvent_" .. i .. "_text"):GetText()
+  local _, _, i = string.find(button:GetName(), "noobDKP_page2_empty_event_(%w+)(.*)")
+  local text = getglobal("noobDKP_page2_empty_event_" .. i .. "_text"):GetText()
   local newactive = ""
   for s, t in pairs(NOOBDKP_g_events) do
     if s ~= "active raid" and t["description"] == text then
@@ -288,8 +290,8 @@ function NoobDKP_HandleOpenEvent(button)
 end
 
 function NoobDKP_HandleDeleteEvent(button)
-  local _, _, i = string.find(button:GetName(), "myTabPage2_emptyEvent_(%w+)(.*)")
-  local text = getglobal("myTabPage2_emptyEvent_" .. i .. "_text"):GetText()
+  local _, _, i = string.find(button:GetName(), "noobDKP_page2_empty_event_(%w+)(.*)")
+  local text = getglobal("noobDKP_page2_empty_event_" .. i .. "_text"):GetText()
   local target = ""
   for s, t in pairs(NOOBDKP_g_events) do
     if s ~= "active raid" and t["description"] == text then
@@ -304,18 +306,17 @@ function NoobDKP_GenerateEventName()
   local name = GetInstanceInfo()
   local d = date("%b %d, %Y %H:%M")
   local text = name .. " on " .. d
-  getglobal("myTabPage2_emptyEvent_EventLocation"):SetText(text)
+  getglobal("noobDKP_page2_empty_event_event_location"):SetText(text)
 end
 
-function NoobDKP_CombatLog(v1, subEvent, v3, v4, sourceName, v6, flags)
-  if subEvent == "UNIT_DIED" and flags then
-    print(NoobDKP_color .. "NoobDKP Detected kill: " .. sourceName)
-    print(NoobDKP_color .. "NoobDKP_CombatLog: " .. flags)    
+function NoobDKP_CombatLog(subEvent, name)
+  if subEvent == "UNIT_DIED" and name then
+    print(NoobDKP_color .. "NoobDKP_CombatLog: " .. name)    
 
-    if NOOBDKP_g_boss_table[flags] ~= nil then
-      print("Found boss kill: " .. flags)
-      getglobal("myTabPage2_Amount"):SetText(NOOBDKP_g_boss_table[flags])
-      getglobal("myTabPage2_Reason"):SetText("Boss kill: " .. flags)
+    if NOOBDKP_g_boss_table[name] ~= nil then
+      print(NoobDKP_color .. "Found boss kill: " .. name)
+      getglobal("noobDKP_page2_amount"):SetText(NOOBDKP_g_boss_table[name])
+      getglobal("noobDKP_page2_reason"):SetText("Boss kill: " .. name)
     end
   end
 end

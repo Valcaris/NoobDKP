@@ -7,7 +7,7 @@
     </Size>
     <Layers>
       <Layer level="ARTWORK">
-        <Texture name="$parent_Highlight" setAllPoints="true" hidden="true">
+        <Texture name="$parent_highlight" setAllPoints="true" hidden="true">
           <Size>
             <AbsDimension y="12" />
           </Size>
@@ -29,7 +29,7 @@
             <MinColor r="1.0" g="1.0" b="0.0" a="0.2" />
           </Gradient>
         </Texture>
-        <Texture name="$parent_Background" setAllPoints="true">
+        <Texture name="$parent_background" setAllPoints="true">
           <Size>
             <AbsDimension y="12" />
           </Size>
@@ -134,7 +134,7 @@
       </Layer>
     </Layers>
     <Frames>
-      <Button name="$parent_Open" inherits="UIPanelButtonTemplate" text="+">
+      <Button name="$parent_open" inherits="UIPanelButtonTemplate" text="+">
         <Anchors>
           <Anchor point="RIGHT" relativePoint="LEFT" relativeTo="$parent">
           </Anchor>
@@ -148,7 +148,7 @@
           </OnClick>
         </Scripts>
       </Button>
-      <Button name="$parent_Delete" inherits="UIPanelButtonTemplate" text="X">
+      <Button name="$parent_delete" inherits="UIPanelButtonTemplate" text="X">
         <Anchors>
           <Anchor point="LEFT" relativePoint="RIGHT" relativeTo="$parent">
           </Anchor>
@@ -204,7 +204,7 @@
     </Backdrop>
     <Layers>
       <Layer level="ARTWORK">
-        <Texture name="myFrameHeader" file="Interface\DialogFrame\UI-DialogBox-Header">
+        <Texture name="noobDKP_frame_header" file="Interface\DialogFrame\UI-DialogBox-Header">
           <Size>
             <AbsDimension x="356" y="64" />
           </Size>
@@ -218,7 +218,7 @@
         </Texture>
         <FontString inherits="GameFontNormal" text="NoobDKP">
           <Anchors>
-            <Anchor point="TOP" relativeTo="myFrameHeader">
+            <Anchor point="TOP" relativeTo="noobDKP_frame_header">
               <Offset>
                 <AbsDimension x="0" y="-14" />
               </Offset>
@@ -228,7 +228,7 @@
       </Layer>
     </Layers>
     <Frames>
-      <Button name="$parent_ButtonClose" inherits="UIPanelCloseButton">
+      <Button name="$parent_button_close" inherits="UIPanelCloseButton">
         <Anchors>
           <Anchor point="TOPRIGHT">
             <Offset>
@@ -240,7 +240,7 @@
           <OnClick>(this:GetParent()):Hide()</OnClick>
         </Scripts>
       </Button>
-      <Frame name="myTabPage1" hidden="false">
+      <Frame name="noobDKP_page1" hidden="false">
         <Anchors>
           <Anchor point="TOPLEFT" />
           <Anchor point="BOTTOMRIGHT" />
@@ -521,7 +521,7 @@
               </Anchor>
             </Anchors>
           </Button>
-          <Button name="$parentGuildRoster" text="Guild Roster" inherits="UIPanelButtonTemplate">
+          <Button name="$parent_guild_roster" text="Guild Roster" inherits="UIPanelButtonTemplate">
             <Anchors>
               <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT">
                 <Offset>
@@ -536,7 +536,7 @@
               <OnClick>NoobDKP_UpdateGuildRoster();</OnClick>
             </Scripts>
           </Button>
-          <Button name="$parentRaidRoster" text="Raid Roster" inherits="UIPanelButtonTemplate">
+          <Button name="$parent_raid_roster" text="Raid Roster" inherits="UIPanelButtonTemplate">
             <Anchors>
               <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT">
                 <Offset>
@@ -551,7 +551,7 @@
               <OnClick>NoobDKP_UpdateRaidRoster();</OnClick>
             </Scripts>
           </Button>
-          <Button name="$parentMainRoster" text="Main Roster" inherits="UIPanelButtonTemplate">
+          <Button name="$parent_main_roster" text="Main Roster" inherits="UIPanelButtonTemplate">
             <Anchors>
               <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT">
                 <Offset>
@@ -574,7 +574,7 @@
           <OnMouseWheel>NoobDKP_RosterVerticalScroll(arg1 * -1)</OnMouseWheel>
         </Scripts>
       </Frame>
-      <Frame name="myTabPage2" hidden="true">
+      <Frame name="noobDKP_page2" hidden="true">
         <Anchors>
           <Anchor point="TOPLEFT" />
           <Anchor point="BOTTOMRIGHT" />
@@ -611,14 +611,14 @@
           </Layer>
         </Layers>
         <Frames>
-          <Frame name="$parent_emptyEvent" hidden="false">
+          <Frame name="$parent_empty_event" hidden="false">
             <Anchors>
               <Anchor point="TOPLEFT" />
               <Anchor point="BOTTOMRIGHT" />
             </Anchors>
             <Layers>
               <Layer level="ARTWORK">
-                <FontString name="$parent_Text" inherits="GameFontNormal" text="No Active Event/Raid Found!">
+                <FontString name="$parent_text" inherits="GameFontNormal" text="No Active Event/Raid Found!">
                   <Anchors>
                     <Anchor point="CENTER" relativePoint="CENTER" relativeTo="$parent">
                       <Offset>
@@ -720,21 +720,21 @@
                   </Anchor>
                 </Anchors>
               </Button>
-              <EditBox name="$parent_EventLocation" inherits="InputBoxTemplate" autoFocus="false">
+              <EditBox name="$parent_event_location" inherits="InputBoxTemplate" autoFocus="false">
                 <Size>
                   <AbsDimension x="200" y="25" />
                 </Size>
                 <Anchors>
-                  <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="$parent_Text" >
+                  <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="$parent_text" >
                     <Offset>
                       <AbsDimension x="30" y="-10" />
                     </Offset>
                   </Anchor>
                 </Anchors>
               </EditBox>
-              <Button name="$parent_createEvent" inherits="UIPanelButtonTemplate" text="Create Event">
+              <Button name="$parent_create_event" inherits="UIPanelButtonTemplate" text="Create Event">
                 <Anchors>
-                  <Anchor point="LEFT" relativePoint="RIGHT" relativeTo="$parent_EventLocation">
+                  <Anchor point="LEFT" relativePoint="RIGHT" relativeTo="$parent_event_location">
                     <Offset>
                       <AbsDimension x="10" y="0" />
                     </Offset>
@@ -745,16 +745,16 @@
                 </Size>
                 <Scripts>
                   <OnClick>
-                    local eventText = getglobal("myTabPage2_emptyEvent_EventLocation")
+                    local eventText = getglobal("noobDKP_page2_empty_event_event_location")
                     NoobDKP_AddEvent(eventText:GetText())
                     NoobDKP_ShowEventTab()
                     eventText:ClearFocus()
                   </OnClick>
                 </Scripts>
               </Button>
-              <Button name="$parent_generateEventName" inherits="UIPanelButtonTemplate" text="Generate Name">
+              <Button name="$parent_generate_event_name" inherits="UIPanelButtonTemplate" text="Generate Name">
                 <Anchors>
-                  <Anchor point="BOTTOMRIGHT" relativePoint="TOPRIGHT" relativeTo="$parent_createEvent">
+                  <Anchor point="BOTTOMRIGHT" relativePoint="TOPRIGHT" relativeTo="$parent_create_event">
                     <Offset>
                       <AbsDimension x="0" y="5" />
                     </Offset>
@@ -774,14 +774,14 @@
               <OnMouseWheel>NoobDKP_EmptyEventVerticalScroll(arg1 * -1)</OnMouseWheel>
             </Scripts>
           </Frame>
-          <Frame name="$parent_Event" hidden="true">
+          <Frame name="$parent_event" hidden="true">
             <Anchors>
               <Anchor point="TOPLEFT" />
               <Anchor point="BOTTOMRIGHT" />
             </Anchors>
             <Layers>
               <Layer level="ARTWORK">
-                <FontString name="$parent_Name" inherits="GameFontNormal" text="Invalid Event Name">
+                <FontString name="$parent_name" inherits="GameFontNormal" text="Invalid Event Name">
                   <Anchors>
                     <Anchor point="TOP" relativeTo="$parent">
                       <Offset>
@@ -883,7 +883,7 @@
                   </Anchor>
                 </Anchors>
               </Button>
-              <Button name="$parent_CloseEvent" text="Close Event" inherits="UIPanelButtonTemplate">
+              <Button name="$parent_close_event" text="Close Event" inherits="UIPanelButtonTemplate">
                 <Anchors>
                   <Anchor point="BOTTOMLEFT" relativeTo="$parent">
                     <Offset>
@@ -900,7 +900,7 @@
               </Button>
             </Frames>
           </Frame>
-          <EditBox name="$parent_Multiplier" inherits="InputBoxTemplate" autoFocus="false">
+          <EditBox name="$parent_multiplier" inherits="InputBoxTemplate" autoFocus="false">
             <Size>
               <AbsDimension x="40" y="25" />
             </Size>
@@ -912,7 +912,7 @@
               </Anchor>
             </Anchors>
           </EditBox>
-          <EditBox name="$parent_Amount" inherits="InputBoxTemplate" autoFocus="false">
+          <EditBox name="$parent_amount" inherits="InputBoxTemplate" autoFocus="false">
             <Size>
               <AbsDimension x="50" y="25" />
             </Size>
@@ -924,7 +924,7 @@
               </Anchor>
             </Anchors>
           </EditBox>
-          <EditBox name="$parent_Reason" inherits="InputBoxTemplate" autoFocus="false">
+          <EditBox name="$parent_reason" inherits="InputBoxTemplate" autoFocus="false">
             <Size>
               <AbsDimension x="215" y="25" />
             </Size>
@@ -936,7 +936,7 @@
               </Anchor>
             </Anchors>
           </EditBox>
-          <Button name="$parentAddEP" text="Add" inherits="UIPanelButtonTemplate">
+          <Button name="$parent_add_EP" text="Add" inherits="UIPanelButtonTemplate">
             <Anchors>
               <Anchor point="BOTTOMLEFT" relativeTo="$parent">
                 <Offset>
@@ -959,20 +959,20 @@
           <OnMouseWheel>NoobDKP_FullEventVerticalScroll(arg1 * -1)</OnMouseWheel>
         </Scripts>
       </Frame>
-      <Frame name="myTabPage3" hidden="true">
+      <Frame name="noobDKP_page3" hidden="true">
         <Anchors>
           <Anchor point="TOPLEFT" />
           <Anchor point="BOTTOMRIGHT" />
         </Anchors>
         <Frames>
-          <Frame name="$parent_emptyAuction" hidden="false">
+          <Frame name="$parent_empty_auction" hidden="false">
             <Anchors>
               <Anchor point="TOPLEFT" />
               <Anchor point="BOTTOMRIGHT" />
             </Anchors>
             <Layers>
               <Layer level="ARTWORK">
-                <FontString name="$parent_Text" inherits="GameFontNormal" text="No Active Auction Found!">
+                <FontString name="$parent_text" inherits="GameFontNormal" text="No Active Auction Found!">
                   <Anchors>
                     <Anchor point="CENTER" relativePoint="CENTER" relativeTo="$parent"></Anchor>
                   </Anchors>
@@ -980,9 +980,9 @@
               </Layer>
             </Layers>
             <Frames>
-              <Button name="$parent_createAuction" inherits="UIPanelButtonTemplate" text="Create Auction">
+              <Button name="$parent_create_auction" inherits="UIPanelButtonTemplate" text="Create Auction">
                 <Anchors>
-                  <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="$parent_Text">
+                  <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="$parent_text">
                     <Offset>
                       <AbsDimension x="0" y="-10" />
                     </Offset>
@@ -993,24 +993,24 @@
                 </Size>
                 <Scripts>
                   <OnClick>
-                    local itemText = getglobal("myTabPage3_emptyAuction_AuctionItem")
+                    local itemText = getglobal("noobDKP_page3_empty_auction_auction_item")
                     NoobDKP_CreateAuction(itemText:GetText())
                     NoobDKP_HandleAuctionTab()
                     itemText:ClearFocus()
                   </OnClick>
                 </Scripts>
               </Button>
-              <EditBox name="$parent_AuctionItem" inherits="InputBoxTemplate" autoFocus="false">
+              <EditBox name="$parent_auction_item" inherits="InputBoxTemplate" autoFocus="false">
                 <Size>
                   <AbsDimension x="200" y="25" />
                 </Size>
                 <Anchors>
-                  <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="$parent_createAuction" />
+                  <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="$parent_create_auction" />
                 </Anchors>
               </EditBox>
             </Frames>
           </Frame>
-          <Frame name="$parent_Auction" hidden="true">
+          <Frame name="$parent_auction" hidden="true">
             <Anchors>
               <Anchor point="TOPLEFT" />
               <Anchor point="BOTTOMRIGHT" />
@@ -1336,7 +1336,7 @@
                   </OnClick>
                 </Scripts>
               </Button>
-              <EditBox name="$parent_Amount" inherits="InputBoxTemplate" autoFocus="false">
+              <EditBox name="$parent_amount" inherits="InputBoxTemplate" autoFocus="false">
                 <Size>
                   <AbsDimension x="50" y="30" />
                 </Size>
@@ -1388,7 +1388,7 @@
           <OnShow>NoobDKP_HandleAuctionTab()</OnShow>
         </Scripts>
       </Frame>
-      <Frame name="myTabPage4" hidden="true">
+      <Frame name="noobDKP_page4" hidden="true">
         <Anchors>
           <Anchor point="TOPLEFT" />
           <Anchor point="BOTTOMRIGHT" />
@@ -1458,7 +1458,7 @@
               <OnClick>NoobDKP_GenerateEventReport();</OnClick>
             </Scripts>
           </Button>
-          <EditBox name="$parent_Text" inherits="InputBoxTemplate" autoFocus="false" >
+          <EditBox name="$parent_text" inherits="InputBoxTemplate" autoFocus="false" >
             <Size>
               <AbsDimension x="450" y="30" />
             </Size>
@@ -1483,13 +1483,13 @@
           </EditBox>
         </Frames>
       </Frame>
-      <Frame name="myTabPage5" hidden="true">
+      <Frame name="noobDKP_page5" hidden="true">
         <Anchors>
           <Anchor point="TOPLEFT" />
           <Anchor point="BOTTOMRIGHT" />
         </Anchors>
         <Frames>
-          <Button name="$parentPush" text="Push Data Back to Guild" inherits="UIPanelButtonTemplate">
+          <Button name="$parent_push" text="Push Data Back to Guild" inherits="UIPanelButtonTemplate">
             <Anchors>
               <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT">
                 <Offset>
@@ -1506,10 +1506,10 @@
           </Button>
         </Frames>
       </Frame>
-      <Frame name="myTabPage6" hidden="true">
+      <Frame name="noobDKP_page6" hidden="true">
         <Layers>
           <Layer level="ARTWORK">
-            <FontString name="$parent_AdminText" inherits="GameFontNormal" text="Admin Mode">
+            <FontString name="$parent_admin_text" inherits="GameFontNormal" text="Admin Mode">
               <Anchors>
                 <Anchor point="TOPLEFT" relativeTo="$parent">
                   <Offset>
@@ -1518,7 +1518,7 @@
                 </Anchor>
               </Anchors>
             </FontString>
-            <FontString name="$parent_LootTableText" inherits="GameFontNormal" text="Populate Loot Table?">
+            <FontString name="$parent_loot_table_text" inherits="GameFontNormal" text="Populate Loot Table?">
               <Anchors>
                 <Anchor point="TOPLEFT" relativeTo="$parent">
                   <Offset>
@@ -1527,7 +1527,7 @@
                 </Anchor>
               </Anchors>
             </FontString>
-            <FontString name="$parent_LootNeedGreedText" inherits="GameFontNormal" text="Show Need/Greed for Auctions?">
+            <FontString name="$parent_loot_need_greed_text" inherits="GameFontNormal" text="Show Need/Greed for Auctions?">
               <Anchors>
                 <Anchor point="TOPLEFT" relativeTo="$parent">
                   <Offset>
@@ -1536,7 +1536,7 @@
                 </Anchor>
               </Anchors>
             </FontString>
-            <FontString name="$parent_DecayPercentText" inherits="GameFontNormal" text="Decay Percentage:">
+            <FontString name="$parent_decay_percent_text" inherits="GameFontNormal" text="Decay Percentage:">
               <Anchors>
                 <Anchor point="TOPLEFT" relativeTo="$parent">
                   <Offset>
@@ -1552,7 +1552,7 @@
           <Anchor point="BOTTOMRIGHT" />
         </Anchors>
         <Frames>
-          <Button name="$parentScan" text="Guild Scan" inherits="UIPanelButtonTemplate">
+          <Button name="$parent_scan" text="Guild Scan" inherits="UIPanelButtonTemplate">
             <Anchors>
               <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT">
                 <Offset>
@@ -1574,7 +1574,7 @@
               </OnLeave>
             </Scripts>
           </Button>
-          <Button name="$parentAuditRoster" text="Audit Guild Roster" inherits="UIPanelButtonTemplate">
+          <Button name="$parent_audit_roster" text="Audit Guild Roster" inherits="UIPanelButtonTemplate">
             <Anchors>
               <Anchor point="TOPLEFT" relativeTo="$parent">
                 <Offset>
@@ -1596,9 +1596,9 @@
               </OnLeave>
             </Scripts>
         </Button>
-          <Button name="$parentPurgeNoEPRoster" text="Purge 0 EP from Roster" inherits="UIPanelButtonTemplate">
+          <Button name="$parent_purge_no_EP_roster" text="Purge 0 EP from Roster" inherits="UIPanelButtonTemplate">
             <Anchors>
-              <Anchor point="TOPLEFT" relativeTo="$parentAuditRoster" relativePoint="TOPRIGHT">
+              <Anchor point="TOPLEFT" relativeTo="$parent_audit_roster" relativePoint="TOPRIGHT">
                 <Offset>
                   <AbsDimension x="0" y="0" />
                 </Offset>
@@ -1611,7 +1611,7 @@
               <OnClick>NoobDKP_PurgeNoEPRoster();</OnClick>
             </Scripts>
           </Button>
-          <EditBox name="$parentExternalName" inherits="InputBoxTemplate" autoFocus="false">
+          <EditBox name="$parent_external_name" inherits="InputBoxTemplate" autoFocus="false">
             <Size>
               <AbsDimension x="90" y="25" />
             </Size>
@@ -1623,7 +1623,7 @@
               </Anchor>
             </Anchors>
           </EditBox>
-          <Button name="$parentAddExternal" text="Add External" inherits="UIPanelButtonTemplate">
+          <Button name="$parent_add_external" text="Add External" inherits="UIPanelButtonTemplate">
             <Anchors>
               <Anchor point="TOPRIGHT" relativePoint="TOPRIGHT">
                 <Offset>
@@ -1636,7 +1636,7 @@
             </Size>
             <Scripts>
               <OnClick>
-                local nameText = getglobal("myTabPage1ExternalName")
+                local nameText = getglobal("noobDKP_page1_external_name")
                 NoobDKP_AddRoster(nameText:GetText())
                 NoobDKP_VerticalScroll(this, 1)
                 nameText:ClearFocus()
@@ -1650,9 +1650,9 @@
               </OnLeave>
             </Scripts>
           </Button>
-          <CheckButton name="$parentAdmin" inherits="UICheckButtonTemplate">
+          <CheckButton name="$parent_admin" inherits="UICheckButtonTemplate">
             <Anchors>
-              <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="$parent_AdminText">
+              <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="$parent_admin_text">
                 <Offset>
                   <AbsDimension x="5" y="5" />
                 </Offset>
@@ -1679,9 +1679,9 @@
               </OnLeave>
             </Scripts>
           </CheckButton>
-          <CheckButton name="$parentLootTable" inherits="UICheckButtonTemplate">
+          <CheckButton name="$parent_loot_table" inherits="UICheckButtonTemplate">
             <Anchors>
-              <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="$parent_LootTableText">
+              <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="$parent_loot_table_text">
                 <Offset>
                   <AbsDimension x="5" y="5" />
                 </Offset>
@@ -1708,9 +1708,9 @@
               </OnLeave>
             </Scripts>
           </CheckButton>
-          <CheckButton name="$parentLootNeedGreed" inherits="UICheckButtonTemplate">
+          <CheckButton name="$parent_loot_need_greed" inherits="UICheckButtonTemplate">
             <Anchors>
-              <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="$parent_LootNeedGreedText">
+              <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="$parent_loot_need_greed_text">
                 <Offset>
                   <AbsDimension x="5" y="5" />
                 </Offset>
@@ -1737,12 +1737,12 @@
               </OnLeave>
             </Scripts>
           </CheckButton>
-          <EditBox name="$parentDecayPercent" inherits="InputBoxTemplate" autoFocus="false">
+          <EditBox name="$parent_decay_percent" inherits="InputBoxTemplate" autoFocus="false">
             <Size>
               <AbsDimension x="40" y="25" />
             </Size>
             <Anchors>
-              <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="$parent_DecayPercentText">
+              <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="$parent_decay_percent_text">
                 <Offset>
                   <AbsDimension x="5" y="5" />
                 </Offset>
@@ -1756,9 +1756,9 @@
               </OnEnterPressed>
             </Scripts>
           </EditBox>
-          <Button name="$parentDecay" text="Run Decay Now" inherits="UIPanelButtonTemplate">
+          <Button name="$parent_decay" text="Run Decay Now" inherits="UIPanelButtonTemplate">
             <Anchors>
-              <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="$parentDecayPercent">
+              <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="$parent_decay_percent">
                 <Offset>
                   <AbsDimension x="5" y="0" />
                 </Offset>
@@ -1769,7 +1769,7 @@
             </Size>
             <Scripts>
               <OnClick>
-                local textbox = getglobal("myTabPage6DecayPercent");
+                local textbox = getglobal("noobDKP_page6_decay_percent");
                 local decay = tonumber(textbox:GetText());
                 NOOBDKP_g_options["decay_percent"] = decay;
                 textbox:ClearFocus();
@@ -1779,6 +1779,56 @@
           </Button>
         </Frames>
       </Frame>
+      <Frame name="noobDKP_page7" hidden="true">
+        <Anchors>
+          <Anchor point="TOPLEFT" />
+          <Anchor point="BOTTOMRIGHT" />
+        </Anchors>
+        <Frames>
+          <ScrollFrame>
+            <Frames>
+            <SimpleHTML 
+              text='&lt;html&gt;&lt;body&gt;You|nare being helped!!!!&lt;/body&gt;&lt;/html&gt;'
+            >
+            <Size>
+              <AbsDimension x="450" y="300" />
+            </Size>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativeTo="$parent">
+                <Offset>
+                  <AbsDimension x="15" y="-20" />
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <FontString inherits="GameFontNormal"/>
+
+            </SimpleHTML>
+            <EditBox font="GameFontNormal" autoFocus="false" multiLine="true">
+              <FontString inherits="GameFontNormal"/>
+              <TextInsets top="1" bottom="1"/>
+              <Size>
+                <AbsDimension x="450" y="300" />
+              </Size>
+              <Anchors>
+                <Anchor point="TOPLEFT" relativeTo="$parent">
+                  <Offset>
+                    <AbsDimension x="15" y="-20" />
+                  </Offset>
+                </Anchor>
+              </Anchors>
+              <Scripts>
+                <OnLoad>
+                  self:SetText("You\nare\nbeing\nhelped!")
+                </OnLoad>
+              </Scripts>
+            </EditBox>
+           </Frames>
+           <Scripts>
+            <OnMouseWheel>OnVerticalScroll(self, arg1 * -1)</OnMouseWheel>
+           </Scripts>
+          </ScrollFrame>
+        </Frames>
+      </Frame>      
       <Button name="$parentTab1" inherits="CharacterFrameTabButtonTemplate" id="1" text="Roster">
         <Anchors>
           <Anchor point="CENTER" relativePoint="BOTTOMLEFT">
@@ -1790,12 +1840,13 @@
         <Scripts>
           <OnClick>
             PanelTemplates_SetTab(noobMainFrame, 1);
-            myTabPage1:Show();
-            myTabPage2:Hide();
-            myTabPage3:Hide();
-            myTabPage4:Hide();
-            myTabPage5:Hide();
-            myTabPage6:Hide();
+            noobDKP_page1:Show();
+            noobDKP_page2:Hide();
+            noobDKP_page3:Hide();
+            noobDKP_page4:Hide();
+            noobDKP_page5:Hide();
+            noobDKP_page6:Hide();
+            noobDKP_page7:Hide();
           </OnClick>
         </Scripts>
       </Button>
@@ -1810,12 +1861,13 @@
         <Scripts>
           <OnClick>
             PanelTemplates_SetTab(noobMainFrame, 2);
-            myTabPage1:Hide();
-            myTabPage2:Show();
-            myTabPage3:Hide();
-            myTabPage4:Hide();
-            myTabPage5:Hide();
-            myTabPage6:Hide();
+            noobDKP_page1:Hide();
+            noobDKP_page2:Show();
+            noobDKP_page3:Hide();
+            noobDKP_page4:Hide();
+            noobDKP_page5:Hide();
+            noobDKP_page6:Hide();
+            noobDKP_page7:Hide();
           </OnClick>
         </Scripts>
       </Button>
@@ -1830,12 +1882,13 @@
         <Scripts>
           <OnClick>
             PanelTemplates_SetTab(noobMainFrame, 3);
-            myTabPage1:Hide();
-            myTabPage2:Hide();
-            myTabPage3:Show();
-            myTabPage4:Hide();
-            myTabPage5:Hide();
-            myTabPage6:Hide();
+            noobDKP_page1:Hide();
+            noobDKP_page2:Hide();
+            noobDKP_page3:Show();
+            noobDKP_page4:Hide();
+            noobDKP_page5:Hide();
+            noobDKP_page6:Hide();
+            noobDKP_page7:Hide();
           </OnClick>
         </Scripts>
       </Button>
@@ -1850,12 +1903,13 @@
         <Scripts>
           <OnClick>
             PanelTemplates_SetTab(noobMainFrame, 4);
-            myTabPage1:Hide();
-            myTabPage2:Hide();
-            myTabPage3:Hide();
-            myTabPage4:Show();
-            myTabPage5:Hide();
-            myTabPage6:Hide();
+            noobDKP_page1:Hide();
+            noobDKP_page2:Hide();
+            noobDKP_page3:Hide();
+            noobDKP_page4:Show();
+            noobDKP_page5:Hide();
+            noobDKP_page6:Hide();
+            noobDKP_page7:Hide();
           </OnClick>
         </Scripts>
       </Button>
@@ -1870,12 +1924,13 @@
         <Scripts>
           <OnClick>
             PanelTemplates_SetTab(noobMainFrame, 5);
-            myTabPage1:Hide();
-            myTabPage2:Hide();
-            myTabPage3:Hide();
-            myTabPage4:Hide();
-            myTabPage5:Show();
-            myTabPage6:Hide();
+            noobDKP_page1:Hide();
+            noobDKP_page2:Hide();
+            noobDKP_page3:Hide();
+            noobDKP_page4:Hide();
+            noobDKP_page5:Show();
+            noobDKP_page6:Hide();
+            noobDKP_page7:Hide();
           </OnClick>
         </Scripts>
       </Button>
@@ -1890,12 +1945,34 @@
         <Scripts>
           <OnClick>
             PanelTemplates_SetTab(noobMainFrame, 6);
-            myTabPage1:Hide();
-            myTabPage2:Hide();
-            myTabPage3:Hide();
-            myTabPage4:Hide();
-            myTabPage5:Hide();
-            myTabPage6:Show();
+            noobDKP_page1:Hide();
+            noobDKP_page2:Hide();
+            noobDKP_page3:Hide();
+            noobDKP_page4:Hide();
+            noobDKP_page5:Hide();
+            noobDKP_page6:Show();
+            noobDKP_page7:Hide();
+          </OnClick>
+        </Scripts>
+      </Button>
+      <Button name="$parentTab7" inherits="CharacterFrameTabButtonTemplate" id="7" text="Help">
+        <Anchors>
+          <Anchor point="LEFT" relativeTo="$parentTab6" relativePoint="RIGHT">
+            <Offset>
+              <AbsDimension x="-16" y="0" />
+            </Offset>
+          </Anchor>
+        </Anchors>
+        <Scripts>
+          <OnClick>
+            PanelTemplates_SetTab(noobMainFrame, 7);
+            noobDKP_page1:Hide();
+            noobDKP_page2:Hide();
+            noobDKP_page3:Hide();
+            noobDKP_page4:Hide();
+            noobDKP_page5:Hide();
+            noobDKP_page6:Hide();
+            noobDKP_page7:Show();
           </OnClick>
         </Scripts>
       </Button>
@@ -1904,7 +1981,7 @@
       <OnEvent function="NoobDKP_OnEvent" />
       <OnLoad>
         this.elapsed = 0;
-        PanelTemplates_SetNumTabs(noobMainFrame, 6);
+        PanelTemplates_SetNumTabs(noobMainFrame, 7);
         PanelTemplates_SetTab(noobMainFrame, 1);
         this:RegisterForDrag("LeftButton");
         this:RegisterEvent("CHAT_MSG_RAID");
@@ -1916,12 +1993,13 @@
       <OnShow>
         PlaySound("UChatScrollButton");
         PanelTemplates_SetTab(noobMainFrame, 1);
-        myTabPage1:Show()
-        myTabPage2:Hide()
-        myTabPage3:Hide()
-        myTabPage4:Hide()
-        myTabPage5:Hide()
-        myTabPage6:Hide()
+        noobDKP_page1:Show()
+        noobDKP_page2:Hide()
+        noobDKP_page3:Hide()
+        noobDKP_page4:Hide()
+        noobDKP_page5:Hide()
+        noobDKP_page6:Hide()
+        noobDKP_page7:Hide()
       </OnShow>
       <OnHide>
         PlaySound("UChatScrollButton");

@@ -5,7 +5,7 @@ function NoobDKPHandleAuction(msg)
   local _, _, cmd, args = string.find(msg, "%s?(%w+)%s?(.*)")
   if cmd == "create" then
     if args == "" then
-      print("No item found to create an auction!")
+      print(NoobDKP_color .. "No item found to create an auction!")
       print(NoobDKP_color .. syntax)
     else
       NoobDKP_CreateAuction(args)
@@ -16,7 +16,7 @@ function NoobDKPHandleAuction(msg)
     NoobDKP_FinishAuction(args)
   elseif cmd == "bid" then
     if args == nil or args == "" then
-      print("No bid found!")
+      print(NoobDKP_color .. "No bid found!")
       print(NoobDKP_color .. syntax)
     else
       NoobDKP_BidAuction(args)
@@ -31,7 +31,7 @@ end
 function NoobDKP_CreateAuction(args)
   local _, _, item = string.find(args, "%s?(.*)")
   if NOOBDKP_g_auction ~= nil then
-    print("Auction already in progress! Cancel first!")
+    print(NoobDKP_color .. "Auction already in progress! Cancel first!")
   else
     NoobDKP_ShiftClickItem(item)
   end
@@ -64,10 +64,10 @@ function NoobDKP_FinishAuction(args)
   end
   local score, ep, gp = NoobDKP_GetEPGP(win_char)
   NoobDKP_HandleAuctionResponse("win", win_char, NOOBDKP_g_auction["_item"], score)
-  getglobal("myTabPage3_Auction_Winner"):SetText(win_char)
+  getglobal("noobDKP_page3_auction_Winner"):SetText(win_char)
   local r, g, b, a = NoobDKP_getClassColor(NOOBDKP_g_roster[win_char][2])
-  getglobal("myTabPage3_Auction_Winner"):SetVertexColor(r, g, b, a)
-  getglobal("myTabPage3_AuctionAddGP"):Enable()
+  getglobal("noobDKP_page3_auction_Winner"):SetVertexColor(r, g, b, a)
+  getglobal("noobDKP_page3_auctionAddGP"):Enable()
 
 end
 
@@ -81,10 +81,10 @@ function NoobDKP_HandleDeclareWinner()
   end
   local score, ep, gp = NoobDKP_GetEPGP(win_char)
   NoobDKP_HandleAuctionResponse("win", win_char, NOOBDKP_g_auction["_item"], score)
-  getglobal("myTabPage3_Auction_Winner"):SetText(win_char)
+  getglobal("noobDKP_page3_auction_Winner"):SetText(win_char)
   local r, g, b, a = NoobDKP_getClassColor(NOOBDKP_g_roster[win_char][2])
-  getglobal("myTabPage3_Auction_Winner"):SetVertexColor(r, g, b, a)
-  getglobal("myTabPage3_AuctionAddGP"):Enable()
+  getglobal("noobDKP_page3_auction_Winner"):SetVertexColor(r, g, b, a)
+  getglobal("noobDKP_page3_auctionAddGP"):Enable()
 end
 
 -- Adds a bid to an auction (GUI version)
@@ -107,7 +107,7 @@ function NoobDKP_AddAuction(name, bid)
 
   NOOBDKP_g_auction[name]["_type"] = bid
   SendChatMessage("NoobDKP: Bid " .. name .. " " .. bid .. " for " .. score .. " accepted " .. ep .. "/" .. gp, "RAID")
-  getglobal("myTabPage3_Auction_finishAuction"):Enable()
+  getglobal("noobDKP_page3_auction_finishAuction"):Enable()
   NoobDKP_HandleUpdateAuction()
 end
 
@@ -292,21 +292,21 @@ end
 
 -- handles switching between an empty and an active auction tab in the GUI
 function NoobDKP_HandleAuctionTab()
-  local emptyAuction = getglobal("myTabPage3_emptyAuction")
-  local fullAuction = getglobal("myTabPage3_Auction")
+  local emptyAuction = getglobal("noobDKP_page3_empty_auction")
+  local fullAuction = getglobal("noobDKP_page3_auction")
   if NOOBDKP_g_auction == nil then
     fullAuction:Hide()
     emptyAuction:Show()
-    getglobal("myTabPage3_AuctionAddGP"):Disable()
-    getglobal("myTabPage3_Auction_finishAuction"):Disable()
-    getglobal("myTabPage3_Auction_Winner"):SetText("No Winner")
+    getglobal("noobDKP_page3_auctionAddGP"):Disable()
+    getglobal("noobDKP_page3_auction_finishAuction"):Disable()
+    getglobal("noobDKP_page3_auction_Winner"):SetText("No Winner")
     if NOOBDKP_g_options["admin_mode"] then
-      getglobal("myTabPage3_emptyAuction_createAuction"):Enable()
+      getglobal("noobDKP_page3_empty_auction_create_auction"):Enable()
     else
-      getglobal("myTabPage3_emptyAuction_createAuction"):Disable()
+      getglobal("noobDKP_page3_empty_auction_create_auction"):Disable()
     end
   else
-    (getglobal("myTabPage3_Auction_Item")):SetText("Auction for: " .. NOOBDKP_g_auction["_item"])
+    (getglobal("noobDKP_page3_auction_Item")):SetText("Auction for: " .. NOOBDKP_g_auction["_item"])
     NoobDKP_HandleUpdateAuction()
     emptyAuction:Hide()
     fullAuction:Show()
@@ -339,7 +339,7 @@ end
 -- handles adding GP to the winner of an auction
 function NoobDKP_HandleAuctionGP()
   local winner = NOOBDKP_g_auction["_winner"]
-  local wingp = getglobal("myTabPage3_Auction_Amount"):GetText()
+  local wingp = getglobal("noobDKP_page3_auction_amount"):GetText()
   if wingp == nil or wingp == "" then
     wingp = NOOBDKP_g_options["defaultGP"]
   end
@@ -349,7 +349,7 @@ function NoobDKP_HandleAuctionGP()
   gp = gp + wingp
   NoobDKP_SetEPGP(winner, ep, gp)
   NoobDKP_HandleUpdateAuction()
-  getglobal("myTabPage3_Auction_Amount"):ClearFocus()
+  getglobal("noobDKP_page3_auction_amount"):ClearFocus()
   NoobDKP_HandleAuctionResponse("gp", winner, wingp)
   local item = NOOBDKP_g_auction["_item"]
   NoobDKP_Event_AddGP(winner, wingp, item)
@@ -425,20 +425,20 @@ function NoobDKP_HandleUpdateAuction()
     local priority = NOOBDKP_g_auction[value[2]]["_type"]
     local score = NOOBDKP_g_auction[value[2]]["_score"]
     if key ~= "_item" and key ~= "_winner" then
-      nameFrame = getglobal("myTabPage3_Auction_entry" .. pos .. "_name")
+      nameFrame = getglobal("noobDKP_page3_auction_entry" .. pos .. "_name")
       nameFrame:SetText(name)
       local r, g, b, a = NoobDKP_getClassColor(NOOBDKP_g_roster[name][2])
       nameFrame:SetVertexColor(r, g, b, a)
-      priorityFrame = getglobal("myTabPage3_Auction_entry" .. pos .. "_rank")
+      priorityFrame = getglobal("noobDKP_page3_auction_entry" .. pos .. "_rank")
       priorityFrame:SetText(priority)
-      scoreFrame = getglobal("myTabPage3_Auction_entry" .. pos .. "_score")
+      scoreFrame = getglobal("noobDKP_page3_auction_entry" .. pos .. "_score")
       scoreFrame:SetText(score)
       local score, ep, gp = NoobDKP_GetEPGP(name)
-      EPFrame = getglobal("myTabPage3_Auction_entry" .. pos .. "_EP")
+      EPFrame = getglobal("noobDKP_page3_auction_entry" .. pos .. "_EP")
       EPFrame:SetText(ep)
-      GPFrame = getglobal("myTabPage3_Auction_entry" .. pos .. "_GP")
+      GPFrame = getglobal("noobDKP_page3_auction_entry" .. pos .. "_GP")
       GPFrame:SetText(gp)
-      DQBox = getglobal("myTabPage3_Auction_entry" .. pos .. "_DQ")
+      DQBox = getglobal("noobDKP_page3_auction_entry" .. pos .. "_DQ")
       if NOOBDKP_g_auction[name]["DQ"] then
         DQBox:SetChecked(true)
       else
@@ -451,42 +451,42 @@ function NoobDKP_HandleUpdateAuction()
 
   if pos <= 10 then
     for j = pos, 10 do
-      nameFrame = getglobal("myTabPage3_Auction_entry" .. j .. "_name")
+      nameFrame = getglobal("noobDKP_page3_auction_entry" .. j .. "_name")
       nameFrame:SetText("")
-      rankFrame = getglobal("myTabPage3_Auction_entry" .. j .. "_rank")
+      rankFrame = getglobal("noobDKP_page3_auction_entry" .. j .. "_rank")
       rankFrame:SetText("")
-      scoreFrame = getglobal("myTabPage3_Auction_entry" .. j .. "_score")
+      scoreFrame = getglobal("noobDKP_page3_auction_entry" .. j .. "_score")
       scoreFrame:SetText("")
-      EPFrame = getglobal("myTabPage3_Auction_entry" .. j .. "_EP")
+      EPFrame = getglobal("noobDKP_page3_auction_entry" .. j .. "_EP")
       EPFrame:SetText("")
-      GPFrame = getglobal("myTabPage3_Auction_entry" .. j .. "_GP")
+      GPFrame = getglobal("noobDKP_page3_auction_entry" .. j .. "_GP")
       GPFrame:SetText("")
-      DQBox = getglobal("myTabPage3_Auction_entry" .. j .. "_DQ")
+      DQBox = getglobal("noobDKP_page3_auction_entry" .. j .. "_DQ")
       DQBox:Hide()
     end
   end
 
   -- if a bid is detected, allow finishing the auction
   if NOOBDKP_g_options["admin_mode"] and pos >= 2 then
-    getglobal("myTabPage3_Auction_finishAuction"):Enable()
-    getglobal("myTabPage3_AuctionAddGP"):Enable()
+    getglobal("noobDKP_page3_auction_finishAuction"):Enable()
+    getglobal("noobDKP_page3_auctionAddGP"):Enable()
     if NOOBDKP_g_auction["_winner"] ~= "" and NOOBDKP_g_auction["_winner"] ~= nil then
       local winner = NOOBDKP_g_auction["_winner"]
-      getglobal("myTabPage3_Auction_Winner"):SetText(winner)
+      getglobal("noobDKP_page3_auction_Winner"):SetText(winner)
       local r, g, b, a = NoobDKP_getClassColor(NOOBDKP_g_roster[winner][2])
-      getglobal("myTabPage3_Auction_Winner"):SetVertexColor(r, g, b, a)
+      getglobal("noobDKP_page3_auction_Winner"):SetVertexColor(r, g, b, a)
     end
   else
-    getglobal("myTabPage3_Auction_finishAuction"):Disable()
-    getglobal("myTabPage3_Auction_Amount"):ClearFocus()
-    getglobal("myTabPage3_AuctionAddGP"):Disable()
+    getglobal("noobDKP_page3_auction_finishAuction"):Disable()
+    getglobal("noobDKP_page3_auction_amount"):ClearFocus()
+    getglobal("noobDKP_page3_auctionAddGP"):Disable()
   end
 end
 
 -- handles adding an item to the loot table (see Populate Loot Table in Options tab)
 function NoobDKP_PopulateLootTable(item)
   if NOOBDKP_g_loot_table[item] == nil or NOOBDKP_g_loot_table[item] == "" then
-    print("Populating Loot Table with " .. item)
+    print(NoobDKP_color .. "Populating Loot Table with " .. item)
     NOOBDKP_g_loot_table[item] = {}
     NOOBDKP_g_loot_table[item]["need"] = {}
     NOOBDKP_g_loot_table[item]["greed"] = {}
@@ -495,8 +495,8 @@ end
 
 -- sets a character as disqualified, for this auction only
 function NoobDKP_Disqualify(button)
-  local _, _, index = string.find(button:GetName(), "%s?myTabPage3_Auction_entry(%w)_DQ")
-  local char = getglobal("myTabPage3_Auction_entry" .. index .. "_name"):GetText()
+  local _, _, index = string.find(button:GetName(), "%s?noobDKP_page3_auction_entry(%w)_DQ")
+  local char = getglobal("noobDKP_page3_auction_entry" .. index .. "_name"):GetText()
   NOOBDKP_g_auction[char]["DQ"] = button:GetChecked()
   NoobDKP_HandleAuctionResponse("DQ", char)
 end
@@ -514,7 +514,7 @@ function NoobDKP_PrePopulateGP(item)
   -- determine if item is heroic version. Would be nice if there was a 
   -- way to get this from the item or WoW, but having the user handle it
   -- seems to work for now
-  if getglobal("myTabPage3_AuctionIsHeroic"):GetChecked() then
+  if getglobal("noobDKP_page3_auctionIsHeroic"):GetChecked() then
     equipLoc = "HC_" .. equipLoc
   end
 
@@ -524,7 +524,7 @@ function NoobDKP_PrePopulateGP(item)
     gp = ""
   end
 
-  getglobal("myTabPage3_Auction_Amount"):SetText(gp)
+  getglobal("noobDKP_page3_auction_amount"):SetText(gp)
 end
 
 function NoobDKP_IsHeroicChanged()

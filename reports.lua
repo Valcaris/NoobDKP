@@ -22,7 +22,7 @@ function NoobDKP_GenerateFullReport()
     end
   end
 
-  getglobal("myTabPage4_Text"):SetText(text)
+  getglobal("noobDKP_page4_text"):SetText(text)
 end
 
 function briefCompare(a, b)
@@ -71,7 +71,7 @@ function NoobDKP_GenerateBriefReport()
     text = text .. "\n | " .. a .. " | " .. b .. " | " .. c .. " | " .. d .. " | " .. e .. " | " .. f .. " |"
   end
 
-  getglobal("myTabPage4_Text"):SetText(text)
+  getglobal("noobDKP_page4_text"):SetText(text)
 end
 
 function altCompare(a, b)
@@ -102,7 +102,7 @@ function NoobDKP_GenerateAltReport()
       main = value[2]
     end
   end
-  getglobal("myTabPage4_Text"):SetText(text)
+  getglobal("noobDKP_page4_text"):SetText(text)
 end
 
 function NoobDKP_GenerateEventReport()
@@ -117,5 +117,5 @@ function NoobDKP_GenerateEventReport()
       end
     end
   end
-  getglobal("myTabPage4_Text"):SetText(text)
+  getglobal("noobDKP_page4_text"):SetText(text)
 end

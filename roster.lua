@@ -11,41 +11,41 @@ end
 function NoobDKPHandleRoster(msg)
   local syntax =
     "roster\n-scan: scans the guild and adds members to roster\n-add [name]: adds a character name as an external\n-remove [name]: removes a character name from the roster (for externals)\n-alt [nameA] [nameB]: sets nameA as an alt of nameB\n-set [name] [Net] [Total]: Sets the values of name to Net value and Total value\n-epgp [name] [ep] [gp]"
-  print("Handle Roster: " .. msg)
+  print(NoobDKP_color .. "Handle Roster: " .. msg)
   local _, _, cmd, args = string.find(msg, "%s?(%w+)%s?(.*)")
   if cmd == "scan" then
     NoobDKP_ScanRoster()
   elseif cmd == "add" then
     if args == "" then
-      print("No character found to add!")
+      print(NoobDKP_color .. "No character found to add!")
       print(NoobDKP_color .. syntax)
     else
       NoobDKP_AddRoster(args)
     end
   elseif cmd == "remove" then
     if args == "" then
-      print("No character found to remove!")
+      print(NoobDKP_color .. "No character found to remove!")
       print(NoobDKP_color .. syntax)
     else
       NoobDKP_RemoveRoster(args)
     end
   elseif cmd == "alt" then
     if args == "" then
-      print("No characters found to set alt!")
+      print(NoobDKP_color .. "No characters found to set alt!")
       print(NoobDKP_color .. syntax)
     else
       NoobDKP_AltRoster(args)
     end
   elseif cmd == "set" then
     if args == "" then
-      print("No values found for set!")
+      print(NoobDKP_color .. "No values found for set!")
       print(NoobDKP_color .. syntax)
     else
       NoobDKP_SetRoster(args)
     end
   elseif cmd == "epgp" then
     if args == "" then
-      print("No values found for set!")
+      print(NoobDKP_color .. "No values found for set!")
       print(NoobDKP_color .. syntax)
     else
       local _, _, char, ep, gp = string.find(args, "%s?(%w+)%s?(-?%d+)%s?(-?%d+)")
@@ -80,19 +80,19 @@ end
 -- add a character to the roster as an external
 function NoobDKP_AddRoster(name)
   name = NoobDKP_FixName(name)
-  print("Add member: " .. name)
+  print(NoobDKP_color .. "Add member: " .. name)
   if NOOBDKP_g_roster[name] == nil then
-    print("Not found! adding...")
+    print(NoobDKP_color .. "Not found! adding...")
     NOOBDKP_g_roster[name] = {"*external*", "unknown", ""}
   else
-    print("Found! skipping...")
+    print(NoobDKP_color .. "Found! skipping...")
   end
 end
 
 -- remove a character from the roster (should only be used on externals)
 function NoobDKP_RemoveRoster(name)
   name = NoobDKP_FixName(name)
-  print("Removing member: " .. name)
+  print(NoobDKP_color .. "Removing member: " .. name)
   NOOBDKP_g_roster[name] = nil
 end
 
@@ -101,11 +101,11 @@ function NoobDKP_AltRoster(args)
   local _, _, alt, main = string.find(args, "%s?(%w+)%s?(.*)")
   alt = NoobDKP_FixName(alt)
   main = NoobDKP_FixName(main)
-  print("Alt: " .. alt .. ", Main: " .. main)
+  print(NoobDKP_color .. "Alt: " .. alt .. ", Main: " .. main)
   if NOOBDKP_g_roster[alt] == nil then
-    print("Unable to find alt: " .. alt)
+    print(NoobDKP_color .. "Unable to find alt: " .. alt)
   elseif NOOBDKP_g_roster[main] == nil then
-    print("Unable to find main: " .. main)
+    print(NoobDKP_color .. "Unable to find main: " .. main)
   else
     NOOBDKP_g_roster[alt][3] = main
   end
@@ -114,14 +114,14 @@ end
 function NoobDKP_SetRoster(args)
   local _, _, char, net, total = string.find(args, "%s?(%w+)%s?(-?%d+)%s?(-?%d+)")
   char = NoobDKP_FixName(char)
-  print("Char: " .. char .. ", Net: " .. net .. ", Total: " .. total)
+  print(NoobDKP_color .. "Char: " .. char .. ", Net: " .. net .. ", Total: " .. total)
 
   local main = NOOBDKP_find_main(char)
   if main ~= "" then
-    print("Found main of " .. char .. " is " .. main .. ". Setting values...")
+    print(NoobDKP_color .. "Found main of " .. char .. " is " .. main .. ". Setting values...")
     NOOBDKP_g_roster[main][3] = "N:" .. net .. " T:" .. total
   else
-    print("Can't find main of " .. char)
+    print(NoobDKP_color .. "Can't find main of " .. char)
   end
 end
 
@@ -133,7 +133,7 @@ function NoobDKP_SetEPGP(char, ep, gp)
 end
 
 function NoobDKP_RosterItemOnClick(self)
-  print("Bob Loblaw " .. self:GetName())
+  print(NoobDKP_color .. "Bob Loblaw " .. self:GetName())
   local nameFrame = getglobal(self:GetName() .. "_name")
   nameFrame:SetText("bob")
 end
@@ -184,7 +184,7 @@ function NoobDKP_RosterVerticalScroll(offset)
 end
 
 function NoobDKP_UpdateRaidRoster()
-  print("Updating Raid Roster...")
+  print(NoobDKP_color .. "Updating Raid Roster...")
   NOOBDKP_g_raid_roster = {}
 
   for idx = 1, 40 do
@@ -315,16 +315,16 @@ function NoobDKP_UpdateRoster()
   local pos = 1 -- index into the frame list
   for key, value in ipairs(sorted) do
     if i >= roster_index then
-      nameFrame = getglobal("myTabPage1_entry" .. pos .. "_name")
+      nameFrame = getglobal("noobDKP_page1_entry" .. pos .. "_name")
       nameFrame:SetText(value[1])
       nameFrame:SetVertexColor(value[2], value[3], value[4], value[5])
-      rankFrame = getglobal("myTabPage1_entry" .. pos .. "_rank")
+      rankFrame = getglobal("noobDKP_page1_entry" .. pos .. "_rank")
       rankFrame:SetText(value[6])
-      scoreFrame = getglobal("myTabPage1_entry" .. pos .. "_score")
+      scoreFrame = getglobal("noobDKP_page1_entry" .. pos .. "_score")
       scoreFrame:SetText(value[7])
-      EPFrame = getglobal("myTabPage1_entry" .. pos .. "_EP")
+      EPFrame = getglobal("noobDKP_page1_entry" .. pos .. "_EP")
       EPFrame:SetText(value[8])
-      GPFrame = getglobal("myTabPage1_entry" .. pos .. "_GP")
+      GPFrame = getglobal("noobDKP_page1_entry" .. pos .. "_GP")
       GPFrame:SetText(value[9])
       pos = pos + 1
       if pos > 15 then
@@ -336,15 +336,15 @@ function NoobDKP_UpdateRoster()
 
   if pos <= 15 then
     for j = pos, 15 do
-      nameFrame = getglobal("myTabPage1_entry" .. j .. "_name")
+      nameFrame = getglobal("noobDKP_page1_entry" .. j .. "_name")
       nameFrame:SetText("")
-      rankFrame = getglobal("myTabPage1_entry" .. j .. "_rank")
+      rankFrame = getglobal("noobDKP_page1_entry" .. j .. "_rank")
       rankFrame:SetText("")
-      scoreFrame = getglobal("myTabPage1_entry" .. j .. "_score")
+      scoreFrame = getglobal("noobDKP_page1_entry" .. j .. "_score")
       scoreFrame:SetText("")
-      EPFrame = getglobal("myTabPage1_entry" .. j .. "_EP")
+      EPFrame = getglobal("noobDKP_page1_entry" .. j .. "_EP")
       EPFrame:SetText("")
-      GPFrame = getglobal("myTabPage1_entry" .. j .. "_GP")
+      GPFrame = getglobal("noobDKP_page1_entry" .. j .. "_GP")
       GPFrame:SetText("")
     end
   end
@@ -365,7 +365,7 @@ function NoobDKP_AuditRoster()
   for key, value in pairs(NOOBDKP_g_roster) do
     if value[1] ~= "*external*" then
       if tempTable[key] ~= 1 then
-        print("Found " .. key .. " left the guild!")
+        print(NoobDKP_color .. "Found " .. key .. " left the guild!")
         NOOBDKP_g_roster[key][1] = "*external*"
       end
     end
@@ -397,7 +397,7 @@ function NoobDKP_PurgeNoEPRoster()
   for key, value in pairs(NOOBDKP_g_roster) do
     local score, ep, gp = NoobDKP_GetEPGP(key)
     if ep == nil or ep == 0 or gp == nil or gp == 0 then
-      print("Purging " .. key .. " for having no values!")
+      print(NoobDKP_color .. "Purging " .. key .. " for having no values!")
       NOOBDKP_g_roster[key] = nil
     end
   end
@@ -433,10 +433,10 @@ function NoobDKP_Decay()
       if t ~= 0 and t ~= "" and n ~= 0 and n ~= "" then
         local _, ep, gp = NoobDKP_GetEPGP(key)
         if ep ~= 0 and gp ~= 0 then
-          print("Found score for " .. key .. " ep = " .. ep .. " gp = " .. gp)
+          print(NoobDKP_color .. "Found score for " .. key .. " ep = " .. ep .. " gp = " .. gp)
           ep = math.floor(ep - (ep * (decay / 100)) + 0.5)
           gp = math.floor(gp - (gp * (decay / 100)) + 0.5)
-          print("Decayed to ep = " .. ep .. " gp = " .. gp)
+          print(NoobDKP_color .. "Decayed to ep = " .. ep .. " gp = " .. gp)
           NoobDKP_SetEPGP(key, ep, gp)
         end
       end
