@@ -116,7 +116,7 @@
     </Frames>
     <Scripts>
       <OnClick>NoobDKP_RosterItemOnClick(this);</OnClick>
-      <OnLoad>this:RegisterForClicks("LeftButtonDown", "RightButtonDown")</OnLoad>
+      <OnLoad>this:RegisterForClicks("RightButtonDown")</OnLoad>
     </Scripts>
   </Button>
 
@@ -179,6 +179,125 @@
       </Layer>
     </Layers>
   </Button>
+
+  <Frame name="roster_menu" hidden="true" frameStrata="TOOLTIP">
+    <Size>
+      <AbsDimension x="120" y="100" />
+    </Size>
+    <Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
+      <BackgroundInsets>
+        <AbsInset left="11" right="12" top="12" bottom="11" />
+      </BackgroundInsets>
+      <TileSize>
+        <AbsValue val="32" />
+      </TileSize>
+      <EdgeSize>
+        <AbsValue val="32" />
+      </EdgeSize>
+    </Backdrop>
+    <Anchors>
+      <Anchor point="LEFT" />
+    </Anchors>
+    <Layers>
+      <Layer level="ARTWORK">
+        <FontString name="$parent_name" inherits="GameFontNormal" text="Unknown">
+          <Anchors>
+            <Anchor point="TOP" relativeTo="$parent">
+              <Offset>
+                <AbsDimension x="0" y="-14" />
+              </Offset>
+            </Anchor>
+          </Anchors>
+        </FontString>
+        <FontString name="$parent_ep" inherits="GameFontNormal" text="Add EP:">
+          <Anchors>
+            <Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
+              <Offset>
+                <AbsDimension x="10" y="-30" />
+              </Offset>
+            </Anchor>
+          </Anchors>
+        </FontString>
+        <FontString name="$parent_gp" inherits="GameFontNormal" text="Add GP:">
+          <Anchors>
+            <Anchor point="TOPLEFT" relativeTo="$parent_ep" relativePoint="BOTTOMLEFT">
+              <Offset>
+                <AbsDimension x="0" y="-5" />
+              </Offset>
+            </Anchor>
+          </Anchors>
+        </FontString>
+      </Layer>
+    </Layers>
+    <Frames>
+      <Button name="$parent_button_close" inherits="UIPanelCloseButton">
+        <Anchors>
+          <Anchor point="TOPRIGHT">
+            <Offset>
+              <AbsDimension x="2" y="2" />
+            </Offset>
+          </Anchor>
+        </Anchors>
+        <Scripts>
+          <OnClick>(this:GetParent()):Hide()</OnClick>
+        </Scripts>
+      </Button>
+      <Button name="$parent_button_remove" text="Remove" inherits="UIPanelButtonTemplate">
+        <Anchors>
+          <Anchor point="BOTTOM" relativTo="$parent">
+            <Offset>
+              <AbsDimension x="00" y="10"/>
+            </Offset>
+          </Anchor>
+        </Anchors>
+        <Size>
+          <AbsDimension x="60" y="20" />
+        </Size>
+        <Scripts>
+          <OnClick>NoobDKP_RosterContextRemove()</OnClick>
+        </Scripts>
+      </Button>
+      <EditBox name="$parent_ep_value" inherits="InputBoxTemplate" autoFocus="false">
+        <Size>
+          <AbsDimension x="25" y="25" />
+        </Size>
+        <Anchors>
+          <Anchor relativePoint="RIGHT" point="LEFT" relativeTo="$parent_ep">
+            <Offset>
+              <AbsDimension x="10" y="0" />
+            </Offset>
+          </Anchor>
+        </Anchors>
+      </EditBox>
+      <EditBox name="$parent_gp_value" inherits="InputBoxTemplate" autoFocus="false">
+        <Size>
+          <AbsDimension x="25" y="25" />
+        </Size>
+        <Anchors>
+          <Anchor relativePoint="RIGHT" point="LEFT" relativeTo="$parent_gp">
+            <Offset>
+              <AbsDimension x="8" y="0" />
+            </Offset>
+          </Anchor>
+        </Anchors>
+      </EditBox>
+      <Button text="OK" inherits="UIPanelButtonTemplate">
+        <Anchors>
+          <Anchor point="LEFT" relativeTo="$parent_ep_value" relativePoint="RIGHT">
+            <Offset>
+              <AbsDimension x="1" y="-10"/>
+            </Offset>
+          </Anchor>
+        </Anchors>
+        <Size>
+          <AbsDimension x="20" y="20" />
+        </Size>
+        <Scripts>
+          <OnClick>NoobDKP_RosterContext()</OnClick>
+        </Scripts>
+      </Button>
+    </Frames>
+  </Frame>
 
   <Frame name="noobMainFrame" toplevel="true" frameStrata="DIALOG" movable="true" enableMouse="true" hidden="false" parent="UIParent">
     <Size>
@@ -1818,7 +1937,17 @@
               </Anchors>
               <Scripts>
                 <OnLoad>
-                  self:SetText("You\nare\nbeing\nhelped!")
+                  self:SetText("Member (non raid leader) \
+                  \n- Use the Roster tab to view EPGP values for your raid or guild.\
+                  \n- Use the Events tab to see a history of loot and rewards.\
+                  \n- Use the Auction tab to watch an auction in progress \
+                  \n Admin (raid leader)\
+                  \n- Go to the Options tab and ensure \"Admin Mode\" is selected.\
+                  \n- When the raid starts, go to the Events tab and click \"Create Event\". Use the \"Generate Name\" button to name the raid after your current locaiton + date.\
+                  \n- When a boss is defeated, its EP value is automatically populated. Click \"Add\" or adjust the EP as desired. Multiplier can be used to increase EP (for first time kills, etc).\
+                  \n- When loot is ready for distributing, shift-click on the item. A new auction will automatically start. Click \"Declare Winner\" to declare the winner. Click \"Add GP\" to award the player the GP (value is populated automatically). Select Heroic to use Heroic loot values. Looting must still be done manually.\
+                  \n- When the raid is done, go to the Events tab and click \"Close Event\".\
+                  \n- Then go to the Reports tab and click on the desired report(s). Text will be pasted in the text window which can then be copied into a text file, Discord, or website.")
                 </OnLoad>
               </Scripts>
             </EditBox>

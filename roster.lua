@@ -125,17 +125,68 @@ function NoobDKP_SetRoster(args)
   end
 end
 
+--[[
 function NoobDKP_SetEPGP(char, ep, gp)
   local main = NOOBDKP_find_main(char)
   local total = ep
   local net = ep - gp
   NOOBDKP_g_roster[main][3] = "N:" .. net .. " T:" .. total
 end
+]]
 
 function NoobDKP_RosterItemOnClick(self)
-  print(NoobDKP_color .. "Bob Loblaw " .. self:GetName())
-  local nameFrame = getglobal(self:GetName() .. "_name")
-  nameFrame:SetText("bob")
+  local my_name = getglobal(self:GetName() .. "_name"):GetText()
+  local menu = getglobal("roster_menu")
+
+  if my_name == nil or my_name == "" then
+    menu:Hide()
+    return 
+  end
+
+  local menu_name = getglobal("roster_menu_name")
+  menu:ClearAllPoints()
+  menu:SetPoint("LEFT", self, "LEFT", 30, -30)
+
+  menu_name:SetText(my_name)
+  getglobal("roster_menu_ep_value"):SetText("")
+  getglobal("roster_menu_gp_value"):SetText("")
+
+  if roster_type == 1 then
+    getglobal("roster_menu_button_remove"):Hide()
+  else
+    getglobal("roster_menu_button_remove"):Show()
+  end
+
+  menu:Show()
+end
+
+function NoobDKP_RosterContext()
+  local menu = getglobal("roster_menu")
+  local name = getglobal("roster_menu_name"):GetText()
+  local ep = getglobal("roster_menu_ep_value"):GetText()
+  local gp = getglobal("roster_menu_gp_value"):GetText()
+
+  if ep == "" or ep == nil then
+    ep = 0
+  end
+
+  if gp == "" or gp == nil then
+    gp = 0
+  end
+
+  local old_score, old_ep, old_gp = NoobDKP_GetEPGP(name)
+  ep = old_ep + ep
+  gp = old_gp + gp
+  NoobDKP_SetEPGP(name, ep, gp)
+  NoobDKP_UpdateRoster()
+  menu:Hide()
+end
+
+function NoobDKP_RosterContextRemove()
+  getglobal("roster_menu"):Hide()
+  local name = getglobal("roster_menu_name"):GetText()
+  NoobDKP_RemoveRoster(name)
+  NoobDKP_UpdateRoster()
 end
 
 function NoobDKP_SortBy(type)
