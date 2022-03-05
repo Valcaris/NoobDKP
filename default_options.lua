@@ -10,6 +10,7 @@ if NOOBDKP_g_options == nil then
 
   NOOBDKP_g_options["admin_mode"] = false
   NOOBDKP_g_options["loot_table"] = false
+  NOOBDKP_g_options["auto_EP"] = true
   
   NOOBDKP_g_options["scroll_scale"] = 5
   
@@ -87,6 +88,9 @@ if NOOBDKP_g_boss_table == nil then
   NOOBDKP_g_boss_table["Sindragosa"] = 10
   NOOBDKP_g_boss_table["The Lich King"] = 50
   NOOBDKP_g_boss_table["Hallion"] = 50
+
+  NOOBDKP_g_boss_table["Kobold Vermin"] = 1
+
 end
 
 if NOOBDKP_g_loot_table == nil then

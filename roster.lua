@@ -399,6 +399,8 @@ function NoobDKP_UpdateRoster()
       GPFrame:SetText("")
     end
   end
+
+  getglobal("roster_menu"):Hide()
 end
 
 function NoobDKP_AuditRoster()

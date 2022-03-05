@@ -3,8 +3,6 @@
     - ** initial add to empty roster not working on first time setup!
     - function wrapper to all uses of option table entries
     - Roster Tab
-        - Right-Click Context menu on List buttons
-            - @see Roster functions
         - Give sort headers a background that is used on mouseover
         - Last update timestamp
         - Virtual rosters to allow events without being in a raid
@@ -24,19 +22,11 @@
         - Master arbitration
     - Options Tab
           - Various widgets for the options, may need mulitple pages or scrolling page
-          - Force refresh: delete all tables and pull from guild/defaults
-    - Create a Help tab with basic instructions or a ? button at the top
     - Communications
     - Minimap Icon
     - TitanBars Icon
     - README.md, code documentation comments, general cleanup, QDKP acknowledgement
     - Conversion from QDKP T:x N:y to own custom notes E:x G:y
-
-    <OnMouseDown> if arg1 == "RightButton"
-        elseif arg1 == "LeftButton"
-        ...
-    <OnEnterPressed>
-    <OnLeave> for tooltips
 ]]
 local noobversion = GetAddOnMetadata("NoobDKP", "Version")
 

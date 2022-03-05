@@ -178,6 +178,10 @@
         </FontString>
       </Layer>
     </Layers>
+    <Scripts>
+      <OnClick>NoobDKP_EventItemOnClick(this);</OnClick>
+      <OnLoad>this:RegisterForClicks("RightButtonDown")</OnLoad>
+    </Scripts>
   </Button>
 
   <Frame name="roster_menu" hidden="true" frameStrata="TOOLTIP">
@@ -199,6 +203,23 @@
       <Anchor point="LEFT" />
     </Anchors>
     <Layers>
+      <Layer level="BACKGROUND">
+        <Texture name="$parent_Background" setAllPoints="true">
+          <Anchors>
+            <Anchor point="TOPLEFT">
+              <Offset>
+                <AbsDimension x="10" y="-10"/>
+              </Offset>
+            </Anchor>
+            <Anchor point="BOTTOMRIGHT">
+              <Offset>
+                <AbsDimension x="-10" y="10"/>
+              </Offset>
+            </Anchor>
+          </Anchors>
+          <Color r="0.0" g="0.0" b="0.0" a="1.0" />
+        </Texture>
+      </Layer>
       <Layer level="ARTWORK">
         <FontString name="$parent_name" inherits="GameFontNormal" text="Unknown">
           <Anchors>
@@ -294,6 +315,211 @@
         </Size>
         <Scripts>
           <OnClick>NoobDKP_RosterContext()</OnClick>
+        </Scripts>
+      </Button>
+    </Frames>
+  </Frame>
+
+  <Frame name="event_menu" hidden="true" frameStrata="TOOLTIP">
+    <Size>
+      <AbsDimension x="300" y="120" />
+    </Size>
+    <Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
+      <BackgroundInsets>
+        <AbsInset left="11" right="12" top="12" bottom="11" />
+      </BackgroundInsets>
+      <TileSize>
+        <AbsValue val="32" />
+      </TileSize>
+      <EdgeSize>
+        <AbsValue val="32" />
+      </EdgeSize>
+    </Backdrop>
+    <Anchors>
+      <Anchor point="LEFT" />
+    </Anchors>
+    <Layers>
+      <Layer level="BACKGROUND">
+        <Texture name="$parent_Background" setAllPoints="true">
+          <Anchors>
+            <Anchor point="TOPLEFT">
+              <Offset>
+                <AbsDimension x="10" y="-10"/>
+              </Offset>
+            </Anchor>
+            <Anchor point="BOTTOMRIGHT">
+              <Offset>
+                <AbsDimension x="-10" y="10"/>
+              </Offset>
+            </Anchor>
+          </Anchors>
+          <Color r="0.0" g="0.0" b="0.0" a="1.0" />
+        </Texture>
+      </Layer>
+      <Layer level="ARTWORK">
+        <FontString name="$parent_who" inherits="GameFontNormal" text="Who:">
+          <Anchors>
+            <Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
+              <Offset>
+                <AbsDimension x="10" y="-12" />
+              </Offset>
+            </Anchor>
+          </Anchors>
+        </FontString>
+        <FontString name="$parent_value" inherits="GameFontNormal" text="Value:">
+          <Anchors>
+            <Anchor point="TOPLEFT" relativeTo="$parent_who" relativePoint="BOTTOMLEFT">
+              <Offset>
+                <AbsDimension x="0" y="-7" />
+              </Offset>
+            </Anchor>
+          </Anchors>
+        </FontString>
+        <FontString name="$parent_value_type" inherits="GameFontNormal" text="EP">
+          <Anchors>
+            <Anchor point="TOPLEFT" relativeTo="$parent_value" relativePoint="BOTTOMLEFT">
+              <Offset>
+                <AbsDimension x="0" y="-7" />
+              </Offset>
+            </Anchor>
+          </Anchors>
+        </FontString>
+        <FontString name="$parent_value_type_2" inherits="GameFontNormal" text="GP">
+          <Anchors>
+            <Anchor point="TOPLEFT" relativeTo="$parent_value" relativePoint="BOTTOMLEFT">
+              <Offset>
+                <AbsDimension x="37" y="-7" />
+              </Offset>
+            </Anchor>
+          </Anchors>
+        </FontString>
+        <FontString name="$parent_reason" inherits="GameFontNormal" text="Reason:">
+          <Anchors>
+            <Anchor point="TOPLEFT" relativeTo="$parent_value_type" relativePoint="BOTTOMLEFT">
+              <Offset>
+                <AbsDimension x="0" y="-7" />
+              </Offset>
+            </Anchor>
+          </Anchors>
+        </FontString>
+        <FontString name="$parent_id" inherits="GameFontNormal" text="0">
+          <Anchors>
+            <Anchor point="BOTTOMLEFT" relativeTo="$parent" relativePoint="BOTTOMLEFT">
+              <Offset>
+                <AbsDimension x="10" y="10" />
+              </Offset>
+            </Anchor>
+          </Anchors>
+        </FontString>
+      </Layer>
+    </Layers>
+    <Frames>
+      <Button name="$parent_button_close" inherits="UIPanelCloseButton">
+        <Anchors>
+          <Anchor point="TOPRIGHT">
+            <Offset>
+              <AbsDimension x="2" y="2" />
+            </Offset>
+          </Anchor>
+        </Anchors>
+        <Scripts>
+          <OnClick>(this:GetParent()):Hide()</OnClick>
+        </Scripts>
+      </Button>
+      <Button name="$parent_button_remove" text="Remove" inherits="UIPanelButtonTemplate">
+        <Anchors>
+          <Anchor point="BOTTOM" relativTo="$parent">
+            <Offset>
+              <AbsDimension x="0" y="10"/>
+            </Offset>
+          </Anchor>
+        </Anchors>
+        <Size>
+          <AbsDimension x="60" y="20" />
+        </Size>
+        <Scripts>
+          <OnClick>NoobDKP_EventContextRemove()</OnClick>
+        </Scripts>
+      </Button>
+      <EditBox name="$parent_who_value" inherits="InputBoxTemplate" autoFocus="false">
+        <Size>
+          <AbsDimension x="200" y="25" />
+        </Size>
+        <Anchors>
+          <Anchor relativePoint="RIGHT" point="LEFT" relativeTo="$parent_who">
+            <Offset>
+              <AbsDimension x="20" y="0" />
+            </Offset>
+          </Anchor>
+        </Anchors>
+      </EditBox>
+      <EditBox name="$parent_value_value" inherits="InputBoxTemplate" autoFocus="false">
+        <Size>
+          <AbsDimension x="25" y="25" />
+        </Size>
+        <Anchors>
+          <Anchor relativePoint="RIGHT" point="LEFT" relativeTo="$parent_value">
+            <Offset>
+              <AbsDimension x="15" y="0" />
+            </Offset>
+          </Anchor>
+        </Anchors>
+      </EditBox>
+      <CheckButton name="$parent_type_EP" inherits="UICheckButtonTemplate" hidden="false">
+        <Anchors>
+          <Anchor point="LEFT" relativeTo="$parent_value_type" relativePoint="RIGHT">
+            <Offset>
+              <AbsDimension x="0" y="0"/>
+            </Offset>
+          </Anchor>
+        </Anchors>
+        <Size>
+          <AbsDimension x="25" y="25" />
+        </Size>
+        <Scripts>
+          <OnClick>NoobDKP_EventHandleType(this)</OnClick>
+        </Scripts>
+      </CheckButton>
+      <CheckButton name="$parent_type_GP" inherits="UICheckButtonTemplate" hidden="false">
+        <Anchors>
+          <Anchor point="LEFT" relativeTo="$parent_value_type_2" relativePoint="RIGHT">
+            <Offset>
+              <AbsDimension x="0" y="0"/>
+            </Offset>
+          </Anchor>
+        </Anchors>
+        <Size>
+          <AbsDimension x="25" y="25" />
+        </Size>
+        <Scripts>
+          <OnClick>NoobDKP_EventHandleType(this)</OnClick>
+        </Scripts>
+      </CheckButton>
+      <EditBox name="$parent_reason_value" inherits="InputBoxTemplate" autoFocus="false">
+        <Size>
+          <AbsDimension x="200" y="25" />
+        </Size>
+        <Anchors>
+          <Anchor relativePoint="RIGHT" point="LEFT" relativeTo="$parent_reason">
+            <Offset>
+              <AbsDimension x="6" y="0" />
+            </Offset>
+          </Anchor>
+        </Anchors>
+      </EditBox>
+      <Button text="OK" inherits="UIPanelButtonTemplate">
+        <Anchors>
+          <Anchor point="RIGHT" relativeTo="$parent" relativePoint="RIGHT">
+            <Offset>
+              <AbsDimension x="-10" y="0"/>
+            </Offset>
+          </Anchor>
+        </Anchors>
+        <Size>
+          <AbsDimension x="20" y="20" />
+        </Size>
+        <Scripts>
+          <OnClick>NoobDKP_EventContext()</OnClick>
         </Scripts>
       </Button>
     </Frames>
@@ -1664,6 +1890,15 @@
                 </Anchor>
               </Anchors>
             </FontString>
+            <FontString name="$parent_auto_EP_text" inherits="GameFontNormal" text="Auto EP?">
+              <Anchors>
+                <Anchor point="TOPLEFT" relativeTo="$parent">
+                  <Offset>
+                    <AbsDimension x="15" y="-150" />
+                  </Offset>
+                </Anchor>
+              </Anchors>
+            </FontString>
           </Layer>
         </Layers>
         <Anchors>
@@ -1896,6 +2131,62 @@
               </OnClick>
             </Scripts>
           </Button>
+          <CheckButton name="$parent_auto_EP" inherits="UICheckButtonTemplate">
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="$parent_auto_EP_text">
+                <Offset>
+                  <AbsDimension x="5" y="5" />
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Size>
+              <AbsDimension x="25" y="25" />
+            </Size>
+            <Scripts>
+              <OnClick>
+                NOOBDKP_g_options["auto_EP"] = this:GetChecked()
+              </OnClick>
+              <OnShow>
+                if NOOBDKP_g_options["auto_EP"] then
+                  this:SetChecked(true)
+                end
+              </OnShow>
+              <OnEnter>
+                GameTooltip:SetOwner(this, "ANCHOR_RIGHT");
+                GameTooltip:SetText('Addon will automatically apply EP when boss death detected');
+              </OnEnter>
+              <OnLeave>
+                GameTooltip:Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+          <Button name="$parent_purge_tables" text="Purge Tables" inherits="UIPanelButtonTemplate">
+            <Anchors>
+              <Anchor point="BOTTOMRIGHT" relativePoint="BOTTOMRIGHT" relativeTo="$parent">
+                <Offset>
+                  <AbsDimension x="-10" y="10" />
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Size>
+              <AbsDimension x="110" y="25" />
+            </Size>
+            <Scripts>
+              <OnClick>
+                NOOBDKP_g_options = nil
+                NOOBDKP_g_boss_table = nil
+                NOOBDKP_g_loot_table = nil
+                print(NoobDKP_color .. "Options purged. Reload to continue...")
+              </OnClick>
+              <OnEnter>
+                GameTooltip:SetOwner(this, "ANCHOR_RIGHT");
+                GameTooltip:SetText('CAUTION!!!\nThis will erase several internal tables and reset to defaults.\nTHIS CANNOT BE UNDONE!!!');
+              </OnEnter>
+              <OnLeave>
+                GameTooltip:Hide();
+              </OnLeave>
+            </Scripts>
+          </Button>
         </Frames>
       </Frame>
       <Frame name="noobDKP_page7" hidden="true">
@@ -1976,6 +2267,8 @@
             noobDKP_page5:Hide();
             noobDKP_page6:Hide();
             noobDKP_page7:Hide();
+            roster_menu:Hide();
+            event_menu:Hide();
           </OnClick>
         </Scripts>
       </Button>
@@ -1997,6 +2290,8 @@
             noobDKP_page5:Hide();
             noobDKP_page6:Hide();
             noobDKP_page7:Hide();
+            roster_menu:Hide();
+            event_menu:Hide();
           </OnClick>
         </Scripts>
       </Button>
@@ -2018,6 +2313,8 @@
             noobDKP_page5:Hide();
             noobDKP_page6:Hide();
             noobDKP_page7:Hide();
+            roster_menu:Hide();
+            event_menu:Hide();
           </OnClick>
         </Scripts>
       </Button>
@@ -2039,6 +2336,8 @@
             noobDKP_page5:Hide();
             noobDKP_page6:Hide();
             noobDKP_page7:Hide();
+            roster_menu:Hide();
+            event_menu:Hide();
           </OnClick>
         </Scripts>
       </Button>
@@ -2060,6 +2359,8 @@
             noobDKP_page5:Show();
             noobDKP_page6:Hide();
             noobDKP_page7:Hide();
+            roster_menu:Hide();
+            event_menu:Hide();
           </OnClick>
         </Scripts>
       </Button>
@@ -2081,6 +2382,8 @@
             noobDKP_page5:Hide();
             noobDKP_page6:Show();
             noobDKP_page7:Hide();
+            roster_menu:Hide();
+            event_menu:Hide();
           </OnClick>
         </Scripts>
       </Button>
@@ -2102,6 +2405,8 @@
             noobDKP_page5:Hide();
             noobDKP_page6:Hide();
             noobDKP_page7:Show();
+            roster_menu:Hide();
+            event_menu:Hide();
           </OnClick>
         </Scripts>
       </Button>
@@ -2129,6 +2434,8 @@
         noobDKP_page5:Hide()
         noobDKP_page6:Hide()
         noobDKP_page7:Hide()
+        roster_menu:Hide();
+        event_menu:Hide();
       </OnShow>
       <OnHide>
         PlaySound("UChatScrollButton");
