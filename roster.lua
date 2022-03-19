@@ -174,6 +174,12 @@ function NoobDKP_RosterContext()
     gp = 0
   end
 
+  local _, _, alt, main = string.find(name, "(%w+) %((%w+)%)")
+
+  if main ~= "" and main ~= nil then
+    name = main
+  end
+
   local old_score, old_ep, old_gp = NoobDKP_GetEPGP(name)
   ep = old_ep + ep
   gp = old_gp + gp

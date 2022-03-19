@@ -111,7 +111,7 @@ function NoobDKP_Event_AddEP(EP, reason)
     NOOBDKP_g_events[raid][id] = s
     NOOBDKP_g_events[raid]["last_id"] = id + 1
     NoobDKP_HandleUpdateFullEvent()
-    end
+  end
 end
 
 function NoobDKP_ShowEventTab()
@@ -171,7 +171,9 @@ function NoobDKP_AddRaidEP()
   getglobal("noobDKP_page2_amount"):ClearFocus()
   getglobal("noobDKP_page2_reason"):ClearFocus()
   NoobDKP_UpdateRoster()
-  NoobDKP_HandleUpdateAuction()
+  if NOOBDKP_g_auction ~= nil then 
+    NoobDKP_HandleUpdateAuction()
+  end
   NoobDKP_Event_AddEP(amount, reason)
 end
 
@@ -322,7 +324,7 @@ function NoobDKP_CombatLog(subEvent, name)
   if subEvent == "UNIT_DIED" and name and NOOBDKP_g_options["admin_mode"] then
     print(NoobDKP_color .. "NoobDKP_CombatLog: " .. name)    
 
-    if NOOBDKP_g_boss_table[name] ~= nil then
+    if NOOBDKP_g_boss_table[name] ~= nil and NOOBDKP_g_events["active_raid"] ~= nil then
       print(NoobDKP_color .. "Found boss kill: " .. name)
       getglobal("noobDKP_page2_amount"):SetText(NOOBDKP_g_boss_table[name])
       getglobal("noobDKP_page2_reason"):SetText("Boss kill: " .. name)
