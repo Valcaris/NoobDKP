@@ -186,7 +186,7 @@
 
   <Frame name="roster_menu" hidden="true" frameStrata="TOOLTIP">
     <Size>
-      <AbsDimension x="120" y="100" />
+      <AbsDimension x="120" y="120" />
     </Size>
     <Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
       <BackgroundInsets>
@@ -315,6 +315,23 @@
         </Size>
         <Scripts>
           <OnClick>NoobDKP_RosterContext()</OnClick>
+        </Scripts>
+      </Button>
+      <Button name="$parent_button_add_virtual" text="Add Virtual Raid" inherits="UIPanelButtonTemplate">
+        <Anchors>
+          <Anchor point="BOTTOM" relativTo="$parent">
+            <Offset>
+              <AbsDimension x="0" y="35"/>
+            </Offset>
+          </Anchor>
+        </Anchors>
+        <Size>
+          <AbsDimension x="100" y="20" />
+        </Size>
+        <Scripts>
+          <OnClick>
+            NoobDKP_RosterContextAddVirtual();
+          </OnClick>
         </Scripts>
       </Button>
     </Frames>
@@ -590,6 +607,19 @@
           <Anchor point="TOPLEFT" />
           <Anchor point="BOTTOMRIGHT" />
         </Anchors>
+        <Layers>
+          <Layer level="ARTWORK">
+            <FontString inherits="GameFontNormal" text="Virtual Raid" name="$parent_virtual" hidden="true">
+              <Anchors>
+                <Anchor point="TOPLEFT" relativeTo="$parent">
+                  <Offset>
+                    <AbsDimension x="10" y="-10" />
+                  </Offset>
+                </Anchor>
+              </Anchors>
+            </FontString>
+          </Layer>
+        </Layers>
         <Frames>
           <Button name="$parent_sort_name">
             <Anchors>
@@ -926,6 +956,15 @@
         </Anchors>
         <Layers>
           <Layer level="ARTWORK">
+            <FontString inherits="GameFontNormal" text="Virtual Raid" name="$parent_virtual" hidden="true">
+              <Anchors>
+                <Anchor point="TOPLEFT" relativeTo="$parent">
+                  <Offset>
+                    <AbsDimension x="10" y="-10" />
+                  </Offset>
+                </Anchor>
+              </Anchors>
+            </FontString>
             <FontString inherits="GameFontNormal" text="EP Amount: ">
               <Anchors>
                 <Anchor point="BOTTOMLEFT" relativeTo="$parent">
@@ -1113,7 +1152,27 @@
                     NoobDKP_GenerateEventName()
                   </OnClick>
                 </Scripts>
-              </Button>
+              </Button>              
+              <Button name="$parent_create_virtual_event" inherits="UIPanelButtonTemplate" text="Create Virtual">
+                <Anchors>
+                  <Anchor point="TOPRIGHT" relativePoint="TOPLEFT" relativeTo="$parent_text">
+                    <Offset>
+                      <AbsDimension x="-5" y="5" />
+                    </Offset>
+                  </Anchor>
+                </Anchors>
+                <Size>
+                  <AbsDimension x="100" y="25" />
+                </Size>
+                <Scripts>
+                  <OnClick>
+                    local eventText = getglobal("noobDKP_page2_empty_event_event_location")
+                    NoobDKP_AddVirtualEvent(eventText:GetText())
+                    NoobDKP_ShowEventTab()
+                    eventText:ClearFocus()
+                  </OnClick>
+                </Scripts>
+              </Button>              
             </Frames>
             <Scripts>
               <OnMouseWheel>NoobDKP_EmptyEventVerticalScroll(arg1 * -1)</OnMouseWheel>

@@ -195,6 +195,17 @@ function NoobDKP_RosterContextRemove()
   NoobDKP_UpdateRoster()
 end
 
+function NoobDKP_RosterContextAddVirtual()
+  local timestamp = NOOBDKP_g_events["active_raid"]
+  if timestamp ~= nil and NOOBDKP_g_events[timestamp]["virtual"] == true then
+    local name = getglobal("roster_menu_name"):GetText()
+    local score, ep, gp = NoobDKP_GetEPGP(name)
+    local t = {"", score, ep, gp}
+    NOOBDKP_g_raid_roster[name] = t
+    getglobal("roster_menu"):Hide()
+  end
+end
+
 function NoobDKP_SortBy(type)
   if sort_type == type then
     if sort_order == 0 then
@@ -242,24 +253,29 @@ end
 
 function NoobDKP_UpdateRaidRoster()
   print(NoobDKP_color .. "Updating Raid Roster...")
-  NOOBDKP_g_raid_roster = {}
 
-  for idx = 1, 40 do
-    local name, _, _, _, class = GetRaidRosterInfo(idx)
-    local score, ep, gp
+  local timestamp = NOOBDKP_g_events["active_raid"]
+  if timestamp ~= nil and NOOBDKP_g_events[timestamp]["virtual"] == false then
 
-    if name ~= nil and class ~= nil then
-      if NOOBDKP_g_roster[name] == nil then
-        NOOBDKP_g_roster[name] = {"*external*", class, ""}
-        ep = 0
-        gp = 0
-        score = 100
-      else
-        NOOBDKP_g_roster[name][2] = class
-        score, ep, gp = NoobDKP_GetEPGP(name)
+    NOOBDKP_g_raid_roster = {}
+
+    for idx = 1, 40 do
+      local name, _, _, _, class = GetRaidRosterInfo(idx)
+      local score, ep, gp
+
+      if name ~= nil and class ~= nil then
+        if NOOBDKP_g_roster[name] == nil then
+          NOOBDKP_g_roster[name] = {"*external*", class, ""}
+          ep = 0
+          gp = 0
+          score = 100
+        else
+          NOOBDKP_g_roster[name][2] = class
+          score, ep, gp = NoobDKP_GetEPGP(name)
+        end
+
+        NOOBDKP_g_raid_roster[name] = {"", score, ep, gp}
       end
-
-      NOOBDKP_g_raid_roster[name] = {"", score, ep, gp}
     end
   end
 

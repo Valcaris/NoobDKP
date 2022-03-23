@@ -42,6 +42,13 @@ function NoobDKP_AddEvent(msg)
   NOOBDKP_g_events["active_raid"] = timestamp
 end
 
+function NoobDKP_AddVirtualEvent(msg)
+  NoobDKP_AddEvent(msg)
+  NOOBDKP_g_events[ NOOBDKP_g_events["active_raid"] ]["virtual"] = true
+  getglobal("noobDKP_page1_virtual"):Show()
+  getglobal("noobDKP_page2_virtual"):Show()
+end
+
 function NoobDKP_RemoveEvent(msg)
   local a = NOOBDKP_g_events["active_raid"]
   local _, _, desc = string.find(msg, "%s?(.*)")
@@ -59,38 +66,15 @@ function NoobDKP_RemoveEvent(msg)
 end
 
 function NoobDKP_CloseEvent()
+  getglobal("noobDKP_page1_virtual"):Hide()
+  getglobal("noobDKP_page2_virtual"):Hide()
+  local timestamp = NOOBDKP_g_events["active_raid"]
+  if timestamp ~= nil and NOOBDKP_g_events[timestamp]["virtual"] == true then
+    NOOBDKP_g_raid_roster = {}
+  end
   NOOBDKP_g_events["active_raid"] = nil
   NoobDKP_ShowEventTab()
 end
-
---[[
-function NoobDKP_RaidEvent(msg)
-  if NOOBDKP_g_events == nil then
-    NOOBDKP_g_events = {}
-  end
-  local _, _, d, desc = string.find(msg, "%s?(-?%d+)%s?(.*)")
-  print(NoobDKP_color .. "Raid event: " .. d .. " " .. desc)
-  local a = NOOBDKP_g_events["active_raid"]
-  print(NoobDKP_color .. " active raid: " .. a)
-  local t = {char = "raid", dkp = d, description = desc}
-  table.insert(NOOBDKP_g_events[a], t)
-end
-
-function NoobDKP_CharEvent(msg)
-  print(NoobDKP_color .. "Char event " .. msg)
-  if NOOBDKP_g_events == nil then
-    NOOBDKP_g_events = {}
-  end
-  local _, _, d, c, desc = string.find(msg, "%s?(-?%d+)%s?(%w+)%s?(.*)")
-  c = NoobDKP_FixName(c)
-  print(NoobDKP_color .. "Character event: " .. d .. " " .. c .. " " .. desc)
-  local a = NOOBDKP_g_events["active_raid"]
-  print(NoobDKP_color .. " active raid: " .. a)
-  local t = {char = c, dkp = d, description = desc}
-  table.insert(NOOBDKP_g_events[a], t)
-end
-
-]]
 
 function NoobDKP_Event_AddGP(char, GP, reason)
   local raid = NOOBDKP_g_events["active_raid"]
@@ -119,17 +103,20 @@ function NoobDKP_ShowEventTab()
   local fullFrame = getglobal("noobDKP_page2_event")
   if NOOBDKP_g_events == nil or NOOBDKP_g_events["active_raid"] == nil then
     if NOOBDKP_g_options["admin_mode"] then
-      getglobal("noobDKP_page2_empty_event_create_event"):Enable()
-      getglobal("noobDKP_page2_add_EP"):Enable()
-      --getglobal("noobDKP_page2_empty_event_event_location"):Enable()
-      --getglobal("noobDKP_page2_amount"):Enable()
-      --getglobal("noobDKP_page2_reason"):Enable()
+      local loc = getglobal("noobDKP_page2_empty_event_event_location"):GetText()
+      if loc ~= nil and loc ~= "" then
+        getglobal("noobDKP_page2_empty_event_create_event"):Enable()
+        getglobal("noobDKP_page2_empty_event_create_virtual_event"):Enable()
+        getglobal("noobDKP_page2_add_EP"):Enable()
+      else
+        getglobal("noobDKP_page2_empty_event_create_event"):Disable()
+        getglobal("noobDKP_page2_empty_event_create_virtual_event"):Disable()
+        getglobal("noobDKP_page2_add_EP"):Disable()
+      end
     else
       getglobal("noobDKP_page2_empty_event_create_event"):Disable()
+      getglobal("noobDKP_page2_empty_event_create_virtual_event"):Disable()
       getglobal("noobDKP_page2_add_EP"):Disable()
-      --getglobal("noobDKP_page2_empty_event_event_location"):Disable()
-      --getglobal("noobDKP_page2_amount"):Disable()
-      --getglobal("noobDKP_page2_reason"):Disable()
     end
 
     fullFrame:Hide()
@@ -303,7 +290,6 @@ end
 function NoobDKP_HandleDeleteEvent(button)
   local _, _, i = string.find(button:GetName(), "noobDKP_page2_empty_event_(%w+)(.*)")
   local text = getglobal("noobDKP_page2_empty_event_" .. i .. "_text"):GetText()
-  local target = ""
   for s, t in pairs(NOOBDKP_g_events) do
     if s ~= "active raid" and t["description"] == text then
       NOOBDKP_g_events[s] = nil
@@ -318,6 +304,9 @@ function NoobDKP_GenerateEventName()
   local d = date("%b %d, %Y %H:%M")
   local text = name .. " on " .. d
   getglobal("noobDKP_page2_empty_event_event_location"):SetText(text)
+  getglobal("noobDKP_page2_empty_event_create_event"):Enable()
+  getglobal("noobDKP_page2_empty_event_create_virtual_event"):Enable()
+  getglobal("noobDKP_page2_add_EP"):Enable()
 end
 
 function NoobDKP_CombatLog(subEvent, name)
