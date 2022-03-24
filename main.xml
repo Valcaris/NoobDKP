@@ -943,9 +943,7 @@
           </Button>
         </Frames>
         <Scripts>
-          <OnLoad>NoobDKP_UpdateRaidRoster();</OnLoad>
           <OnShow>NoobDKP_UpdateRoster();</OnShow>
-          
           <OnMouseWheel>NoobDKP_RosterVerticalScroll(arg1 * -1)</OnMouseWheel>
         </Scripts>
       </Frame>
@@ -1153,26 +1151,6 @@
                   </OnClick>
                 </Scripts>
               </Button>              
-              <Button name="$parent_create_virtual_event" inherits="UIPanelButtonTemplate" text="Create Virtual">
-                <Anchors>
-                  <Anchor point="TOPRIGHT" relativePoint="TOPLEFT" relativeTo="$parent_text">
-                    <Offset>
-                      <AbsDimension x="-5" y="5" />
-                    </Offset>
-                  </Anchor>
-                </Anchors>
-                <Size>
-                  <AbsDimension x="100" y="25" />
-                </Size>
-                <Scripts>
-                  <OnClick>
-                    local eventText = getglobal("noobDKP_page2_empty_event_event_location")
-                    NoobDKP_AddVirtualEvent(eventText:GetText())
-                    NoobDKP_ShowEventTab()
-                    eventText:ClearFocus()
-                  </OnClick>
-                </Scripts>
-              </Button>              
             </Frames>
             <Scripts>
               <OnMouseWheel>NoobDKP_EmptyEventVerticalScroll(arg1 * -1)</OnMouseWheel>
@@ -1197,6 +1175,26 @@
               </Layer>
             </Layers>
             <Frames>
+              <Button name="$parent_create_virtual_event" inherits="UIPanelButtonTemplate" text="Set Virtual">
+                <Anchors>
+                  <Anchor point="TOPRIGHT" relativePoint="TOPLEFT" relativeTo="$parent_name">
+                    <Offset>
+                      <AbsDimension x="-5" y="5" />
+                    </Offset>
+                  </Anchor>
+                </Anchors>
+                <Size>
+                  <AbsDimension x="80" y="25" />
+                </Size>
+                <Scripts>
+                  <OnClick>
+                    local eventText = getglobal("noobDKP_page2_empty_event_event_location")
+                    NoobDKP_AddVirtualEvent(eventText:GetText())
+                    NoobDKP_ShowEventTab()
+                    eventText:ClearFocus()
+                  </OnClick>
+                </Scripts>
+              </Button>              
               <Button name="$parent_event_1" inherits="event_list_template">
                 <Anchors>
                   <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$parent">
@@ -2482,6 +2480,9 @@
         this:RegisterEvent("CHAT_MSG_WHISPER");
         this:RegisterEvent("RAID_ROSTER_UPDATE");
         this:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED");
+        this:RegisterEvent("ADDON_LOADED");
+        this:RegisterEvent("RAID_BOSS_EMOTE");
+        this:RegisterEvent("CHAT_MSG_MONSTER_YELL");
       </OnLoad>
       <OnShow>
         PlaySound("UChatScrollButton");

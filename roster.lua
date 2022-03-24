@@ -125,15 +125,6 @@ function NoobDKP_SetRoster(args)
   end
 end
 
---[[
-function NoobDKP_SetEPGP(char, ep, gp)
-  local main = NOOBDKP_find_main(char)
-  local total = ep
-  local net = ep - gp
-  NOOBDKP_g_roster[main][3] = "N:" .. net .. " T:" .. total
-end
-]]
-
 function NoobDKP_RosterItemOnClick(self)
   local my_name = getglobal(self:GetName() .. "_name"):GetText()
   local menu = getglobal("roster_menu")
@@ -151,10 +142,12 @@ function NoobDKP_RosterItemOnClick(self)
   getglobal("roster_menu_ep_value"):SetText("")
   getglobal("roster_menu_gp_value"):SetText("")
 
-  if roster_type == 1 then
-    getglobal("roster_menu_button_remove"):Hide()
+  if roster_type == 2 then
+    if NOOBDKP_g_events["virtual"] == true then
+      getglobal("roster_menu_button_add_virtual"):Hide()
+    end
   else
-    getglobal("roster_menu_button_remove"):Show()
+    getglobal("roster_menu_button_add_virtual"):Show()
   end
 
   menu:Show()
@@ -196,8 +189,7 @@ function NoobDKP_RosterContextRemove()
 end
 
 function NoobDKP_RosterContextAddVirtual()
-  local timestamp = NOOBDKP_g_events["active_raid"]
-  if timestamp ~= nil and NOOBDKP_g_events[timestamp]["virtual"] == true then
+  if NOOBDKP_g_events["virtual"] == true then
     local name = getglobal("roster_menu_name"):GetText()
     local score, ep, gp = NoobDKP_GetEPGP(name)
     local t = {"", score, ep, gp}
@@ -254,9 +246,7 @@ end
 function NoobDKP_UpdateRaidRoster()
   print(NoobDKP_color .. "Updating Raid Roster...")
 
-  local timestamp = NOOBDKP_g_events["active_raid"]
-  if timestamp ~= nil and NOOBDKP_g_events[timestamp]["virtual"] == false then
-
+  if NOOBDKP_g_events["virtual"] ~= true then
     NOOBDKP_g_raid_roster = {}
 
     for idx = 1, 40 do
@@ -340,6 +330,10 @@ function NoobDKP_UpdateRoster()
   local nameFrame, rankFrame, scoreFrame, EPFrame, GPFrame
   local whichRoster
   local sorted = {}
+
+  if NOOBDKP_g_events["virtual"] == true then
+    getglobal("noobDKP_page1_virtual"):Show()
+  end
 
   if roster_type == 0 then
     whichRoster = NOOBDKP_g_roster

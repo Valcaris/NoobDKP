@@ -43,10 +43,7 @@ function NoobDKP_AddEvent(msg)
 end
 
 function NoobDKP_AddVirtualEvent(msg)
-  NoobDKP_AddEvent(msg)
-  NOOBDKP_g_events[ NOOBDKP_g_events["active_raid"] ]["virtual"] = true
-  getglobal("noobDKP_page1_virtual"):Show()
-  getglobal("noobDKP_page2_virtual"):Show()
+  NOOBDKP_g_events["virtual"] = true
 end
 
 function NoobDKP_RemoveEvent(msg)
@@ -68,11 +65,11 @@ end
 function NoobDKP_CloseEvent()
   getglobal("noobDKP_page1_virtual"):Hide()
   getglobal("noobDKP_page2_virtual"):Hide()
-  local timestamp = NOOBDKP_g_events["active_raid"]
-  if timestamp ~= nil and NOOBDKP_g_events[timestamp]["virtual"] == true then
+  if NOOBDKP_g_events["virtual"] == true then
     NOOBDKP_g_raid_roster = {}
   end
   NOOBDKP_g_events["active_raid"] = nil
+  NOOBDKP_g_events["virtual"] = false
   NoobDKP_ShowEventTab()
 end
 
@@ -101,21 +98,23 @@ end
 function NoobDKP_ShowEventTab()
   local emptyFrame = getglobal("noobDKP_page2_empty_event")
   local fullFrame = getglobal("noobDKP_page2_event")
+
+  if NOOBDKP_g_events["virtual"] == true then
+    getglobal("noobDKP_page2_virtual"):Show()
+  end
+
   if NOOBDKP_g_events == nil or NOOBDKP_g_events["active_raid"] == nil then
     if NOOBDKP_g_options["admin_mode"] then
       local loc = getglobal("noobDKP_page2_empty_event_event_location"):GetText()
       if loc ~= nil and loc ~= "" then
         getglobal("noobDKP_page2_empty_event_create_event"):Enable()
-        getglobal("noobDKP_page2_empty_event_create_virtual_event"):Enable()
         getglobal("noobDKP_page2_add_EP"):Enable()
       else
         getglobal("noobDKP_page2_empty_event_create_event"):Disable()
-        getglobal("noobDKP_page2_empty_event_create_virtual_event"):Disable()
         getglobal("noobDKP_page2_add_EP"):Disable()
       end
     else
       getglobal("noobDKP_page2_empty_event_create_event"):Disable()
-      getglobal("noobDKP_page2_empty_event_create_virtual_event"):Disable()
       getglobal("noobDKP_page2_add_EP"):Disable()
     end
 
@@ -189,7 +188,7 @@ function NoobDKP_HandleUpdateEmptyEvent()
   local widget
 
   for s, t in pairs(NOOBDKP_g_events) do
-    if s ~= "active_raid" then
+    if s ~= "active_raid" and s ~= "virtual" then
       if i >= event_container_index then
         widget = getglobal("noobDKP_page2_empty_event_" .. pos)
         widget:Show()

@@ -5,14 +5,14 @@
     - Roster Tab
         - Give sort headers a background that is used on mouseover
         - Last update timestamp
-        - **Virtual rosters to allow events without being in a raid
-        - Only show context menu's Add Virtual Raid button if a virtual raid is open
-        - Add visual indicator if event is virtual to raid roster
+        - *If raid roster in virtual raid, context menu can remove player
     - Events Tab
         - Add color to event listings
         - sync event sends raid roster values to raid for syncing
         - add indicators when events scroll off the page up or down
-        - add indicator if event is virtual
+        - *add current roster to each event entry
+        - *allow editing of event entry roster
+        - *when virtual event, repopulate raid roster from event entry roster
     - Auctions Tab
         - Add countdown to window when auction started, possibly broadcast to raid (with checkbox)
         - Option to have Declare Winner set GP and close auction all at once (or have separate actions)
@@ -99,14 +99,21 @@ function NoobDKP_OnEvent(self, event, ...)
     end
   -- handle changes in the raid roster
   elseif event == "RAID_ROSTER_UPDATE" then
-    local timestamp = NOOBDKP_g_events["active_raid"]
-    if timestamp ~= nil and NOOBDKP_g_events[timestamp]["virtual"] == false then
+    if NOOBDKP_g_events["virtual"] ~= true then
       NoobDKP_UpdateRaidRoster()
     end
   -- handle unit deaths (to detect boss kills)
   elseif event == "COMBAT_LOG_EVENT_UNFILTERED" then
     local _, subEvent, _, _, _, _, name = ...
     NoobDKP_CombatLog(subEvent, name)
+  elseif event == "ADDON_LOADED" then
+    NoobDKP_UpdateRaidRoster()
+  elseif event == "RAID_BOSS_EMOTE" then
+    local text, name = ...
+    print(NoobDKP_color .. "RAID_BOSS_EMOTE: " .. name .. ": " .. text)
+  elseif event == "CHAT_MSG_MONSTER_YELL" then
+    local text, name = ...
+    print(NoobDKP_color .. "CHAT_MSG_MONSTER_YELL: " .. name .. ": " .. text)
   end
 end
 

@@ -108,7 +108,7 @@ end
 function NoobDKP_GenerateEventReport()
   local text = "Event Report:\n"
   for s, t in pairs(NOOBDKP_g_events) do
-    if s ~= "active_raid" then
+    if s ~= "active_raid" and s ~= "virtual" then
       text = text .. "\nEvent: " .. t["description"]
       for g, h in pairs(t) do
         if g ~= "description" and g ~= "last_id" then
