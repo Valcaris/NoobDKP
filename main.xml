@@ -1989,7 +1989,7 @@
             <Anchors>
               <Anchor point="TOPLEFT" relativeTo="$parent">
                 <Offset>
-                  <AbsDimension x="15" y="-20" />
+                  <AbsDimension x="10" y="-20" />
                 </Offset>
               </Anchor>
             </Anchors>
@@ -2011,7 +2011,7 @@
             <Anchors>
               <Anchor point="TOPLEFT" relativeTo="$parent_audit_roster" relativePoint="TOPRIGHT">
                 <Offset>
-                  <AbsDimension x="0" y="0" />
+                  <AbsDimension x="-10" y="0" />
                 </Offset>
               </Anchor>
             </Anchors>
@@ -2047,9 +2047,8 @@
             </Size>
             <Scripts>
               <OnClick>
-                local nameText = getglobal("noobDKP_page1_external_name")
+                local nameText = getglobal("noobDKP_page6_external_name")
                 NoobDKP_AddRoster(nameText:GetText())
-                NoobDKP_VerticalScroll(this, 1)
                 nameText:ClearFocus()
               </OnClick>
               <OnEnter>

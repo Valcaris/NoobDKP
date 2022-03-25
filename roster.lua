@@ -184,7 +184,13 @@ end
 function NoobDKP_RosterContextRemove()
   getglobal("roster_menu"):Hide()
   local name = getglobal("roster_menu_name"):GetText()
-  NoobDKP_RemoveRoster(name)
+
+  if roster_type == 1 and NOOBDKP_g_events["virtual"] == true then
+    NOOBDKP_g_raid_roster[name] = nil
+  else
+    NoobDKP_RemoveRoster(name)
+  end
+
   NoobDKP_UpdateRoster()
 end
 
@@ -338,10 +344,10 @@ function NoobDKP_UpdateRoster()
   if roster_type == 0 then
     whichRoster = NOOBDKP_g_roster
   elseif roster_type == 1 then
-    whichRoster = NOOBDKP_g_raid_roster
     if NOOBDKP_g_raid_roster == nil then
       NOOBDKP_g_raid_roster = {}
     end
+    whichRoster = NOOBDKP_g_raid_roster
   else
     whichRoster = NOOBDKP_g_roster
   end

@@ -5,7 +5,6 @@
     - Roster Tab
         - Give sort headers a background that is used on mouseover
         - Last update timestamp
-        - *If raid roster in virtual raid, context menu can remove player
     - Events Tab
         - Add color to event listings
         - sync event sends raid roster values to raid for syncing
