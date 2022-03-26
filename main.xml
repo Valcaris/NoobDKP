@@ -2231,6 +2231,7 @@
               <OnClick>
                 NOOBDKP_g_options = nil
                 NOOBDKP_g_boss_table = nil
+                NOOBDKP_g_boss_emote = nil
                 NOOBDKP_g_loot_table = nil
                 print(NoobDKP_color .. "Options purged. Reload to continue...")
               </OnClick>

@@ -410,3 +410,41 @@ function NoobDKP_EventHandleType(button)
     end
   end
 end
+
+function NoobDKP_HandleBossEmote(text, name)
+  print(NoobDKP_color .. "RAID_BOSS_EMOTE: " .. name .. ": " .. text)
+  for key, value in pairs(NOOBDKP_g_boss_emote) do
+    if key == name then
+      if string.find(value[1], text) then
+        if NOOBDKP_g_boss_table[ value[2] ] ~= nil and NOOBDKP_g_events["active_raid"] ~= nil then
+          print(NoobDKP_color .. "Found boss kill: " .. value[2])
+          getglobal("noobDKP_page2_amount"):SetText(NOOBDKP_g_boss_table[value[2] ])
+          getglobal("noobDKP_page2_reason"):SetText("Boss kill: " .. value[2])
+          if NOOBDKP_g_options["auto_EP"] then
+            NoobDKP_AddRaidEP()
+          end
+        end
+      end
+    end
+  end
+end
+
+function NoobDKP_HandleMonsterYell(text, name)
+  print(NoobDKP_color .. "CHAT_MSG_MONSTER_YELL: " .. name .. ": " .. text)
+  for key, value in pairs(NOOBDKP_g_boss_emote) do
+    if key == name then
+      print("Name Match for " .. name)
+      if string.find(text, value[1]) ~= nil then
+        print("Text Match for " .. value[1])
+        if NOOBDKP_g_boss_table[ value[2] ] ~= nil and NOOBDKP_g_events["active_raid"] ~= nil then
+          print(NoobDKP_color .. "Found boss kill: " .. value[2])
+          getglobal("noobDKP_page2_amount"):SetText(NOOBDKP_g_boss_table[value[2] ])
+          getglobal("noobDKP_page2_reason"):SetText("Boss kill: " .. value[2])
+          if NOOBDKP_g_options["auto_EP"] then
+            NoobDKP_AddRaidEP()
+          end
+        end
+      end
+    end
+  end
+end

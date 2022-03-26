@@ -109,10 +109,10 @@ function NoobDKP_OnEvent(self, event, ...)
     NoobDKP_UpdateRaidRoster()
   elseif event == "RAID_BOSS_EMOTE" then
     local text, name = ...
-    print(NoobDKP_color .. "RAID_BOSS_EMOTE: " .. name .. ": " .. text)
+    NoobDKP_HandleBossEmote(text, name)
   elseif event == "CHAT_MSG_MONSTER_YELL" then
     local text, name = ...
-    print(NoobDKP_color .. "CHAT_MSG_MONSTER_YELL: " .. name .. ": " .. text)
+    NoobDKP_HandleMonsterYell(text, name)
   end
 end
 

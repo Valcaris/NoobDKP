@@ -77,19 +77,29 @@ if NOOBDKP_g_boss_table == nil then
   NOOBDKP_g_boss_table = {}
   NOOBDKP_g_boss_table["Lord Marrowgar"] = 10
   NOOBDKP_g_boss_table["Lady Deathwhisper"] = 10
-  --NOOBDKP_g_boss_table["Lord Marrowgar"] = 10 -- Gunship Battle
+  NOOBDKP_g_boss_table["Gunship Battle"] = 10
   NOOBDKP_g_boss_table["Deathbringer Saurfang"] = 10
   NOOBDKP_g_boss_table["Festergut"] = 10
   NOOBDKP_g_boss_table["Rotface"] = 10
   NOOBDKP_g_boss_table["Professor Putricide"] = 10
   NOOBDKP_g_boss_table["Prince Valanar"] = 10 -- Blood Prince Council
   NOOBDKP_g_boss_table["Blood-Queen Lana'thel"] = 10
-  NOOBDKP_g_boss_table["Valithria Dreamwalker"] = 10
+  --NOOBDKP_g_boss_table["Valithria Dreamwalker"] = 10
   NOOBDKP_g_boss_table["Sindragosa"] = 10
   NOOBDKP_g_boss_table["The Lich King"] = 50
   NOOBDKP_g_boss_table["Hallion"] = 50
 
   NOOBDKP_g_boss_table["Kobold Vermin"] = 1
+  NOOBDKP_g_boss_table["Lower City"] = 1
+end
+
+if NOOBDKP_g_boss_emote == nil then
+  NOOBDKP_g_boss_emote = {
+    ["High Overlord Saurfang"] = { "The Alliance falter.", "Gunship Battle" },
+    ["Muradin Bronzebeard"] = { "Don't say I didn't warn ya", "Gunship Battle" },
+    ["Valthria Dreamwalker"] = { "I am renewed!", "Valthria Dreamwalker" },
+    ["Cro Threadstrong"] = { "FRUIT VENDOR!!!", "Lower City"},
+  }
 
 end
 
