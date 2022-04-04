@@ -75,22 +75,19 @@ end
 
 if NOOBDKP_g_boss_table == nil then
   NOOBDKP_g_boss_table = {}
-  NOOBDKP_g_boss_table["Lord Marrowgar"] = 10
-  NOOBDKP_g_boss_table["Lady Deathwhisper"] = 10
-  NOOBDKP_g_boss_table["Gunship Battle"] = 10
-  NOOBDKP_g_boss_table["Deathbringer Saurfang"] = 10
-  NOOBDKP_g_boss_table["Festergut"] = 10
-  NOOBDKP_g_boss_table["Rotface"] = 10
-  NOOBDKP_g_boss_table["Professor Putricide"] = 10
-  NOOBDKP_g_boss_table["Prince Valanar"] = 10 -- Blood Prince Council
-  NOOBDKP_g_boss_table["Blood-Queen Lana'thel"] = 10
-  --NOOBDKP_g_boss_table["Valithria Dreamwalker"] = 10
-  NOOBDKP_g_boss_table["Sindragosa"] = 10
+  NOOBDKP_g_boss_table["Lord Marrowgar"] = 20
+  NOOBDKP_g_boss_table["Lady Deathwhisper"] = 20
+  NOOBDKP_g_boss_table["Gunship Battle"] = 20
+  NOOBDKP_g_boss_table["Deathbringer Saurfang"] = 20
+  NOOBDKP_g_boss_table["Festergut"] = 20
+  NOOBDKP_g_boss_table["Rotface"] = 20
+  NOOBDKP_g_boss_table["Professor Putricide"] = 20
+  NOOBDKP_g_boss_table["Prince Valanar"] = 20 -- Blood Prince Council
+  NOOBDKP_g_boss_table["Blood-Queen Lana'thel"] = 20
+  NOOBDKP_g_boss_table["Valithria Dreamwalker"] = 20
+  NOOBDKP_g_boss_table["Sindragosa"] = 20
   NOOBDKP_g_boss_table["The Lich King"] = 50
   NOOBDKP_g_boss_table["Hallion"] = 50
-
-  NOOBDKP_g_boss_table["Kobold Vermin"] = 1
-  NOOBDKP_g_boss_table["Lower City"] = 1
 end
 
 if NOOBDKP_g_boss_emote == nil then
@@ -98,7 +95,6 @@ if NOOBDKP_g_boss_emote == nil then
     ["High Overlord Saurfang"] = { "The Alliance falter.", "Gunship Battle" },
     ["Muradin Bronzebeard"] = { "Don't say I didn't warn ya", "Gunship Battle" },
     ["Valthria Dreamwalker"] = { "I AM RENEWED!", "Valthria Dreamwalker" },
-    ["Cro Threadstrong"] = { "FRUIT VENDOR!!!", "Lower City"},
   }
 
 end

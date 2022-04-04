@@ -9,7 +9,6 @@
         - Add color to event listings
         - sync event sends raid roster values to raid for syncing
         - add indicators when events scroll off the page up or down
-        - *add current roster to each event entry
         - *allow editing of event entry roster
         - *when virtual event, repopulate raid roster from event entry roster
         - **when creating event with nil name, create a default name
@@ -17,6 +16,7 @@
         - Add countdown to window when auction started, possibly broadcast to raid (with checkbox)
         - Option to have Declare Winner set GP and close auction all at once (or have separate actions)
         - trim need/greed of whitespace
+        - * auto-detect for Rotface/Festergut bloods
     - Reports Tab
     - Sync Tab
         - Show who else has addon and what version
