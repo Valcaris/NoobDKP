@@ -1353,6 +1353,33 @@
               <OnClick>NoobDKP_AddRaidEP();</OnClick>
             </Scripts>
           </Button>
+          <Button name="$parent_add_GP" text="Add" inherits="UIPanelButtonTemplate">
+            <Anchors>
+              <Anchor point="BOTTOMLEFT" relativeTo="$parent_add_EP" relativePoint="TOPLEFT">
+                <Offset>
+                  <AbsDimension x="0" y="5" />
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Size>
+              <AbsDimension x="35" y="25" />
+            </Size>
+            <Scripts>
+              <OnClick>NoobDKP_AddRaidGP();</OnClick>
+            </Scripts>
+          </Button>
+          <EditBox name="$parent_amount_GP" inherits="InputBoxTemplate" autoFocus="false">
+            <Size>
+              <AbsDimension x="50" y="25" />
+            </Size>
+            <Anchors>
+              <Anchor point="BOTTOMRIGHT" relativeTo="$parent_add_GP" relativePoint="BOTTOMLEFT">
+                <Offset>
+                  <AbsDimension x="-5" y="0" />
+                </Offset>
+              </Anchor>
+            </Anchors>
+          </EditBox>
         </Frames>
         <Scripts>
           <OnShow>
@@ -2481,7 +2508,6 @@
         this:RegisterEvent("RAID_ROSTER_UPDATE");
         this:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED");
         this:RegisterEvent("ADDON_LOADED");
-        this:RegisterEvent("RAID_BOSS_EMOTE");
         this:RegisterEvent("CHAT_MSG_MONSTER_YELL");
       </OnLoad>
       <OnShow>

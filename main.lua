@@ -12,6 +12,7 @@
         - *add current roster to each event entry
         - *allow editing of event entry roster
         - *when virtual event, repopulate raid roster from event entry roster
+        - **when creating event with nil name, create a default name
     - Auctions Tab
         - Add countdown to window when auction started, possibly broadcast to raid (with checkbox)
         - Option to have Declare Winner set GP and close auction all at once (or have separate actions)
@@ -107,9 +108,6 @@ function NoobDKP_OnEvent(self, event, ...)
     NoobDKP_CombatLog(subEvent, name)
   elseif event == "ADDON_LOADED" then
     NoobDKP_UpdateRaidRoster()
-  elseif event == "RAID_BOSS_EMOTE" then
-    local text, name = ...
-    NoobDKP_HandleBossEmote(text, name)
   elseif event == "CHAT_MSG_MONSTER_YELL" then
     local text, name = ...
     NoobDKP_HandleMonsterYell(text, name)

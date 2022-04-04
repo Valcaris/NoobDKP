@@ -112,7 +112,7 @@ function NoobDKP_GenerateEventReport()
       text = text .. "\nEvent: " .. t["description"]
       for g, h in pairs(t) do
         if g ~= "description" and g ~= "last_id" then
-          text = text .. "\n\t" .. h
+          text = text .. "\n\t" .. NoobDKP_Event_EntryToString(g, h)
         end
       end
     end

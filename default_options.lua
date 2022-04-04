@@ -97,7 +97,7 @@ if NOOBDKP_g_boss_emote == nil then
   NOOBDKP_g_boss_emote = {
     ["High Overlord Saurfang"] = { "The Alliance falter.", "Gunship Battle" },
     ["Muradin Bronzebeard"] = { "Don't say I didn't warn ya", "Gunship Battle" },
-    ["Valthria Dreamwalker"] = { "I am renewed!", "Valthria Dreamwalker" },
+    ["Valthria Dreamwalker"] = { "I AM RENEWED!", "Valthria Dreamwalker" },
     ["Cro Threadstrong"] = { "FRUIT VENDOR!!!", "Lower City"},
   }
 

@@ -15,6 +15,12 @@ function NoobDKPHandleRoster(msg)
   local _, _, cmd, args = string.find(msg, "%s?(%w+)%s?(.*)")
   if cmd == "scan" then
     NoobDKP_ScanRoster()
+  elseif cmd == "virt" then
+    local _, _, cmd, args =  string.find(msg, "%s?(%w+)%s?(.*)")
+    NoobDKP_FixName(args)
+    getglobal("roster_menu_name"):SetText(args)
+    NoobDKP_RosterContextAddVirtual()
+    NoobDKP_UpdateRoster()
   elseif cmd == "add" then
     if args == "" then
       print(NoobDKP_color .. "No character found to add!")
@@ -196,11 +202,13 @@ end
 
 function NoobDKP_RosterContextAddVirtual()
   if NOOBDKP_g_events["virtual"] == true then
-    local name = getglobal("roster_menu_name"):GetText()
+    local name = NoobDKP_ParseNameText(getglobal("roster_menu_name"):GetText())
     local score, ep, gp = NoobDKP_GetEPGP(name)
     local t = {"", score, ep, gp}
     NOOBDKP_g_raid_roster[name] = t
     getglobal("roster_menu"):Hide()
+  else
+    print(NoobDKP_color .. "Error: not in a virtual raid!!")
   end
 end
 
@@ -250,8 +258,6 @@ function NoobDKP_RosterVerticalScroll(offset)
 end
 
 function NoobDKP_UpdateRaidRoster()
-  print(NoobDKP_color .. "Updating Raid Roster...")
-
   if NOOBDKP_g_events["virtual"] ~= true then
     NOOBDKP_g_raid_roster = {}
 
@@ -355,16 +361,17 @@ function NoobDKP_UpdateRoster()
   for key, value in pairs(whichRoster) do
     local nameText = key
     local skip = false
-    if NOOBDKP_g_roster[NOOBDKP_g_roster[key][3]] ~= nil then
-      if roster_type == 2 then
-        skip = true
-      else
-        nameText = nameText .. " (" .. NOOBDKP_g_roster[key][3] .. ")"
+
+    -- don't add main/alt on the Main Roster
+    if roster_type ~= 2 then
+      local main = NOOBDKP_find_main(key)
+      if main ~= nil and main ~= "" and main ~= key then
+        nameText = nameText .. " (" .. main .. ")"
       end
     end
 
-    if skip == false then
-      local rank = value[1]
+    if roster_type ~= 2 then
+      local rank = NOOBDKP_g_roster[key][1]
       local r, g, b, a = NoobDKP_getClassColor(NOOBDKP_g_roster[key][2])
       local score, ep, gp = NoobDKP_GetEPGP(key)
       local t = {nameText, r, g, b, a, rank, score, ep, gp}
@@ -445,24 +452,6 @@ function NoobDKP_AuditRoster()
       end
     end
   end
-
-  -- find characters whose main left the guild
---  for key, value in pairs(NOOBDKP_g_roster) do
---    local main = NOOBDKP_find_main(key)
---    if main == "" or main == nil then
---      print("Found " .. key .. "'s main left the guild!")
---      NOOBDKP_g_roster[key][3] = ""
---    end
---  end
-
-  -- remove all characters with 0 EP
---  for key, value in pairs(NOOBDKP_g_roster) do
---    local score, ep, gp = NoobDKP_ParseOfficerNote(value[3])
---    if ep == 0 or ep == "0" then
---      print("Found " .. key .. " has no EP, removing!")
---      NOOBDKP_g_roster[key] = nil
---    end
---  end
 
   SetGuildRosterShowOffline(false)
   NoobDKP_UpdateRoster()
