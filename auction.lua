@@ -354,7 +354,7 @@ function NoobDKP_HandleAuctionGP()
   local item = NOOBDKP_g_auction["_item"]
 
   local chars = { winner }
-  NoobDKP_Event_addEntry(0, wingp, item, chars, 0)
+  NoobDKP_Event_AddEntry(0, wingp, item, chars, 0)
 end
 
 -- handles sending messages to the raid during an auction
