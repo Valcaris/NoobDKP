@@ -423,6 +423,7 @@ function NoobDKP_HandleUpdateAuction()
   local sortedList = NoobDKP_SortAuction()
 
   for key, value in pairs(sortedList) do
+    if pos < 10 then
     local name = value[2]
     local priority = NOOBDKP_g_auction[value[2]]["_type"]
     local score = NOOBDKP_g_auction[value[2]]["_score"]
@@ -448,6 +449,7 @@ function NoobDKP_HandleUpdateAuction()
       end
       DQBox:Show()
       pos = pos + 1
+    end
     end
   end
 

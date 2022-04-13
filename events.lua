@@ -143,11 +143,11 @@ function NoobDKP_AddRaidEP()
     reason = "no reason"
   end
 
-  if tonumber(multiplier) == nil or tonumber(multiplier) == 0 then
+  if multipler == nil or tonumber(multiplier) == nil or tonumber(multiplier) == 0 then
     multiplier = 1
   end
 
-  if tonumber(amount) == nil then
+  if amount == nil or tonumber(amount) == nil then
     amount = 0
   end
 
@@ -171,7 +171,7 @@ function NoobDKP_AddRaidEP()
   getglobal("noobDKP_page2_reason"):ClearFocus()
   NoobDKP_UpdateRoster()
 
-  if NOOBDKP_g_auction ~= nil then 
+  if NOOBDKP_g_auction ~= nil and NOOBDKP_g_auction ~= {} then 
     NoobDKP_HandleUpdateAuction()
   end
   NoobDKP_Event_AddEntry(amount, 0, reason, chars, 0)
@@ -331,7 +331,7 @@ function NoobDKP_HandleOpenEvent(button)
   local text = getglobal("noobDKP_page2_empty_event_" .. i .. "_text"):GetText()
   local newactive = ""
   for s, t in pairs(NOOBDKP_g_events) do
-    if s ~= "active raid" and t["description"] == text then
+    if s ~= "active raid" and s ~= "virtual" and t["description"] == text then
       newactive = s
       break
     end

@@ -25,8 +25,9 @@ function NoobDKP_GenerateFullReport()
   getglobal("noobDKP_page4_text"):SetText(text)
 end
 
+-- sort by score, high to low
 function briefCompare(a, b)
-  return a[1] < b[1]
+  return a[6] > b[6]
 end
 
 function NoobDKP_GenerateBriefReport()
@@ -68,7 +69,10 @@ function NoobDKP_GenerateBriefReport()
     if f == nil or f == "" then
       f = 0
     end
-    text = text .. "\n | " .. a .. " | " .. b .. " | " .. c .. " | " .. d .. " | " .. e .. " | " .. f .. " |"
+
+    if tonumber(d) ~= 0 or tonumber(e) ~= 0 then
+      text = text .. "\n | " .. a .. " | " .. b .. " | " .. c .. " | " .. d .. " | " .. e .. " | " .. f .. " |"
+    end
   end
 
   getglobal("noobDKP_page4_text"):SetText(text)
