@@ -342,6 +342,7 @@ function NoobDKP_UpdateRoster()
   local nameFrame, rankFrame, scoreFrame, EPFrame, GPFrame
   local whichRoster
   local sorted = {}
+  local unique = {}
 
   if NOOBDKP_g_events["virtual"] == true then
     getglobal("noobDKP_page1_virtual"):Show()
@@ -361,13 +362,17 @@ function NoobDKP_UpdateRoster()
   for key, value in pairs(whichRoster) do
     local nameText = key
     local skip = false
+    local main
 
     -- don't add main/alt on the Main Roster
     if roster_type ~= 2 then
-      local main = NOOBDKP_find_main(key)
+      main = NOOBDKP_find_main(key)
       if main ~= nil and main ~= "" and main ~= key then
         nameText = nameText .. " (" .. main .. ")"
       end
+    else
+      main = NOOBDKP_find_main(key)
+      nameText = main
     end
 
     if roster_type ~= 2 then
@@ -376,6 +381,15 @@ function NoobDKP_UpdateRoster()
       local score, ep, gp = NoobDKP_GetEPGP(key)
       local t = {nameText, r, g, b, a, rank, score, ep, gp}
       table.insert(sorted, t)
+    else
+      if unique[main] ~= 1 then
+        local rank = NOOBDKP_g_roster[main][1]
+        local r, g, b, a = NoobDKP_getClassColor(NOOBDKP_g_roster[main][2])
+        local score, ep, gp = NoobDKP_GetEPGP(main)
+        local t = {nameText, r, g, b, a, rank, score, ep, gp}
+        table.insert(sorted, t)
+        unique[main] = 1
+      end
     end
   end
 

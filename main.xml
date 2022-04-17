@@ -2314,15 +2314,14 @@
                 <OnLoad>
                   self:SetText("Member (non raid leader) \
                   \n- Use the Roster tab to view EPGP values for your raid or guild.\
-                  \n- Use the Events tab to see a history of loot and rewards.\
                   \n- Use the Auction tab to watch an auction in progress \
                   \n Admin (raid leader)\
-                  \n- Go to the Options tab and ensure \"Admin Mode\" is selected.\
+                  \n- Go to the Options tab and ensure \"Admin Mode\" and \"Auto EP\" is selected.\
                   \n- When the raid starts, go to the Events tab and click \"Create Event\". Use the \"Generate Name\" button to name the raid after your current locaiton + date.\
-                  \n- When a boss is defeated, its EP value is automatically populated. Click \"Add\" or adjust the EP as desired. Multiplier can be used to increase EP (for first time kills, etc).\
-                  \n- When loot is ready for distributing, shift-click on the item. A new auction will automatically start. Click \"Declare Winner\" to declare the winner. Click \"Add GP\" to award the player the GP (value is populated automatically). Select Heroic to use Heroic loot values. Looting must still be done manually.\
+                  \n- When a boss is defeated, verify its EP value is automatically added to the raid.\
+                  \n- When loot is ready for distributing, shift-click on the item. A new auction will automatically start in the Auctions tab. Click \"Declare Winner\" to declare the winner. Click \"Add GP\" to award the player the GP (value is populated automatically). Select Heroic to use Heroic loot values. Looting must still be done manually.\
                   \n- When the raid is done, go to the Events tab and click \"Close Event\".\
-                  \n- Then go to the Reports tab and click on the desired report(s). Text will be pasted in the text window which can then be copied into a text file, Discord, or website.")
+                  \n- Use the Reports tab to generate the desired report(s). Text will be pasted in the text window which can then be copied into a text file, Discord, or website.")
                 </OnLoad>
               </Scripts>
             </EditBox>
