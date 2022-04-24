@@ -1918,7 +1918,7 @@
           <Anchor point="BOTTOMRIGHT" />
         </Anchors>
         <Frames>
-          <Button name="$parent_push" text="Push Data Back to Guild" inherits="UIPanelButtonTemplate">
+          <Button name="$parent_scan" text="Guild Scan" inherits="UIPanelButtonTemplate">
             <Anchors>
               <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT">
                 <Offset>
@@ -1927,10 +1927,39 @@
               </Anchor>
             </Anchors>
             <Size>
+              <AbsDimension x="80" y="25" />
+            </Size>
+            <Scripts>
+              <OnClick>NoobDKP_ScanRoster();</OnClick>
+              <OnEnter>
+                GameTooltip:SetOwner(this, "ANCHOR_RIGHT");
+                GameTooltip:SetText('Searches through the guild for any characters\nwho are level 80 and adds to the guild roster if necessary');
+              </OnEnter>
+              <OnLeave>
+                GameTooltip:Hide();
+              </OnLeave>
+            </Scripts>
+          </Button>
+          <Button name="$parent_push" text="Push Data Back to Guild" inherits="UIPanelButtonTemplate">
+            <Anchors>
+              <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT">
+                <Offset>
+                  <AbsDimension x="10" y="45" />
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Size>
               <AbsDimension x="160" y="25" />
             </Size>
             <Scripts>
               <OnClick>NoobDKP_PushRoster();</OnClick>
+              <OnEnter>
+                GameTooltip:SetOwner(this, "ANCHOR_RIGHT");
+                GameTooltip:SetText('Pushes EPGP values to the officer guild notes\nWill only work if you have permissions to set officer notes!');
+              </OnEnter>
+              <OnLeave>
+                GameTooltip:Hide();
+              </OnLeave>
             </Scripts>
           </Button>
         </Frames>
@@ -1990,28 +2019,6 @@
           <Anchor point="BOTTOMRIGHT" />
         </Anchors>
         <Frames>
-          <Button name="$parent_scan" text="Guild Scan" inherits="UIPanelButtonTemplate">
-            <Anchors>
-              <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT">
-                <Offset>
-                  <AbsDimension x="10" y="15" />
-                </Offset>
-              </Anchor>
-            </Anchors>
-            <Size>
-              <AbsDimension x="80" y="25" />
-            </Size>
-            <Scripts>
-              <OnClick>NoobDKP_ScanRoster();</OnClick>
-              <OnEnter>
-                GameTooltip:SetOwner(this, "ANCHOR_RIGHT");
-                GameTooltip:SetText('Searches through the guild for any characters\nwho are level 80 and adds to the guild roster if necessary');
-              </OnEnter>
-              <OnLeave>
-                GameTooltip:Hide();
-              </OnLeave>
-            </Scripts>
-          </Button>
           <Button name="$parent_audit_roster" text="Audit Guild Roster" inherits="UIPanelButtonTemplate">
             <Anchors>
               <Anchor point="TOPLEFT" relativeTo="$parent">
@@ -2047,6 +2054,13 @@
             </Size>
             <Scripts>
               <OnClick>NoobDKP_PurgeNoEPRoster();</OnClick>
+              <OnEnter>
+                GameTooltip:SetOwner(this, "ANCHOR_RIGHT");
+                GameTooltip:SetText('Scans the roster and removes any characters with 0 EP');
+              </OnEnter>
+              <OnLeave>
+                GameTooltip:Hide();
+              </OnLeave>
             </Scripts>
           </Button>
           <EditBox name="$parent_external_name" inherits="InputBoxTemplate" autoFocus="false">
@@ -2212,6 +2226,13 @@
                 textbox:ClearFocus();
                 NoobDKP_Decay();
               </OnClick>
+              <OnEnter>
+                GameTooltip:SetOwner(this, "ANCHOR_RIGHT");
+                GameTooltip:SetText('Reduces EP and GP by the given percentage.\nWARNING: THIS CANNOT BE UNDONE!');
+              </OnEnter>
+              <OnLeave>
+                GameTooltip:Hide();
+              </OnLeave>
             </Scripts>
           </Button>
           <CheckButton name="$parent_auto_EP" inherits="UICheckButtonTemplate">
@@ -2264,7 +2285,7 @@
               </OnClick>
               <OnEnter>
                 GameTooltip:SetOwner(this, "ANCHOR_RIGHT");
-                GameTooltip:SetText('CAUTION!!!\nThis will erase several internal tables and reset to defaults.\nTHIS CANNOT BE UNDONE!!!');
+                GameTooltip:SetText('This will erase several internal tables and reset to defaults.\nThis may be necessary when addon updates are pushed out.\nWARNING: THIS CANNOT BE UNDONE!!!');
               </OnEnter>
               <OnLeave>
                 GameTooltip:Hide();
@@ -2281,22 +2302,6 @@
         <Frames>
           <ScrollFrame>
             <Frames>
-            <SimpleHTML 
-              text='&lt;html&gt;&lt;body&gt;You|nare being helped!!!!&lt;/body&gt;&lt;/html&gt;'
-            >
-            <Size>
-              <AbsDimension x="450" y="300" />
-            </Size>
-            <Anchors>
-              <Anchor point="TOPLEFT" relativeTo="$parent">
-                <Offset>
-                  <AbsDimension x="15" y="-20" />
-                </Offset>
-              </Anchor>
-            </Anchors>
-            <FontString inherits="GameFontNormal"/>
-
-            </SimpleHTML>
             <EditBox font="GameFontNormal" autoFocus="false" multiLine="true">
               <FontString inherits="GameFontNormal"/>
               <TextInsets top="1" bottom="1"/>
@@ -2313,6 +2318,7 @@
               <Scripts>
                 <OnLoad>
                   self:SetText("Member (non raid leader) \
+                  \n- First Time: Go to Sync tab and click Guild Scan \
                   \n- Use the Roster tab to view EPGP values for your raid or guild.\
                   \n- Use the Auction tab to watch an auction in progress \
                   \n Admin (raid leader)\
