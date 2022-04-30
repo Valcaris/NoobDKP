@@ -346,8 +346,10 @@ end
 function NoobDKP_HandleDeleteEvent(button)
   local _, _, i = string.find(button:GetName(), "noobDKP_page2_empty_event_(%w+)(.*)")
   local text = getglobal("noobDKP_page2_empty_event_" .. i .. "_text"):GetText()
+
   for s, t in pairs(NOOBDKP_g_events) do
-    if s ~= "active raid" and t["description"] == text then
+    if s ~= "active raid" and s ~= "virtual" and t["description"] == text then
+      print(NoobDKP_color .. "Removing event from list: " .. text)
       NOOBDKP_g_events[s] = nil
       break
     end
