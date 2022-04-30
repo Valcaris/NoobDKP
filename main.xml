@@ -542,7 +542,7 @@
     </Frames>
   </Frame>
 
-  <Frame name="noobMainFrame" toplevel="true" frameStrata="DIALOG" movable="true" enableMouse="true" hidden="false" parent="UIParent">
+  <Frame name="noobMainFrame" toplevel="true" frameStrata="DIALOG" movable="true" enableMouse="true" hidden="true" parent="UIParent">
     <Size>
       <AbsDimension x="480" y="325" />
     </Size>

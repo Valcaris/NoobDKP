@@ -87,7 +87,7 @@ if NOOBDKP_g_boss_table == nil then
   NOOBDKP_g_boss_table["Valithria Dreamwalker"] = 20
   NOOBDKP_g_boss_table["Sindragosa"] = 20
   NOOBDKP_g_boss_table["The Lich King"] = 50
-  NOOBDKP_g_boss_table["Hallion"] = 50
+  NOOBDKP_g_boss_table["Halion Controller"] = 50
 end
 
 if NOOBDKP_g_boss_emote == nil then
