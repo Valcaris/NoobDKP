@@ -70,13 +70,16 @@ local function NoobDKPAddonCommands(msg, editbox)
     -- creates various reports
     print(NoobDKP_color .. "Report, args: " .. args)
   elseif cmd == "value" and args ~= "" then
-    -- manipulates DKP values directly
+    -- manipulates EPGP values directly
     print(NoobDKP_color .. "Values, args: " .. args)
   elseif cmd == "auction" and args ~= "" then
+    -- manipulates auctions directoy
     NoobDKPHandleAuction(args)
   elseif cmd == "show" then
+    -- shows the NoobDKP panel
     noobMainFrame:Show()
   elseif cmd == "hide" then
+    -- hides the NoobDKP panel
     noobMainFrame:Hide()
   else
     -- prints the help syntax to the user

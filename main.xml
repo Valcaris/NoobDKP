@@ -963,20 +963,20 @@
                 </Anchor>
               </Anchors>
             </FontString>
-            <FontString inherits="GameFontNormal" text="EP Amount: ">
+            <FontString inherits="GameFontNormal" text="EP: ">
               <Anchors>
-                <Anchor point="BOTTOMLEFT" relativeTo="$parent">
+                <Anchor point="BOTTOMRIGHT" relativeTo="$parent">
                   <Offset>
-                    <AbsDimension x="20" y="30" />
+                    <AbsDimension x="-110" y="30" />
                   </Offset>
                 </Anchor>
               </Anchors>
             </FontString>
-            <FontString inherits="GameFontNormal" text="EP Multiplier:">
+            <FontString inherits="GameFontNormal" text="GP: ">
               <Anchors>
-                <Anchor point="BOTTOMLEFT" relativeTo="$parent">
+                <Anchor point="BOTTOMRIGHT" relativeTo="$parent">
                   <Offset>
-                    <AbsDimension x="20" y="52" />
+                    <AbsDimension x="-110" y="60" />
                   </Offset>
                 </Anchor>
               </Anchors>
@@ -985,7 +985,7 @@
               <Anchors>
                 <Anchor point="BOTTOMLEFT" relativeTo="$parent">
                   <Offset>
-                    <AbsDimension x="155" y="30" />
+                    <AbsDimension x="15" y="30" />
                   </Offset>
                 </Anchor>
               </Anchors>
@@ -1109,16 +1109,16 @@
                 <Anchors>
                   <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="$parent_text" >
                     <Offset>
-                      <AbsDimension x="30" y="-10" />
+                      <AbsDimension x="-30" y="-10" />
                     </Offset>
                   </Anchor>
                 </Anchors>
               </EditBox>
               <Button name="$parent_create_event" inherits="UIPanelButtonTemplate" text="Create Event">
                 <Anchors>
-                  <Anchor point="LEFT" relativePoint="RIGHT" relativeTo="$parent_event_location">
+                  <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent">
                     <Offset>
-                      <AbsDimension x="10" y="0" />
+                      <AbsDimension x="10" y="50" />
                     </Offset>
                   </Anchor>
                 </Anchors>
@@ -1136,7 +1136,7 @@
               </Button>
               <Button name="$parent_generate_event_name" inherits="UIPanelButtonTemplate" text="Generate Name">
                 <Anchors>
-                  <Anchor point="BOTTOMRIGHT" relativePoint="TOPRIGHT" relativeTo="$parent_create_event">
+                  <Anchor point="BOTTOMLEFT" relativePoint="TOPLEFT" relativeTo="$parent_create_event">
                     <Offset>
                       <AbsDimension x="0" y="5" />
                     </Offset>
@@ -1302,26 +1302,14 @@
               </Button>
             </Frames>
           </Frame>
-          <EditBox name="$parent_multiplier" inherits="InputBoxTemplate" autoFocus="false">
-            <Size>
-              <AbsDimension x="40" y="25" />
-            </Size>
-            <Anchors>
-              <Anchor point="BOTTOMLEFT" relativeTo="$parent">
-                <Offset>
-                  <AbsDimension x="110" y="45" />
-                </Offset>
-              </Anchor>
-            </Anchors>
-          </EditBox>
           <EditBox name="$parent_amount" inherits="InputBoxTemplate" autoFocus="false">
             <Size>
               <AbsDimension x="50" y="25" />
             </Size>
             <Anchors>
-              <Anchor point="BOTTOMLEFT" relativeTo="$parent">
+              <Anchor point="BOTTOMRIGHT" relativeTo="$parent">
                 <Offset>
-                  <AbsDimension x="100" y="20" />
+                  <AbsDimension x="-55" y="20" />
                 </Offset>
               </Anchor>
             </Anchors>
@@ -1333,27 +1321,27 @@
             <Anchors>
               <Anchor point="BOTTOMLEFT" relativeTo="$parent">
                 <Offset>
-                  <AbsDimension x="210" y="20" />
+                  <AbsDimension x="100" y="20" />
                 </Offset>
               </Anchor>
             </Anchors>
           </EditBox>
-          <Button name="$parent_add_EP" text="Add" inherits="UIPanelButtonTemplate">
+          <Button name="$parent_add_EP" text="Add EP" inherits="UIPanelButtonTemplate">
             <Anchors>
               <Anchor point="BOTTOMLEFT" relativeTo="$parent">
                 <Offset>
-                  <AbsDimension x="430" y="20" />
+                  <AbsDimension x="425" y="20" />
                 </Offset>
               </Anchor>
             </Anchors>
             <Size>
-              <AbsDimension x="35" y="25" />
+              <AbsDimension x="50" y="25" />
             </Size>
             <Scripts>
               <OnClick>NoobDKP_AddRaidEP();</OnClick>
             </Scripts>
           </Button>
-          <Button name="$parent_add_GP" text="Add" inherits="UIPanelButtonTemplate">
+          <Button name="$parent_add_GP" text="Add GP" inherits="UIPanelButtonTemplate">
             <Anchors>
               <Anchor point="BOTTOMLEFT" relativeTo="$parent_add_EP" relativePoint="TOPLEFT">
                 <Offset>
@@ -1362,7 +1350,7 @@
               </Anchor>
             </Anchors>
             <Size>
-              <AbsDimension x="35" y="25" />
+              <AbsDimension x="50" y="25" />
             </Size>
             <Scripts>
               <OnClick>NoobDKP_AddRaidGP();</OnClick>
@@ -1375,7 +1363,7 @@
             <Anchors>
               <Anchor point="BOTTOMRIGHT" relativeTo="$parent_add_GP" relativePoint="BOTTOMLEFT">
                 <Offset>
-                  <AbsDimension x="-5" y="0" />
+                  <AbsDimension x="0" y="0" />
                 </Offset>
               </Anchor>
             </Anchors>

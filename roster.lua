@@ -14,14 +14,17 @@ function NoobDKPHandleRoster(msg)
   print(NoobDKP_color .. "Handle Roster: " .. msg)
   local _, _, cmd, args = string.find(msg, "%s?(%w+)%s?(.*)")
   if cmd == "scan" then
+    -- performs a roster scan
     NoobDKP_ScanRoster()
   elseif cmd == "virt" then
+    -- adds a member to a virtual raid
     local _, _, cmd, args =  string.find(msg, "%s?(%w+)%s?(.*)")
     NoobDKP_FixName(args)
     getglobal("roster_menu_name"):SetText(args)
     NoobDKP_RosterContextAddVirtual()
     NoobDKP_UpdateRoster()
   elseif cmd == "add" then
+    -- adds a member to the roster (usually not guilded)
     if args == "" then
       print(NoobDKP_color .. "No character found to add!")
       print(NoobDKP_color .. syntax)
@@ -29,6 +32,7 @@ function NoobDKPHandleRoster(msg)
       NoobDKP_AddRoster(args)
     end
   elseif cmd == "remove" then
+    -- removes a member from the roster (usually when they leave the guild)
     if args == "" then
       print(NoobDKP_color .. "No character found to remove!")
       print(NoobDKP_color .. syntax)
@@ -36,6 +40,7 @@ function NoobDKPHandleRoster(msg)
       NoobDKP_RemoveRoster(args)
     end
   elseif cmd == "alt" then
+    -- Sets character A as an alt of character B
     if args == "" then
       print(NoobDKP_color .. "No characters found to set alt!")
       print(NoobDKP_color .. syntax)
@@ -43,6 +48,7 @@ function NoobDKPHandleRoster(msg)
       NoobDKP_AltRoster(args)
     end
   elseif cmd == "set" then
+    -- sets all EPGP values of a charcter directly
     if args == "" then
       print(NoobDKP_color .. "No values found for set!")
       print(NoobDKP_color .. syntax)
@@ -50,6 +56,7 @@ function NoobDKPHandleRoster(msg)
       NoobDKP_SetRoster(args)
     end
   elseif cmd == "epgp" then
+    -- sets the EPGP values of a charcter directly
     if args == "" then
       print(NoobDKP_color .. "No values found for set!")
       print(NoobDKP_color .. syntax)
