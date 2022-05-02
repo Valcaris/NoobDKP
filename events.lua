@@ -28,6 +28,12 @@ end
 function NoobDKP_AddEvent(msg)
   local _, _, desc = string.find(msg, "%s?(.*)")
   local timestamp = time()
+
+  if desc == "" or desc == nil then
+    local d = date("%b %d, %Y %H:%M")
+    desc = "No Description on " .. d
+  end
+
   print(NoobDKP_color .. "Add Event: " .. desc .. ", " .. timestamp)
 
   if NOOBDKP_g_options["admin_mode"] then
@@ -90,7 +96,6 @@ function NoobDKP_Event_EntryToString(id, entry)
   local ep = entry[1]
   local gp = entry[2]
   local text = entry[3]
-  --local chars
 
   local s = id .. ". " .. ep .. " EP and " .. gp .. " GP for " .. text .. " to "
   for i, c in pairs(entry[4]) do
@@ -137,23 +142,13 @@ end
 function NoobDKP_AddRaidEP()
   local amount = getglobal("noobDKP_page2_amount"):GetText()
   local reason = getglobal("noobDKP_page2_reason"):GetText()
-  local multiplier = getglobal("noobDKP_page2_multiplier"):GetText()
 
   if reason == nil or reason == "" then
     reason = "no reason"
   end
 
-  if multipler == nil or tonumber(multiplier) == nil or tonumber(multiplier) == 0 then
-    multiplier = 1
-  end
-
   if amount == nil or tonumber(amount) == nil then
     amount = 0
-  end
-
-  amount = amount * multiplier
-  if NOOBDKP_g_options["admin_mode"] then
-    SendChatMessage("NoobDKP: EP Adding " .. amount .. " EP to the raid for " .. reason, "RAID")
   end
 
   local chars = {}
@@ -166,7 +161,6 @@ function NoobDKP_AddRaidEP()
     table.insert(chars, key)
   end
 
-  getglobal("noobDKP_page2_multiplier"):ClearFocus()
   getglobal("noobDKP_page2_amount"):ClearFocus()
   getglobal("noobDKP_page2_reason"):ClearFocus()
   NoobDKP_UpdateRoster()
@@ -175,28 +169,23 @@ function NoobDKP_AddRaidEP()
     NoobDKP_HandleUpdateAuction()
   end
   NoobDKP_Event_AddEntry(amount, 0, reason, chars, 0)
+
+  print(NoobDKP_color .. "Adding " .. amount .. " EP to raid because: " .. reason)
+  if NOOBDKP_g_options["admin_mode"] then
+    SendChatMessage("NoobDKP: EP Adding " .. amount .. " EP to the raid for " .. reason, "RAID")
+  end
 end
 
 function NoobDKP_AddRaidGP()
   local amount = getglobal("noobDKP_page2_amount_GP"):GetText()
   local reason = getglobal("noobDKP_page2_reason"):GetText()
-  local multiplier = getglobal("noobDKP_page2_multiplier"):GetText()
 
   if reason == nil or reason == "" then
     reason = "no reason"
   end
 
-  if tonumber(multiplier) == nil or tonumber(multiplier) == 0 then
-    multiplier = 1
-  end
-
   if tonumber(amount) == nil then
     amount = 0
-  end
-
-  amount = amount * multiplier
-  if NOOBDKP_g_options["admin_mode"] then
-    SendChatMessage("NoobDKP: GP Adding " .. amount .. " GP to the raid for " .. reason, "RAID")
   end
 
   local chars = {}
@@ -209,7 +198,6 @@ function NoobDKP_AddRaidGP()
     table.insert(chars, key)
   end
 
-  getglobal("noobDKP_page2_multiplier"):ClearFocus()
   getglobal("noobDKP_page2_amount_GP"):ClearFocus()
   getglobal("noobDKP_page2_reason"):ClearFocus()
   NoobDKP_UpdateRoster()
@@ -218,6 +206,11 @@ function NoobDKP_AddRaidGP()
     NoobDKP_HandleUpdateAuction()
   end
   NoobDKP_Event_AddEntry(0, amount, reason, chars, 0)
+
+  print(NoobDKP_color .. "Adding " .. amount .. " GP to raid because: " .. reason)
+  if NOOBDKP_g_options["admin_mode"] then
+    SendChatMessage("NoobDKP: GP Adding " .. amount .. " GP to the raid for " .. reason, "RAID")
+  end
 end
 
 function event_helper(i, pos)

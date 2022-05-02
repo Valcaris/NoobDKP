@@ -1381,6 +1381,19 @@
           <Anchor point="TOPLEFT" />
           <Anchor point="BOTTOMRIGHT" />
         </Anchors>
+        <Layers>
+          <Layer level="ARTWORK">
+            <FontString inherits="GameFontNormal" text="WARNING: No Active Event Detected!" name="$parent_warning" hidden="true">
+              <Anchors>
+                <Anchor point="BOTTOM" relativePoint="BOTTOm" relativeTo="$parent">
+                  <Offset>
+                    <AbsDimension x="0" y="50" />
+                  </Offset>
+                </Anchor>
+              </Anchors>
+            </FontString>
+          </Layer>
+        </Layers>
         <Frames>
           <Frame name="$parent_empty_auction" hidden="false">
             <Anchors>

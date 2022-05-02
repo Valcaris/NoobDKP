@@ -7,6 +7,19 @@ if NOOBDKP_g_roster == nil then
   NOOBDKP_g_roster = {}
 end
 
+function NoobDKPVirtualAdd(msg)
+  local _, _, cmd, args =  string.find(msg, "%s?(%w+)%s?(.*)")
+  NoobDKP_FixName(args)
+  if NOOBDKP_g_roster[args] == nil then
+    print(NoobDKP_color .. "Could not find char: " .. args)
+  else
+    getglobal("roster_menu_name"):SetText(args)
+    NoobDKP_RosterContextAddVirtual()
+    NoobDKP_UpdateRoster()
+    print(NoobDKP_color .. "Added to virtual raid: " .. args)
+  end
+end
+
 -- handler for /noob member
 function NoobDKPHandleRoster(msg)
   local syntax =
@@ -18,11 +31,7 @@ function NoobDKPHandleRoster(msg)
     NoobDKP_ScanRoster()
   elseif cmd == "virt" then
     -- adds a member to a virtual raid
-    local _, _, cmd, args =  string.find(msg, "%s?(%w+)%s?(.*)")
-    NoobDKP_FixName(args)
-    getglobal("roster_menu_name"):SetText(args)
-    NoobDKP_RosterContextAddVirtual()
-    NoobDKP_UpdateRoster()
+    NoobDKPVirtualAdd(msg)
   elseif cmd == "add" then
     -- adds a member to the roster (usually not guilded)
     if args == "" then
@@ -478,16 +487,23 @@ function NoobDKP_AuditRoster()
   NoobDKP_UpdateRoster()
 end
 
+-- This function scans through the roster and removes people with no values
 function NoobDKP_PurgeNoEPRoster()
   for key, value in pairs(NOOBDKP_g_roster) do
     local score, ep, gp = NoobDKP_GetEPGP(key)
-    if ep == nil or ep == 0 or gp == nil or gp == 0 then
+
+    score = tonumber(score)
+    ep = tonumber(ep)
+    gp = tonumber(gp)
+
+    if (ep == nil or ep == 0) and (gp == nil or gp == 0) then
       print(NoobDKP_color .. "Purging " .. key .. " for having no values!")
       NOOBDKP_g_roster[key] = nil
     end
   end
 end
 
+-- This function pushes all values in the addon to the guild officer notes
 function NoobDKP_PushRoster()
   if NOOBDKP_g_roster == nil or CanEditOfficerNote() == false then
     return ""
@@ -506,18 +522,22 @@ function NoobDKP_PushRoster()
   SetGuildRosterShowOffline(false)
 end
 
+-- This function performs the decay function.
+-- It will scan through the roster, ignore anyone with no EP or GP,
+-- ignore alts (so the decay is only applied once rather than once per alt)
+-- and reduce EP by the percentage and GP by the percentage
 function NoobDKP_Decay()
-  if
-    NOOBDKP_g_options["decay_percent"] ~= nil and NOOBDKP_g_options["decay_percent"] ~= 0 and
-      NOOBDKP_g_options["decay_percent"] ~= ""
-   then
+  if NOOBDKP_g_options["decay_percent"] ~= nil and NOOBDKP_g_options["decay_percent"] ~= 0 and NOOBDKP_g_options["decay_percent"] ~= "" then
     local decay = tonumber(NOOBDKP_g_options["decay_percent"])
     print(NoobDKP_color .. "NoobDKP Decaying Roster by " .. decay .. "%")
     for key, value in pairs(NOOBDKP_g_roster) do
-      local t, n = NoobDKP_ParseNote(value[3])
-      if t ~= 0 and t ~= "" and n ~= 0 and n ~= "" then
-        local _, ep, gp = NoobDKP_GetEPGP(key)
-        if ep ~= 0 and gp ~= 0 then
+      local main = NOOBDKP_find_main(key)
+      -- ignore alts so the calculation is only done once per player
+      if main == key then
+        local t, n = NoobDKP_ParseNote(value[3])
+        -- ignore people with no values
+        if (t ~= 0 and t ~= "") or (n ~= 0 and n ~= "") then
+          local _, ep, gp = NoobDKP_GetEPGP(key)
           print(NoobDKP_color .. "Found score for " .. key .. " ep = " .. ep .. " gp = " .. gp)
           ep = math.floor(ep - (ep * (decay / 100)) + 0.5)
           gp = math.floor(gp - (gp * (decay / 100)) + 0.5)

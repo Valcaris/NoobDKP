@@ -420,6 +420,13 @@ function NoobDKP_HandleUpdateAuction()
   local nameFrame, priorityFrame, scoreFrame, EPFrame, GPFrame, DQBox
   local pos = 1 -- index into the frame list
 
+  -- Add a warning if no event is active. May not want to do auctions without an event.
+  if NOOBDKP_g_events == nil or NOOBDKP_g_events["active_raid"] == nil then
+    getglobal("noobDKP_page3_warning"):Show()
+  else
+    getglobal("noobDKP_page3_warning"):Hide()
+  end
+
   local sortedList = NoobDKP_SortAuction()
 
   for key, value in pairs(sortedList) do

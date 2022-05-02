@@ -97,6 +97,22 @@ function NoobDKP_FixName(name)
     return ""
   end
   local lower = string.lower(name)
+
+  --[[
+  local i, j = string.find(name, "-")
+
+  if nil ~= i then
+    local s = string.gsub(string.sub(name, j), "^%l", string.upper)
+    print(NoobDKP_color .. " Temp string: " .. s)
+  end
+
+  i, j = string.find(name, "(")
+  if nil ~= i then
+    local s = string.gsub(string.sub(name, j), "^%l", string.upper)
+    print(NoobDKP_color .. " Temp string: " .. s)
+  end
+  ]]
+
   return lower:gsub("^%l", string.upper)
 end
 
@@ -146,6 +162,5 @@ end
 
 function NoobDKP_ParseNameText(text)
   local _, _, name = string.find(text, "(%w*)(.*)")
-  print("NoobDKP_ParseNameText text: " .. text .. " name: " .. name)
   return name
 end

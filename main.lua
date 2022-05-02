@@ -81,6 +81,9 @@ local function NoobDKPAddonCommands(msg, editbox)
   elseif cmd == "hide" then
     -- hides the NoobDKP panel
     noobMainFrame:Hide()
+  elseif cmd == "vi" then
+    -- shortcut for roster virt
+    NoobDKPVirtualAdd(msg)
   else
     -- prints the help syntax to the user
     print(NoobDKP_color .. syntax)
