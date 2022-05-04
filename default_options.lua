@@ -35,7 +35,7 @@ if NOOBDKP_g_options == nil then
   NOOBDKP_g_options["INVTYPE_LEGS"] = 50
   NOOBDKP_g_options["INVTYPE_FEET"] = 50
   NOOBDKP_g_options["INVTYPE_FINGER"] = 50
-  NOOBDKP_g_options["INVTYPE_TRINKET"] = 100
+  NOOBDKP_g_options["INVTYPE_TRINKET"] = 150
   NOOBDKP_g_options["INVTYPE_2HWEAPON"] = 100
   NOOBDKP_g_options["INVTYPE_WEAPON"] = 100
   NOOBDKP_g_options["INVTYPE_SHIELD"] = 100
@@ -46,7 +46,7 @@ if NOOBDKP_g_options == nil then
   NOOBDKP_g_options["INVTYPE_HOLDABLE"] = 100
   NOOBDKP_g_options["INVTYPE_RELIC"] = 0
 
-  NOOBDKP_g_options["MARK"] = 150
+  NOOBDKP_g_options["MARK"] = 100
   NOOBDKP_g_options["HC_MARK"] = 250
 
   NOOBDKP_g_options["HC_INVTYPE_HEAD"] = 200
@@ -63,13 +63,13 @@ if NOOBDKP_g_options == nil then
   NOOBDKP_g_options["HC_INVTYPE_FINGER"] = 200
   NOOBDKP_g_options["HC_INVTYPE_TRINKET"] = 300
   NOOBDKP_g_options["HC_INVTYPE_2HWEAPON"] = 300
-  NOOBDKP_g_options["HC_INVTYPE_WEAPON"] = 300
-  NOOBDKP_g_options["HC_INVTYPE_SHIELD"] = 300
-  NOOBDKP_g_options["HC_INVTYPE_RANGED"] = 300
-  NOOBDKP_g_options["HC_INVTYPE_THROWN"] = 300
-  NOOBDKP_g_options["HC_INVTYPE_WEAPONMAINHAND"] = 300
-  NOOBDKP_g_options["HC_INVTYPE_WEAPONOFFHAND"] = 300
-  NOOBDKP_g_options["HC_INVTYPE_HOLDABLE"] = 300
+  NOOBDKP_g_options["HC_INVTYPE_WEAPON"] = 250
+  NOOBDKP_g_options["HC_INVTYPE_SHIELD"] = 250
+  NOOBDKP_g_options["HC_INVTYPE_RANGED"] = 250
+  NOOBDKP_g_options["HC_INVTYPE_THROWN"] = 250
+  NOOBDKP_g_options["HC_INVTYPE_WEAPONMAINHAND"] = 250
+  NOOBDKP_g_options["HC_INVTYPE_WEAPONOFFHAND"] = 250
+  NOOBDKP_g_options["HC_INVTYPE_HOLDABLE"] = 250
   NOOBDKP_g_options["HC_INVTYPE_RELIC"] = 0
 end
 
@@ -86,8 +86,8 @@ if NOOBDKP_g_boss_table == nil then
   NOOBDKP_g_boss_table["Blood-Queen Lana'thel"] = 20
   NOOBDKP_g_boss_table["Valithria Dreamwalker"] = 20
   NOOBDKP_g_boss_table["Sindragosa"] = 20
-  NOOBDKP_g_boss_table["The Lich King"] = 50
-  NOOBDKP_g_boss_table["Halion Controller"] = 50
+  NOOBDKP_g_boss_table["The Lich King"] = 100
+  NOOBDKP_g_boss_table["Halion Controller"] = 100
 end
 
 if NOOBDKP_g_boss_emote == nil then
