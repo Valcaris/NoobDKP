@@ -2,6 +2,9 @@
 DKP/EPGP Addon for &lt;The Noob Guild>
 
 ## Overview
+
+### Note: If you download this as a zip, be sure to rename the folder as "NoobDKP" NOT "NoobDKP-main". Cloning from git works fine.
+
 This addon was created to help manage the loot system of &lt;The Noob Guild>. I looked at EPGP_Lootmaster, but it wouldn't work for me out of the box and just didn't feel like it did what I wanted to. QDKP was closer, but it's more geared for DKP rather than EPGP. I tried it in a raid, and it had several issues such as not telling people what their final score was and not letting people with more GP than EP bid.
 
 ## Whispers and Raid Chat
