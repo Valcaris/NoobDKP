@@ -77,10 +77,10 @@ local function NoobDKPAddonCommands(msg, editbox)
     NoobDKPHandleAuction(args)
   elseif cmd == "show" then
     -- shows the NoobDKP panel
-    noobMainFrame:Show()
+    NoobDKP_ToggleView()
   elseif cmd == "hide" then
     -- hides the NoobDKP panel
-    noobMainFrame:Hide()
+    NoobDKP_ToggleView()
   elseif cmd == "vi" then
     -- shortcut for roster virt
     NoobDKPVirtualAdd(msg)
@@ -180,5 +180,38 @@ function NoobDKP_ParseChat(text, playerName)
   end
 end
 
+function NoobDKP_ToggleView()
+  if noobMainFrame:IsShown() then
+    noobMainFrame:Hide()
+  else
+    noobMainFrame:Show()
+  end
+end
+
+-- minimap stuff
+minimap = LibStub("LibDBIcon-1.0")
+
+noobldb = LibStub("LibDataBroker-1.1"):NewDataObject("NoobDKP", {
+  type = "data source",
+  icon = "Interface\\AddOns\\NoobDKP\\TNG.blp",
+  OnClick = function(clickedframe, button) NoobDKP_ToggleView() end,
+  OnEnter = function(self) 
+    GameTooltip:SetOwner(self, "ANCHOR_LEFT");
+    GameTooltip:ClearLines();
+    GameTooltip:AddLine("NoobDKP v" .. noobversion);
+    GameTooltip:AddLine("Click to toggle frame");
+    GameTooltip:Show();
+  end,
+  OnLeave = function(self) 
+    GameTooltip:Hide(); 
+  end,
+})
+
+minimap:Register("NoobDKP", noobldb, NOOBDKP_g_minimap)
+
+-- note: for some reason, NOOBDKP_g_minimap["minimapPos"] is nil here
+-- even though it's in the SavedVariables and thus should persist
+
+-- slash command stuff
 SLASH_NOOBDKP1 = "/noob"
 SlashCmdList["NOOBDKP"] = NoobDKPAddonCommands

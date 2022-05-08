@@ -826,3 +826,7 @@ if NOOBDKP_g_loot_table == nil then
     },
   }  
 end
+
+if NOOBDKP_g_minimap == nil then
+  NOOBDKP_g_minimap = {}
+end
