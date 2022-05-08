@@ -9,7 +9,7 @@ end
 
 function NoobDKPVirtualAdd(msg)
   local _, _, cmd, args =  string.find(msg, "%s?(%w+)%s?(.*)")
-  NoobDKP_FixName(args)
+  args = NoobDKP_FixName(args)
   if NOOBDKP_g_roster[args] == nil then
     print(NoobDKP_color .. "Could not find char: " .. args)
   else

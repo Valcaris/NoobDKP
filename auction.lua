@@ -362,6 +362,7 @@ function NoobDKP_HandleAuctionResponse(type, ...)
   if NOOBDKP_g_options["admin_mode"] then
     if type == "item" then
       local item = ...
+      SendChatMessage("NoobDKP: Auction starting for item " .. item, "RAID_WARNING")
       SendChatMessage("NoobDKP: Auction starting for item " .. item, "RAID")
       if NOOBDKP_g_loot_table[item] ~= nil and NOOBDKP_g_options["loot_need_greed"] then
         local need = NOOBDKP_g_loot_table[item]["need"]
