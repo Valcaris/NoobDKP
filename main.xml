@@ -542,6 +542,8 @@
     </Frames>
   </Frame>
 
+  <GameTooltip name="NoobDKP_tooltip" hidden="true" inherits="GameTooltipTemplate"/>
+
   <Frame name="noobMainFrame" toplevel="true" frameStrata="DIALOG" movable="true" enableMouse="true" hidden="true" parent="UIParent">
     <Size>
       <AbsDimension x="480" y="325" />
@@ -614,6 +616,15 @@
                 <Anchor point="TOPLEFT" relativeTo="$parent">
                   <Offset>
                     <AbsDimension x="10" y="-10" />
+                  </Offset>
+                </Anchor>
+              </Anchors>
+            </FontString>
+            <FontString inherits="GameFontNormal" text="Unknown" name="$parent_last_update" hidden="false">
+              <Anchors>
+                <Anchor point="BOTTOMRIGHT" relativeTo="$parent" relativePoint="BOTTOMRIGHT">
+                  <Offset>
+                    <AbsDimension x="-10" y="10" />
                   </Offset>
                 </Anchor>
               </Anchors>
@@ -943,7 +954,10 @@
           </Button>
         </Frames>
         <Scripts>
-          <OnShow>NoobDKP_UpdateRoster();</OnShow>
+          <OnShow>
+            getglobal("noobDKP_page1_last_update"):SetText(NOOBDKP_g_options["last_update"])
+            NoobDKP_UpdateRoster();
+          </OnShow>
           <OnMouseWheel>NoobDKP_RosterVerticalScroll(arg1 * -1)</OnMouseWheel>
         </Scripts>
       </Frame>

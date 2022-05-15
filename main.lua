@@ -11,10 +11,9 @@
         - add indicators when events scroll off the page up or down
         - *allow editing of event entry roster
         - *when virtual event, repopulate raid roster from event entry roster
-        - **when creating event with nil name, create a default name
+        - right-click on container = rename event
     - Auctions Tab
         - Add countdown to window when auction started, possibly broadcast to raid (with checkbox)
-        - Option to have Declare Winner set GP and close auction all at once (or have separate actions)
         - trim need/greed of whitespace
         - * auto-detect for Rotface/Festergut bloods
     - Reports Tab
@@ -26,7 +25,6 @@
     - Options Tab
           - Various widgets for the options, may need mulitple pages or scrolling page
     - Communications
-    - Minimap Icon
     - TitanBars Icon
     - README.md, code documentation comments, general cleanup, QDKP acknowledgement
     - Conversion from QDKP T:x N:y to own custom notes E:x G:y
@@ -123,6 +121,7 @@ end
 function NoobDKP_ParseChat(text, playerName)
   -- admins listen to need/greed, non-admins listen to the admin respons
   if NOOBDKP_g_options["admin_mode"] then
+    text = string.lower(text)
     -- pass will remove character from bidding (if they bid)
     if text == "pass" then
       NoobDKP_HandleAddBid(playerName, text)
@@ -196,14 +195,16 @@ noobldb = LibStub("LibDataBroker-1.1"):NewDataObject("NoobDKP", {
   icon = "Interface\\AddOns\\NoobDKP\\TNG.blp",
   OnClick = function(clickedframe, button) NoobDKP_ToggleView() end,
   OnEnter = function(self) 
-    GameTooltip:SetOwner(self, "ANCHOR_LEFT");
-    GameTooltip:ClearLines();
-    GameTooltip:AddLine("NoobDKP v" .. noobversion);
-    GameTooltip:AddLine("Click to toggle frame");
-    GameTooltip:Show();
+    local tooltip = getglobal("NoobDKP_tooltip")
+    tooltip:SetOwner(self, "ANCHOR_LEFT");
+    tooltip:ClearLines();
+    tooltip:AddLine("NoobDKP v" .. noobversion);
+    tooltip:AddLine("Click to toggle frame");
+    tooltip:Show();
   end,
   OnLeave = function(self) 
-    GameTooltip:Hide(); 
+    local tooltip = getglobal("NoobDKP_tooltip")
+    tooltip:Hide();
   end,
 })
 
