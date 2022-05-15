@@ -398,7 +398,7 @@ function NoobDKP_UpdateRoster()
       local t = {nameText, r, g, b, a, rank, score, ep, gp}
       table.insert(sorted, t)
     else
-      if unique[main] ~= 1 then
+      if main ~= nil and main ~= "" and unique[main] ~= 1 then
         local rank = NOOBDKP_g_roster[main][1]
         local r, g, b, a = NoobDKP_getClassColor(NOOBDKP_g_roster[main][2])
         local score, ep, gp = NoobDKP_GetEPGP(main)
