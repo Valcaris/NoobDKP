@@ -111,6 +111,7 @@ function NoobDKP_OnEvent(self, event, ...)
     local _, subEvent, _, _, _, _, name = ...
     NoobDKP_CombatLog(subEvent, name)
   elseif event == "ADDON_LOADED" then
+    minimap:Refresh("NoobDKP", NOOBDKP_g_minimap)
     NoobDKP_UpdateRaidRoster()
   elseif event == "CHAT_MSG_MONSTER_YELL" then
     local text, name = ...
