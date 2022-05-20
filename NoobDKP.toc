@@ -14,4 +14,4 @@ reports.lua
 util.lua
 loot.lua
 
-LibDBIcon-1.0\embeds.xml
+LibDBIcon-1.0\lib.xml
