@@ -195,10 +195,15 @@ function NoobDKP_RosterContext()
     name = main
   end
 
+  local chars = { name }
+  NoobDKP_Event_AddEntry(ep, gp, "Manual Setting", chars, 0)
+  print(NoobDKP_color .. "Manual Setting EP: " .. ep .. " GP: " .. gp)
+
   local old_score, old_ep, old_gp = NoobDKP_GetEPGP(name)
   ep = old_ep + ep
   gp = old_gp + gp
   NoobDKP_SetEPGP(name, ep, gp)
+
   NoobDKP_UpdateRoster()
   menu:Hide()
 end

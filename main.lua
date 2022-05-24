@@ -111,6 +111,7 @@ function NoobDKP_OnEvent(self, event, ...)
     local _, subEvent, _, _, _, _, name = ...
     NoobDKP_CombatLog(subEvent, name)
   elseif event == "ADDON_LOADED" then
+    -- refresh minimap data here. Otherwise tables aren't loaded yet
     minimap:Refresh("NoobDKP", NOOBDKP_g_minimap)
     NoobDKP_UpdateRaidRoster()
   elseif event == "CHAT_MSG_MONSTER_YELL" then
@@ -210,9 +211,8 @@ noobldb = LibStub("LibDataBroker-1.1"):NewDataObject("NoobDKP", {
 })
 
 minimap:Register("NoobDKP", noobldb, NOOBDKP_g_minimap)
-
--- note: for some reason, NOOBDKP_g_minimap["minimapPos"] is nil here
--- even though it's in the SavedVariables and thus should persist
+-- note: register is done here, but the tables aren't fully loaded
+-- at this point, so we refresh the table in the ADDON_LOADED event handler
 
 -- slash command stuff
 SLASH_NOOBDKP1 = "/noob"
