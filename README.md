@@ -24,17 +24,17 @@ This addon has the following tabs:
   - When creating a new event, the current location and time can be used with the "Generate Name" button
   - Boss kills are detected based on receiving a UNIT_DEATH event for units found in the internal NOOBDKP_g_boss_table
     - EP is populated based on this boss table
-  - The EP Multiplier multiplies the EP value. This is useful if EP is added for first-time or one-shot kills (or whatever is desired)
-  - If the Auto EP option is enabled, EP for detected bosses will automatically be added to the raid and an item added to the event history
+    - If the Auto EP option is enabled, EP for detected bosses will automatically be added to the raid according to the boss table
 - Auction
   - This shows when an item is being bid for as well as everyone who has indicated that they want the item, sorted by need/greed, then by score.
   - If a person has bid, they may change their bid as they like (need to greed or vice versa). A person can also type "pass" to cancel their bid. They can then re-enter their bid if desired
   - GP is populated automatically based on the item's inventory slot if found in NOOBDKP_g_options
     - If Heroic is checked, the heroic version of the GP is used, if found in NOOBDKP_g_options
   - If an item is found in the internal loot table and has a need an/or greed description, those descriptions will be sent to the raid during the auction if the "Show Need/Greed for Auctions" option is enabled
-  - The "Declare Winner" button detects the highest need score (or greed score if no needs). Ties are automatically resolved with a /roll and announced to the raid
+  - The "Declare Winner" button detects the highest need score (or greed score if no needs). 
+    - Ties are automatically resolved with a /roll and announced to the raid. 
+    - GP is automatically added to the winner and a line is added to the current event
   - The "DQ" column is for disqualifying a character from an auction (if someone rolls on something they can't use). It is only valid for that auction and is reset on every auction.
-  - This allows a user to add GP to the bid winner.
 - Reports
   - This prints various reports to text which can then be copy-pasted to wherever the user wishes in case they need to maintain an offline backup/audit of all looting activities.
     - The Full Report has everyone's values including mains and alts

@@ -4,10 +4,14 @@
     - function wrapper to all uses of option table entries
     - Roster Tab
         - Give sort headers a background that is used on mouseover
-        - Last update timestamp
+        - Guild Scan should fix people in/out of the guild
+        - Scan should fix class, EPGP, rank of roster
+        - Should tolerate/fix spaces in officer notes
+        - Should be able to remove alt status from char
+        - When char enters raid, check to fix class
+        - Clamp scrolling to end of list
     - Events Tab
         - Add color to event listings
-        - sync event sends raid roster values to raid for syncing
         - add indicators when events scroll off the page up or down
         - *allow editing of event entry roster
         - *when virtual event, repopulate raid roster from event entry roster
@@ -18,18 +22,24 @@
         - * auto-detect for Rotface/Festergut bloods
     - Reports Tab
     - Sync Tab
-        - Show who else has addon and what version
+        - Show/scan/advertise who else has addon and what version
+        - Choose to pull EPGP or events (or both)
         - Permissions based on guild rank for who can set what
         - Sync Externals (guildies are just in notes)
+        - sync event sends raid roster values to raid for syncing
         - Master arbitration
+          - Only one echo in raid chat for bid and boss detection
+        - Manual Push/Pull from others (show update timestamp)
+        - Change Guild Scan to "Pull Guild Notes into Data"
     - Options Tab
           - Various widgets for the options, may need mulitple pages or scrolling page
+          - Refactor Audit Guild Roster, find use for it (different than purge)
+          - Move Add External to Roster tab
     - Communications
     - TitanBars Icon
     - README.md, code documentation comments, general cleanup, QDKP acknowledgement
     - Conversion from QDKP T:x N:y to own custom notes E:x G:y
 ]]
-local noobversion = GetAddOnMetadata("NoobDKP", "Version")
 
 print(NoobDKP_color .. "NoobDKP v" .. noobversion)
 
@@ -96,10 +106,13 @@ function NoobDKP_OnEvent(self, event, ...)
   -- handle whispers
   elseif event == "CHAT_MSG_WHISPER" then
     local text, playerName = ...
+    text = string.lower(text)
     if text == "noob help" then
       NoobDKP_HelpReply(playerName)
     elseif text == "noob" then
       NoobDKP_QueryReply(playerName)
+    elseif text == "need" or text == "greed" or text == "pass" then
+      NoobDKP_ParseChat(text, playerName)
     end
   -- handle changes in the raid roster
   elseif event == "RAID_ROSTER_UPDATE" then
@@ -111,12 +124,21 @@ function NoobDKP_OnEvent(self, event, ...)
     local _, subEvent, _, _, _, _, name = ...
     NoobDKP_CombatLog(subEvent, name)
   elseif event == "ADDON_LOADED" then
-    -- refresh minimap data here. Otherwise tables aren't loaded yet
-    minimap:Refresh("NoobDKP", NOOBDKP_g_minimap)
-    NoobDKP_UpdateRaidRoster()
+    local addon = ...
+    if addon == "NoobDKP" then
+      -- refresh minimap data here. Otherwise tables aren't loaded yet
+      minimap:Refresh("NoobDKP", NOOBDKP_g_minimap)
+      NoobDKP_HandleSyncOnLoad()
+      NoobDKP_UpdateRaidRoster()
+    end
   elseif event == "CHAT_MSG_MONSTER_YELL" then
     local text, name = ...
     NoobDKP_HandleMonsterYell(text, name)
+  elseif event == "CHAT_MSG_ADDON" then
+    local prefix, text, _, sender = ...
+    if prefix == "NoobDKP" then
+      NoobDKP_HandleSyncMessage(sender, text)
+    end
   end
 end
 

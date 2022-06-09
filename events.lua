@@ -360,8 +360,6 @@ end
 
 function NoobDKP_CombatLog(subEvent, name)
   if subEvent == "UNIT_DIED" and name and NOOBDKP_g_options["admin_mode"] then
-    print(NoobDKP_color .. "Found kill: " .. name)
-
     if NOOBDKP_g_boss_table[name] ~= nil and NOOBDKP_g_events["active_raid"] ~= nil then
       print(NoobDKP_color .. "Found boss kill: " .. name)
       getglobal("noobDKP_page2_amount"):SetText(NOOBDKP_g_boss_table[name])

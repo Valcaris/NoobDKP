@@ -184,6 +184,92 @@
     </Scripts>
   </Button>
 
+  <Button name="sync_list_template" virtual="true" hidden="false">
+    <Size>
+      <AbsDimension x="400" y="14" />
+    </Size>
+    <Layers>
+      <Layer level="ARTWORK">
+        <Texture name="$parent_highlight" setAllPoints="true" hidden="true">
+          <Size>
+            <AbsDimension y="12" />
+          </Size>
+          <Anchors>
+            <Anchor point="TOPLEFT">
+              <Offset>
+                <AbsDimension x="-2" y="-1" />
+              </Offset>
+            </Anchor>
+            <Anchor point="TOPRIGHT">
+              <Offset>
+                <AbsDimension x="2" />
+              </Offset>
+            </Anchor>
+          </Anchors>
+          <Color r="1.0" g="1.0" b="0.0" a="0.6" />
+          <Gradient orientation="VERTICAL">
+            <MaxColor r="1.0" g="1.0" b="0.0" a="0.7" />
+            <MinColor r="1.0" g="1.0" b="0.0" a="0.2" />
+          </Gradient>
+        </Texture>
+        <Texture name="$parent_background" setAllPoints="true">
+          <Size>
+            <AbsDimension y="12" />
+          </Size>
+          <Anchors>
+            <Anchor point="TOPLEFT">
+              <Offset>
+                <AbsDimension x="-2" y="-1" />
+              </Offset>
+            </Anchor>
+            <Anchor point="TOPRIGHT">
+              <Offset>
+                <AbsDimension x="2" />
+              </Offset>
+            </Anchor>
+          </Anchors>
+          <Color r="0.5" g="0.5" b="0.5" a="1" />
+          <Gradient orientation="VERTICAL">
+            <MaxColor r="0.5" g="0.5" b="0.5" a="0.0" />
+            <MinColor r="0.2" g="0.2" b="0.2" a="0.8" />
+          </Gradient>
+        </Texture>
+        <FontString name="$parent_name" inherits="GameFontHighlight" wraponspaces="false" justifyH="LEFT" enableMouse="true" text="Thisisacharname">
+          <Size>
+            <AbsDimension x="150" y="15" />
+          </Size>
+          <Anchors>
+            <Anchor relativePoint="LEFT" point="LEFT" />
+          </Anchors>
+        </FontString>
+        <FontString name="$parent_version" inherits="GameFontHighlight" wraponspaces="false" justifyH="LEFT" text="Jan 1, 2022 22:22">
+          <Size>
+            <AbsDimension x="50" y="14" />
+          </Size>
+          <Anchors>
+            <Anchor point="TOPLEFT" relativeTo="$parent_name" relativePoint="TOPRIGHT" />
+          </Anchors>
+        </FontString>
+        <FontString name="$parent_sync_time" inherits="GameFontHighlight" wraponspaces="false" justifyH="LEFT" text="Jan 1, 2022 22:22">
+          <Size>
+            <AbsDimension x="150" y="14" />
+          </Size>
+          <Anchors>
+            <Anchor point="TOPLEFT" relativeTo="$parent_version" relativePoint="TOPRIGHT" />
+          </Anchors>
+        </FontString>
+        <FontString name="$parent_events" inherits="GameFontHighlight" wraponspaces="false" justifyH="LEFT" text="Events...">
+          <Size>
+            <AbsDimension x="50" y="14" />
+          </Size>
+          <Anchors>
+            <Anchor point="TOPLEFT" relativeTo="$parent_sync_time" relativePoint="TOPRIGHT" />
+          </Anchors>
+        </FontString>
+      </Layer>
+    </Layers>
+  </Button>
+
   <Frame name="roster_menu" hidden="true" frameStrata="TOOLTIP">
     <Size>
       <AbsDimension x="120" y="120" />
@@ -616,6 +702,15 @@
                 <Anchor point="TOPLEFT" relativeTo="$parent">
                   <Offset>
                     <AbsDimension x="10" y="-10" />
+                  </Offset>
+                </Anchor>
+              </Anchors>
+            </FontString>
+            <FontString inherits="GameFontNormal" text="Last Sync Time:" hidden="false">
+              <Anchors>
+                <Anchor point="BOTTOMRIGHT" relativeTo="$parent" relativePoint="BOTTOMRIGHT">
+                  <Offset>
+                    <AbsDimension x="-10" y="30" />
                   </Offset>
                 </Anchor>
               </Anchors>
@@ -1932,7 +2027,128 @@
           <Anchor point="TOPLEFT" />
           <Anchor point="BOTTOMRIGHT" />
         </Anchors>
+        <Layers>
+          <Layer level="ARTWORK">
+            <FontString name="$parent_name" inherits="GameFontNormal" text="Name">
+              <Anchors>
+                <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$parent">
+                  <Offset>
+                    <AbsDimension x="50" y="-30" />
+                  </Offset>
+                </Anchor>
+              </Anchors>
+            </FontString>
+            <FontString name="$parent_version" inherits="GameFontNormal" text="Version">
+              <Anchors>
+                <Anchor point="TOP" relativePoint="TOP" relativeTo="$parent_name">
+                  <Offset>
+                    <AbsDimension x="110" y="0" />
+                  </Offset>
+                </Anchor>
+              </Anchors>
+            </FontString>
+            <FontString name="$parent_time" inherits="GameFontNormal" text="Last Sync Time">
+              <Anchors>
+                <Anchor point="TOP" relativePoint="TOP" relativeTo="$parent_version">
+                  <Offset>
+                    <AbsDimension x="100" y="0" />
+                  </Offset>
+                </Anchor>
+              </Anchors>
+            </FontString>
+          </Layer>
+        </Layers>
         <Frames>
+          <Button name="$parent_entry1" inherits="sync_list_template">
+            <Anchors>
+              <Anchor relativePoint="TOPLEFT" point="TOPLEFT" relativeTo="$parent">
+                <Offset>
+                  <AbsDimension x="10" y="-45" />
+                </Offset>
+              </Anchor>
+            </Anchors>
+          </Button>          
+          <Button name="$parent_entry2" inherits="sync_list_template">
+            <Anchors>
+              <Anchor relativePoint="BOTTOMLEFT" point="TOPLEFT" relativeTo="$parent_entry1">
+                <Offset>
+                  <AbsDimension x="0" y="-2" />
+                </Offset>
+              </Anchor>
+            </Anchors>
+          </Button>
+          <Button name="$parent_entry3" inherits="sync_list_template">
+            <Anchors>
+              <Anchor relativePoint="BOTTOMLEFT" point="TOPLEFT" relativeTo="$parent_entry2">
+                <Offset>
+                  <AbsDimension x="0" y="-2" />
+                </Offset>
+              </Anchor>
+            </Anchors>
+          </Button>
+          <Button name="$parent_entry4" inherits="sync_list_template">
+            <Anchors>
+              <Anchor relativePoint="BOTTOMLEFT" point="TOPLEFT" relativeTo="$parent_entry3">
+                <Offset>
+                  <AbsDimension x="0" y="-2" />
+                </Offset>
+              </Anchor>
+            </Anchors>
+          </Button>
+          <Button name="$parent_entry5" inherits="sync_list_template">
+            <Anchors>
+              <Anchor relativePoint="BOTTOMLEFT" point="TOPLEFT" relativeTo="$parent_entry4">
+                <Offset>
+                  <AbsDimension x="0" y="-2" />
+                </Offset>
+              </Anchor>
+            </Anchors>
+          </Button>
+          <Button name="$parent_entry6" inherits="sync_list_template">
+            <Anchors>
+              <Anchor relativePoint="BOTTOMLEFT" point="TOPLEFT" relativeTo="$parent_entry5">
+                <Offset>
+                  <AbsDimension x="0" y="-2" />
+                </Offset>
+              </Anchor>
+            </Anchors>
+          </Button>
+          <Button name="$parent_entry7" inherits="sync_list_template">
+            <Anchors>
+              <Anchor relativePoint="BOTTOMLEFT" point="TOPLEFT" relativeTo="$parent_entry6">
+                <Offset>
+                  <AbsDimension x="0" y="-2" />
+                </Offset>
+              </Anchor>
+            </Anchors>
+          </Button>
+          <Button name="$parent_entry8" inherits="sync_list_template">
+            <Anchors>
+              <Anchor relativePoint="BOTTOMLEFT" point="TOPLEFT" relativeTo="$parent_entry7">
+                <Offset>
+                  <AbsDimension x="0" y="-2" />
+                </Offset>
+              </Anchor>
+            </Anchors>
+          </Button>
+          <Button name="$parent_entry9" inherits="sync_list_template">
+            <Anchors>
+              <Anchor relativePoint="BOTTOMLEFT" point="TOPLEFT" relativeTo="$parent_entry8">
+                <Offset>
+                  <AbsDimension x="0" y="-2" />
+                </Offset>
+              </Anchor>
+            </Anchors>
+          </Button>
+          <Button name="$parent_entry10" inherits="sync_list_template">
+            <Anchors>
+              <Anchor relativePoint="BOTTOMLEFT" point="TOPLEFT" relativeTo="$parent_entry9">
+                <Offset>
+                  <AbsDimension x="0" y="-2" />
+                </Offset>
+              </Anchor>
+            </Anchors>
+          </Button>
           <Button name="$parent_scan" text="Guild Scan" inherits="UIPanelButtonTemplate">
             <Anchors>
               <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT">
@@ -1977,7 +2193,27 @@
               </OnLeave>
             </Scripts>
           </Button>
+          <Button name="$parent_trigger" text="Triggered!" inherits="UIPanelButtonTemplate">
+            <Anchors>
+              <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT">
+                <Offset>
+                  <AbsDimension x="200" y="45" />
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Size>
+              <AbsDimension x="100" y="25" />
+            </Size>
+            <Scripts>
+              <OnClick>NoobDKP_HandleSyncOnLoad();</OnClick>
+            </Scripts>
+          </Button>
         </Frames>
+        <Scripts>
+          <OnShow>
+            NoobDKP_HandleRefreshSyncs();
+          </OnShow>
+        </Scripts>
       </Frame>
       <Frame name="noobDKP_page6" hidden="true">
         <Layers>
@@ -2525,6 +2761,7 @@
         this:RegisterEvent("CHAT_MSG_RAID");
         this:RegisterEvent("CHAT_MSG_RAID_LEADER");
         this:RegisterEvent("CHAT_MSG_WHISPER");
+        this:RegisterEvent("CHAT_MSG_ADDON");
         this:RegisterEvent("RAID_ROSTER_UPDATE");
         this:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED");
         this:RegisterEvent("ADDON_LOADED");

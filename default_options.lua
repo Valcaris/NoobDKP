@@ -1,6 +1,7 @@
 -- NoobDKP Options file
 
 NoobDKP_color = "|cfff0ba3c"
+noobversion = GetAddOnMetadata("NoobDKP", "Version")
 
 
 -- maybe make a default table and a list of option names, then go through the
@@ -829,4 +830,8 @@ end
 
 if NOOBDKP_g_minimap == nil then
   NOOBDKP_g_minimap = {}
+end
+
+if NOOBDKP_g_syncs == nil then
+  NOOBDKP_g_syncs = {}
 end
