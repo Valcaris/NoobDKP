@@ -96,6 +96,8 @@ function NoobDKP_ScanRoster()
   end
 
   SetGuildRosterShowOffline(false)
+  NOOBDKP_g_options["last_update"] = date("%b %d, %Y %H:%M")
+  getglobal("noobDKP_page1_last_update"):SetText(NOOBDKP_g_options["last_update"])
   NoobDKP_UpdateRoster()
 end
 

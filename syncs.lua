@@ -1,14 +1,17 @@
 function NoobDKP_HandleSyncMessage(sender, text)
   print(NoobDKP_color .. sender .. " sent: " .. text)
   local _, _, cmd, args = string.find(text, "%s?(%w+)%s?(.*)")
+  local main = NOOBDKP_find_main(sender)
+  if main == "" or main == nil then main = sender end
+
   if cmd == "v" then
-    if NOOBDKP_g_syncs[sender] == nil then
-      NOOBDKP_g_syncs[sender] = {}
+    if NOOBDKP_g_syncs[main] == nil then
+      NOOBDKP_g_syncs[main] = {}
     end
     print(NoobDKP_color .. " cmd: " .. cmd .. " args: " .. args)
     local _, _, version, sync_time = string.find(args, "(.*) # (.*)")
-    NOOBDKP_g_syncs[sender]["version"] = version
-    NOOBDKP_g_syncs[sender]["sync_time"] = sync_time
+    NOOBDKP_g_syncs[main]["version"] = version
+    NOOBDKP_g_syncs[main]["sync_time"] = sync_time
     print(NoobDKP_color .. " version: " .. version .. " sync time: " .. sync_time)
   end
   NoobDKP_HandleRefreshSyncs()

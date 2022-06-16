@@ -2193,7 +2193,7 @@
               </OnLeave>
             </Scripts>
           </Button>
-          <Button name="$parent_trigger" text="Triggered!" inherits="UIPanelButtonTemplate">
+          <Button name="$parent_trigger" text="Send ping to others" inherits="UIPanelButtonTemplate">
             <Anchors>
               <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT">
                 <Offset>
@@ -2202,10 +2202,17 @@
               </Anchor>
             </Anchors>
             <Size>
-              <AbsDimension x="100" y="25" />
+              <AbsDimension x="130" y="25" />
             </Size>
             <Scripts>
               <OnClick>NoobDKP_HandleSyncOnLoad();</OnClick>
+              <OnEnter>
+                GameTooltip:SetOwner(this, "ANCHOR_RIGHT");
+                GameTooltip:SetText('Sends a message to the guild and raid that you are here!');
+              </OnEnter>
+              <OnLeave>
+                GameTooltip:Hide();
+              </OnLeave>
             </Scripts>
           </Button>
         </Frames>
