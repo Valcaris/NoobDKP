@@ -157,6 +157,10 @@ end
 function NoobDKP_SetEPGP(char, ep, gp)
   local note = "N:" .. (ep - gp) .. " T:" .. ep
   local main = NOOBDKP_find_main(char)
+  if main == nil or main == "" then
+    main = char
+    NOOBDKP_g_roster[main] = {} 
+  end
   NOOBDKP_g_roster[main][3] = note
 end
 

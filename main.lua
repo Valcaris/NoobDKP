@@ -22,7 +22,6 @@
         - * auto-detect for Rotface/Festergut bloods
     - Reports Tab
     - Sync Tab
-        - Show/scan/advertise who else has addon and what version
         - Choose to pull EPGP or events (or both)
         - Permissions based on guild rank for who can set what
         - Sync Externals (guildies are just in notes)
@@ -35,7 +34,6 @@
           - Various widgets for the options, may need mulitple pages or scrolling page
           - Refactor Audit Guild Roster, find use for it (different than purge)
           - Move Add External to Roster tab
-    - Communications
     - TitanBars Icon
     - README.md, code documentation comments, general cleanup, QDKP acknowledgement
     - Conversion from QDKP T:x N:y to own custom notes E:x G:y
@@ -151,39 +149,20 @@ function NoobDKP_ParseChat(text, playerName)
       NoobDKP_HandleAddBid(playerName, text)
       NoobDKP_HandleAuctionResponse("bid_pass", playerName)
       NoobDKP_HandleUpdateAuction()
+      NoobDKP_SyncAuctionBid(playerName, text)
     -- need or greed will add character to bidding
     elseif text == "need" or text == "greed" then
       NoobDKP_HandleAddBid(playerName, text)
-      NoobDKP_HandleUpdateAuction()
       local score, ep, gp = NoobDKP_GetEPGP(playerName)
+      text = NoobDKP_HandleHeroicItemBid(playerName, text)
+      NoobDKP_HandleUpdateAuction()
       NoobDKP_HandleAuctionResponse("bid", playerName, text, score, ep, gp)
+      NoobDKP_SyncAuctionBid(playerName, text)
     end
   else
     -- if not admin, just listen to the admin to keep updated
     local _, _, cmd = string.find(text, "NoobDKP: (%w+)(.*)")
-    -- handle a new bid
-    if cmd == "Bid" then
-      local _, _, char, val, score, ep, gp =
-        string.find(text, "NoobDKP: Bid (%w+) (%w+) for (%d+) accepted (%d+)/(%d+)")
-      NoobDKP_SetEPGP(char, ep, gp)
-      NoobDKP_UpdateRoster()
-      local score = NoobDKP_calculateScore(ep, gp)
-      NOOBDKP_g_auction[char] = {}
-      NOOBDKP_g_auction[char]["_score"] = score
-      NOOBDKP_g_auction[char]["_type"] = val
-      NoobDKP_HandleUpdateAuction()
-    -- handle removing a bid
-    elseif cmd == "Pass" then
-      local _, _, char =
-        string.find(text, "NoobDKP: Pass (%w+) is passing this roll")
-      NOOBDKP_g_auction[char] = {}
-      NoobDKP_HandleUpdateAuction()
-    -- handle a new auction
-    elseif cmd == "Auction" then
-      local _, _, item = string.find(text, "NoobDKP: Auction starting for item (.*)")
-      NoobDKP_ShiftClickItem(item)
-    -- handle GP being added
-    elseif cmd == "GP" then
+    if cmd == "GP" then
       local _, _, gp, char = string.find(text, "NoobDKP: GP (-?%d+) to (%w+)")
       local main = NOOBDKP_find_main(char)
       local ep = NOOBDKP_g_raid_roster[char][3]

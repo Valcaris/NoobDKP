@@ -1871,7 +1871,7 @@
                 </Size>
                 <Scripts>
                   <OnClick>
-                    NoobDKP_HandleDeclareWinner()
+                    NoobDKP_FinishAuction("");
                   </OnClick>
                 </Scripts>
               </Button>
@@ -2193,7 +2193,7 @@
               </OnLeave>
             </Scripts>
           </Button>
-          <Button name="$parent_trigger" text="Send ping to others" inherits="UIPanelButtonTemplate">
+          <Button name="$parent_ping" text="Send ping to others" inherits="UIPanelButtonTemplate">
             <Anchors>
               <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT">
                 <Offset>
@@ -2209,6 +2209,28 @@
               <OnEnter>
                 GameTooltip:SetOwner(this, "ANCHOR_RIGHT");
                 GameTooltip:SetText('Sends a message to the guild and raid that you are here!');
+              </OnEnter>
+              <OnLeave>
+                GameTooltip:Hide();
+              </OnLeave>
+            </Scripts>
+          </Button>
+          <Button name="$parent_clear" text="Clear Syncs" inherits="UIPanelButtonTemplate">
+            <Anchors>
+              <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT">
+                <Offset>
+                  <AbsDimension x="350" y="45" />
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Size>
+              <AbsDimension x="100" y="25" />
+            </Size>
+            <Scripts>
+              <OnClick>NoobDKP_HandleClearSyncs();</OnClick>
+              <OnEnter>
+                GameTooltip:SetOwner(this, "ANCHOR_RIGHT");
+                GameTooltip:SetText('Clears all received syncs');
               </OnEnter>
               <OnLeave>
                 GameTooltip:Hide();
@@ -2266,6 +2288,15 @@
                 <Anchor point="TOPLEFT" relativeTo="$parent">
                   <Offset>
                     <AbsDimension x="15" y="-150" />
+                  </Offset>
+                </Anchor>
+              </Anchors>
+            </FontString>
+            <FontString name="$parent_min_EP_heroic_text" inherits="GameFontNormal" text="Min EP for heroics:">
+              <Anchors>
+                <Anchor point="TOPLEFT" relativeTo="$parent">
+                  <Offset>
+                    <AbsDimension x="15" y="-180" />
                   </Offset>
                 </Anchor>
               </Anchors>
@@ -2522,6 +2553,35 @@
               </OnLeave>
             </Scripts>
           </CheckButton>
+          <EditBox name="$parent_min_GP_heroics" inherits="InputBoxTemplate" autoFocus="false">
+            <Size>
+              <AbsDimension x="40" y="25" />
+            </Size>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="$parent_min_EP_heroic_text">
+                <Offset>
+                  <AbsDimension x="5" y="5" />
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnShow>
+                local val = NOOBDKP_g_options["min_EP_heroics"];
+                if val == nil or val == "" then val = 0 end;
+                this:SetText(val);</OnShow>
+              <OnEnterPressed>
+                NOOBDKP_g_options["min_EP_heroics"] = tonumber(this:GetText())
+                this:ClearFocus();
+              </OnEnterPressed>
+              <OnEnter>
+                GameTooltip:SetOwner(this, "ANCHOR_RIGHT");
+                GameTooltip:SetText('Addon will force bids to greed if item is heroic and player EP is below this number');
+              </OnEnter>
+              <OnLeave>
+                GameTooltip:Hide();
+              </OnLeave>
+            </Scripts>
+          </EditBox>
           <Button name="$parent_purge_tables" text="Purge Tables" inherits="UIPanelButtonTemplate">
             <Anchors>
               <Anchor point="BOTTOMRIGHT" relativePoint="BOTTOMRIGHT" relativeTo="$parent">

@@ -47,13 +47,25 @@ end
 -- args = char to override the winner (optional)
 function NoobDKP_FinishAuction(args)
   local _, _, char = string.find(args, "%s?(%w+)%s?")
+  NoobDKP_HandleFinishAuction(char)
+
+  local win_char = NOOBDKP_g_auction["_winner"]
+  if win_char == "" then
+    return 
+  end
+  local score, ep, gp = NoobDKP_GetEPGP(win_char)
+  NoobDKP_HandleAuctionResponse("win", win_char, NOOBDKP_g_auction["_item"], score)
+  NoobDKP_HandleSyncAuctionFinish(win_char)
+end
+
+function NoobDKP_HandleFinishAuction(char)
   char = NoobDKP_FixName(char)
   if NOOBDKP_g_auction == nil then
     print(NoobDKP_color .. "No auction in progress to finish!")
     return
   elseif char ~= nil and char ~= "" then
     print(NoobDKP_color .. "Overriding " .. char .. " as the winner!")
-    NOOBDKP_g_auction[winner] = char
+    NOOBDKP_g_auction["_winner"] = char
   else
     NoobDKP_FindTheWinner()
   end
@@ -63,12 +75,10 @@ function NoobDKP_FinishAuction(args)
     return 
   end
   local score, ep, gp = NoobDKP_GetEPGP(win_char)
-  NoobDKP_HandleAuctionResponse("win", win_char, NOOBDKP_g_auction["_item"], score)
   getglobal("noobDKP_page3_auction_Winner"):SetText(win_char)
   local r, g, b, a = NoobDKP_getClassColor(NOOBDKP_g_roster[win_char][2])
   getglobal("noobDKP_page3_auction_Winner"):SetVertexColor(r, g, b, a)
   getglobal("noobDKP_page3_auctionAddGP"):Enable()
-
 end
 
 -- handles declaring a winner for an auction
@@ -80,6 +90,7 @@ function NoobDKP_HandleDeclareWinner()
     return 
   end
   local score, ep, gp = NoobDKP_GetEPGP(win_char)
+  NoobDKP_HandleSyncAuctionFinish(win_char)
   NoobDKP_HandleAuctionResponse("win", win_char, NOOBDKP_g_auction["_item"], score)
   getglobal("noobDKP_page3_auction_Winner"):SetText(win_char)
   local r, g, b, a = NoobDKP_getClassColor(NOOBDKP_g_roster[win_char][2])
@@ -307,7 +318,6 @@ function NoobDKP_HandleAuctionTab()
     end
   else
     (getglobal("noobDKP_page3_auction_Item")):SetText("Auction for: " .. NOOBDKP_g_auction["_item"])
-    NoobDKP_HandleUpdateAuction()
     emptyAuction:Hide()
     fullAuction:Show()
   end
@@ -327,13 +337,28 @@ function NoobDKP_HandleAddBid(name, bid)
   local score, ep, gp = NoobDKP_GetEPGP(name)
   NOOBDKP_g_auction[name] = {}
   NOOBDKP_g_auction[name]["_score"] = score
-
-  if tonumber(ep) < NOOBDKP_g_options["min_EP"] and bid == "need" then
-    bid = "greed"
-    NoobDKP_HandleAuctionResponse("force_greed", name)
-  end
-
   NOOBDKP_g_auction[name]["_type"] = bid
+end
+
+-- handles if an item is indicated to be heroic
+-- This allows for minimum EP bids on heroics
+function NoobDKP_HandleHeroicItemBid(name, bid)
+  print(NoobDKP_color .. "Handling Heroic Item Bid...")
+  local box = getglobal("noobDKP_page3_auctionIsHeroic")
+  if box:GetChecked() then
+    local score, ep, gp = NoobDKP_GetEPGP(name)
+    local hero = NOOBDKP_g_options["min_EP_heroics"]
+    -- check that the config value is valid and non zero, 
+    -- that the bidder doesn't have enough EP,
+    -- and that they tried to bid need.
+    -- If so, force the bid to greed.
+    if hero ~= nil and hero ~= 0 and tonumber(ep) < hero and bid == "need" then
+      bid = "greed"
+      NoobDKP_HandleAuctionResponse("force_greed", name)
+      NOOBDKP_g_auction[name]["_type"] = bid
+    end
+  end
+  return bid
 end
 
 -- handles adding GP to the winner of an auction
@@ -377,7 +402,7 @@ function NoobDKP_HandleAuctionResponse(type, ...)
     elseif type == "force_greed" then
       local name = ...
       SendChatMessage(
-        "NoobDKP: " .. name .. " does not have " .. NOOBDKP_g_options["min_EP"] .. " EP, setting to greed bid",
+        "NoobDKP: " .. name .. " does not have " .. NOOBDKP_g_options["min_EP_heroics"] .. " EP, setting to greed bid",
         "RAID"
       )
     elseif type == "bid_pass" then
@@ -547,17 +572,23 @@ end
 -- handler when an item is shift-clicked (creates auction if valid)
 function NoobDKP_ShiftClickItem(item)
   if getglobal("noobMainFrame"):IsShown() then
-    NOOBDKP_g_auction = nil
-    NOOBDKP_g_auction = {}
-    NOOBDKP_g_auction["_item"] = item
-    NoobDKP_HandleUpdateAuction()
-    NoobDKP_HandleAuctionTab()
+    NoobDKP_HandleItemAuction(item)
     NoobDKP_HandleAuctionResponse("item", item)
-    NoobDKP_PrePopulateGP(item)
+    NoobDKP_SyncAuctionItem(item)
   end
   if NOOBDKP_g_options["loot_table"] then
     NoobDKP_PopulateLootTable(item)
   end
+end
+
+-- helper function for handling when an item is added to an auction
+function NoobDKP_HandleItemAuction(item)
+  NOOBDKP_g_auction = nil
+  NOOBDKP_g_auction = {}
+  NOOBDKP_g_auction["_item"] = item
+  NoobDKP_HandleUpdateAuction()
+  NoobDKP_HandleAuctionTab()
+  NoobDKP_PrePopulateGP(item)
 end
 
 hooksecurefunc("ChatEdit_InsertLink", NoobDKP_ShiftClickItem)

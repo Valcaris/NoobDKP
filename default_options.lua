@@ -21,6 +21,7 @@ if NOOBDKP_g_options == nil then
   NOOBDKP_g_options["scale_EP"] = 100
   NOOBDKP_g_options["defaultGP"] = 50
   NOOBDKP_g_options["min_EP"] = 0
+  NOOBDKP_g_options["min_EP_heroics"] = 500
   NOOBDKP_g_options["decay_percent"] = 30
 
   -- gear options by inventory slot type
