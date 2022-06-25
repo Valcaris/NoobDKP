@@ -100,11 +100,14 @@ function NoobDKP_OnEvent(self, event, ...)
   -- handle raid chat messages
   if event == "CHAT_MSG_RAID" or event == "CHAT_MSG_RAID_LEADER" then
     local text, playerName = ...
+    text = string.lower(text)
+    text = text:match("^%s*(.-)%s*$")
     NoobDKP_ParseChat(text, playerName)
   -- handle whispers
   elseif event == "CHAT_MSG_WHISPER" then
     local text, playerName = ...
     text = string.lower(text)
+    text = text:match("^%s*(.-)%s*$")
     if text == "noob help" then
       NoobDKP_HelpReply(playerName)
     elseif text == "noob" then

@@ -317,9 +317,11 @@ function NoobDKP_HandleAuctionTab()
       getglobal("noobDKP_page3_empty_auction_create_auction"):Disable()
     end
   else
+    if NOOBDKP_g_auction ~= nil and NOOBDKP_g_auction["_item"] ~= nil then
     (getglobal("noobDKP_page3_auction_Item")):SetText("Auction for: " .. NOOBDKP_g_auction["_item"])
     emptyAuction:Hide()
     fullAuction:Show()
+    end
   end
 end
 
@@ -332,6 +334,10 @@ function NoobDKP_HandleAddBid(name, bid)
   if bid == "pass" then
     NOOBDKP_g_auction[name] = {}
     return
+  end
+
+  if NOOBDKP_g_auction == nil then
+    NOOBDKP_g_auction = {}
   end
 
   local score, ep, gp = NoobDKP_GetEPGP(name)

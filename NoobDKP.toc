@@ -1,7 +1,7 @@
 ##Interface: 30300
 ##Title: NoobDKP
 ##Author: The Guild Master
-##Version: 0.0.12
+##Version: 0.0.13
 ##SavedVariables: NOOBDKP_g_auction, NOOBDKP_g_raid_roster, NOOBDKP_g_events, NOOBDKP_g_roster, NOOBDKP_g_options, NOOBDKP_g_loot_table, NOOBDKP_g_boss_table, NOOBDKP_g_boss_emote, NOOBDKP_g_minimap, NOOBDKP_g_syncs
 
 libs\LibStub\LibStub.lua

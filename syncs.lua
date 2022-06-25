@@ -65,7 +65,6 @@ end
 -- handles sending the sync message when an auction is created for an item
 function NoobDKP_SyncAuctionItem(item)
   local msg = "item " .. item
-  SendAddonMessage("NoobDKP", msg, "GUILD", 0)
   SendAddonMessage("NoobDKP", msg, "RAID", 0)
   print(NoobDKP_color .. "Sent addon message: " .. msg)
 end
@@ -74,7 +73,6 @@ end
 function NoobDKP_SyncAuctionBid(name, bid)
   local score, ep, gp = NoobDKP_GetEPGP(name)
   local msg = "auction " .. name .. " " .. bid .. " " .. ep .. " " .. gp
-  SendAddonMessage("NoobDKP", msg, "GUILD", 0)
   SendAddonMessage("NoobDKP", msg, "RAID", 0)
   print(NoobDKP_color .. "Sent addon message: " .. msg)
 end
@@ -82,7 +80,6 @@ end
 -- handles sending the sync message when an auction is finished
 function NoobDKP_HandleSyncAuctionFinish(name)
   local msg = "winner " .. name
-  SendAddonMessage("NoobDKP", msg, "GUILD", 0)
   SendAddonMessage("NoobDKP", msg, "RAID", 0)
   print(NoobDKP_color .. "Sent addon message: " .. msg)
 end

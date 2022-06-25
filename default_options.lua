@@ -836,3 +836,15 @@ end
 if NOOBDKP_g_syncs == nil then
   NOOBDKP_g_syncs = {}
 end
+
+if NOOBDKP_g_events == nil then
+  NOOBDKP_g_events = {}
+end
+
+if NOOBDKP_g_raid_roster == nil then
+  NOOBDKP_g_raid_roster = {}
+end
+
+if NOOBDKP_g_roster == nil then
+  NOOBDKP_g_roster = {}
+end
