@@ -49,10 +49,16 @@ function NoobDKP_AddEvent(msg)
 end
 
 function NoobDKP_AddVirtualEvent(msg)
+  if NOOBDKP_g_events == nil then
+    NOOBDKP_g_events = {}
+  end
   NOOBDKP_g_events["virtual"] = true
 end
 
 function NoobDKP_RemoveEvent(msg)
+  if NOOBDKP_g_events == nil then
+    NOOBDKP_g_events = {}
+  end
   local a = NOOBDKP_g_events["active_raid"]
   local _, _, desc = string.find(msg, "%s?(.*)")
   print(NoobDKP_color .. "Remove event: " .. desc)
@@ -71,7 +77,7 @@ end
 function NoobDKP_CloseEvent()
   getglobal("noobDKP_page1_virtual"):Hide()
   getglobal("noobDKP_page2_virtual"):Hide()
-  if NOOBDKP_g_events["virtual"] == true then
+  if (NOOBDKP_g_events == nil) or (NOOBDKP_g_events["virtual"] == true) then
     NOOBDKP_g_raid_roster = {}
   end
   NOOBDKP_g_events["active_raid"] = nil
@@ -80,6 +86,9 @@ function NoobDKP_CloseEvent()
 end
 
 function NoobDKP_Event_AddEntry(ep, gp, text, chars, id)
+  if NOOBDKP_g_events == nil then
+    NOOBDKP_g_events = {}
+  end
   local raid = NOOBDKP_g_events["active_raid"]
   if raid ~= nil then
     if id == 0 or id == nil then
@@ -113,11 +122,14 @@ function NoobDKP_ShowEventTab()
   local emptyFrame = getglobal("noobDKP_page2_empty_event")
   local fullFrame = getglobal("noobDKP_page2_event")
 
+  if NOOBDKP_g_events == nil then
+    NOOBDKP_g_events = {}
+  end
   if NOOBDKP_g_events["virtual"] == true then
     getglobal("noobDKP_page2_virtual"):Show()
   end
 
-  if NOOBDKP_g_events == nil or NOOBDKP_g_events["active_raid"] == nil then
+  if NOOBDKP_g_events["active_raid"] == nil then
     if NOOBDKP_g_options["admin_mode"] then
       local loc = getglobal("noobDKP_page2_empty_event_event_location"):GetText()
       if loc ~= nil and loc ~= "" then
@@ -214,6 +226,9 @@ function NoobDKP_AddRaidGP()
 end
 
 function event_helper(i, pos)
+  if NOOBDKP_g_events == nil then
+    NOOBDKP_g_events = {}
+  end
   local raid = NOOBDKP_g_events["active_raid"]
   local widget
   for s, t in pairs(NOOBDKP_g_events[raid]) do
@@ -233,6 +248,9 @@ function event_helper(i, pos)
 end
 
 function NoobDKP_HandleUpdateEmptyEvent()
+  if NOOBDKP_g_events == nil then
+    NOOBDKP_g_events = {}
+  end
   local i = 1 -- index into the table
   local pos = 1 -- index into the frame list
   local widget
@@ -280,6 +298,9 @@ function NoobDKP_HandleUpdateFullEvent()
 end
 
 function NoobDKP_FullEventVerticalScroll(offset)
+  if NOOBDKP_g_events == nil then
+    NOOBDKP_g_events = {}
+  end
   local raid = NOOBDKP_g_events["active_raid"]
   offset = offset * NOOBDKP_g_options["scroll_scale"]
 
@@ -304,7 +325,7 @@ function NoobDKP_EmptyEventVerticalScroll(offset)
   event_container_index = event_container_index + offset
 
   local tableSize = getTableSize(NOOBDKP_g_events)
-  if NOOBDKP_g_events["active_raid"] ~= nil then
+  if (NOOBDKP_g_events ~= nil) and (NOOBDKP_g_events["active_raid"] ~= nil) then
     tableSize = tableSize - 1
   end
 
@@ -320,6 +341,9 @@ function NoobDKP_EmptyEventVerticalScroll(offset)
 end
 
 function NoobDKP_HandleOpenEvent(button)
+  if NOOBDKP_g_events == nil then
+    NOOBDKP_g_events = {}
+  end
   local _, _, i = string.find(button:GetName(), "noobDKP_page2_empty_event_(%w+)(.*)")
   local text = getglobal("noobDKP_page2_empty_event_" .. i .. "_text"):GetText()
   local newactive = ""
@@ -337,6 +361,9 @@ function NoobDKP_HandleOpenEvent(button)
 end
 
 function NoobDKP_HandleDeleteEvent(button)
+  if NOOBDKP_g_events == nil then
+    NOOBDKP_g_events = {}
+  end
   local _, _, i = string.find(button:GetName(), "noobDKP_page2_empty_event_(%w+)(.*)")
   local text = getglobal("noobDKP_page2_empty_event_" .. i .. "_text"):GetText()
 
@@ -359,6 +386,9 @@ function NoobDKP_GenerateEventName()
 end
 
 function NoobDKP_CombatLog(subEvent, name)
+  if NOOBDKP_g_events == nil then
+    NOOBDKP_g_events = {}
+  end
   if subEvent == "UNIT_DIED" and name and NOOBDKP_g_options["admin_mode"] then
     if NOOBDKP_g_boss_table[name] ~= nil and NOOBDKP_g_events["active_raid"] ~= nil then
       print(NoobDKP_color .. "Found boss kill: " .. name)
@@ -416,6 +446,9 @@ function NoobDKP_EventContext()
 end
 
 function NoobDKP_EventContextRemove()
+  if NOOBDKP_g_events == nil then
+    NOOBDKP_g_events = {}
+  end
   getglobal("event_menu"):Hide()
   local id = tonumber(getglobal("event_menu_id"):GetText())
   local raid = NOOBDKP_g_events["active_raid"]

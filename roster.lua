@@ -166,7 +166,7 @@ function NoobDKP_RosterItemOnClick(self)
   getglobal("roster_menu_ep_value"):SetText("")
   getglobal("roster_menu_gp_value"):SetText("")
 
-  if roster_type == 2 then
+  if (NOOBDKP_g_events ~= nil) and (roster_type == 2) then
     if NOOBDKP_g_events["virtual"] == true then
       getglobal("roster_menu_button_add_virtual"):Hide()
     end
@@ -214,7 +214,7 @@ function NoobDKP_RosterContextRemove()
   getglobal("roster_menu"):Hide()
   local name = getglobal("roster_menu_name"):GetText()
 
-  if roster_type == 1 and NOOBDKP_g_events["virtual"] == true then
+  if (NOOBDKP_g_events ~= nil) and (roster_type == 1) and (NOOBDKP_g_events["virtual"] == true) then
     NOOBDKP_g_raid_roster[name] = nil
   else
     NoobDKP_RemoveRoster(name)
@@ -224,7 +224,7 @@ function NoobDKP_RosterContextRemove()
 end
 
 function NoobDKP_RosterContextAddVirtual()
-  if NOOBDKP_g_events["virtual"] == true then
+  if (NOOBDKP_g_events ~= nil) and NOOBDKP_g_events["virtual"] == true then
     local name = NoobDKP_ParseNameText(getglobal("roster_menu_name"):GetText())
     local score, ep, gp = NoobDKP_GetEPGP(name)
     local t = {"", score, ep, gp}
@@ -281,7 +281,7 @@ function NoobDKP_RosterVerticalScroll(offset)
 end
 
 function NoobDKP_UpdateRaidRoster()
-  if NOOBDKP_g_events["virtual"] ~= true then
+  if (NOOBDKP_g_events == nil) or (NOOBDKP_g_events["virtual"] ~= true) then
     NOOBDKP_g_raid_roster = {}
 
     for idx = 1, 40 do
@@ -367,6 +367,9 @@ function NoobDKP_UpdateRoster()
   local sorted = {}
   local unique = {}
 
+  if NOOBDKP_g_events == nil then
+    NOOBDKP_g_events = {}
+  end
   if NOOBDKP_g_events["virtual"] == true then
     getglobal("noobDKP_page1_virtual"):Show()
   end
