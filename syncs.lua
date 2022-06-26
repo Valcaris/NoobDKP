@@ -98,7 +98,11 @@ function NoobDKP_HandleRefreshSyncs()
       version = value["version"]
       nameFrame = getglobal("noobDKP_page5_entry" .. pos .. "_name")
       nameFrame:SetText(name)
-      local r, g, b, a = NoobDKP_getClassColor(NOOBDKP_g_roster[name][2])
+      if NOOBDKP_g_roster == nil or NOOBDKP_g_roster[name] == nil then
+        r, g, b, a = NoobDKP_getClassColor("unknown")
+      else
+        r, g, b, a = NoobDKP_getClassColor(NOOBDKP_g_roster[name][2])
+      end
       nameFrame:SetVertexColor(r, g, b, a)
       versionFrame = getglobal("noobDKP_page5_entry" .. pos .. "_version")
       versionFrame:SetText(version)
