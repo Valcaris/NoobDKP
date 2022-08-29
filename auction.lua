@@ -382,6 +382,7 @@ function NoobDKP_HandleAuctionGP()
   NoobDKP_HandleUpdateAuction()
   getglobal("noobDKP_page3_auction_amount"):ClearFocus()
   NoobDKP_HandleAuctionResponse("gp", winner, wingp)
+  NoobDKP_HandleSyncEPGP(winner, ep, gp)  
   local item = NOOBDKP_g_auction["_item"]
 
   local chars = { winner }

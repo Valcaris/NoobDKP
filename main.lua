@@ -29,7 +29,6 @@
         - Master arbitration
           - Only one echo in raid chat for bid and boss detection
         - Manual Push/Pull from others (show update timestamp)
-        - Change Guild Scan to "Pull Guild Notes into Data"
     - Options Tab
           - Various widgets for the options, may need mulitple pages or scrolling page
           - Refactor Audit Guild Roster, find use for it (different than purge)
@@ -144,7 +143,7 @@ function NoobDKP_OnEvent(self, event, ...)
 end
 
 function NoobDKP_ParseChat(text, playerName)
-  -- admins listen to need/greed, non-admins listen to the admin respons
+  -- admins listen to need/greed, non-admins listen to the admin response
   if NOOBDKP_g_options["admin_mode"] then
     text = string.lower(text)
     -- pass will remove character from bidding (if they bid)
@@ -161,26 +160,6 @@ function NoobDKP_ParseChat(text, playerName)
       NoobDKP_HandleUpdateAuction()
       NoobDKP_HandleAuctionResponse("bid", playerName, text, score, ep, gp)
       NoobDKP_SyncAuctionBid(playerName, text)
-    end
-  else
-    -- if not admin, just listen to the admin to keep updated
-    local _, _, cmd = string.find(text, "NoobDKP: (%w+)(.*)")
-    if cmd == "GP" then
-      local _, _, gp, char = string.find(text, "NoobDKP: GP (-?%d+) to (%w+)")
-      local main = NOOBDKP_find_main(char)
-      local ep = NOOBDKP_g_raid_roster[char][3]
-      local oldgp = NOOBDKP_g_raid_roster[char][4]
-      local newgp = oldgp + gp
-      NoobDKP_SetEPGP(main, ep, newgp)
-      NoobDKP_UpdateRoster()
-      NoobDKP_HandleUpdateAuction()
-    elseif cmd == "EP" then
-      print(NoobDKP_color .. "EP event detected!")
-      local _, _, ep, reason = string.find(text, "NoobDKP: EP Adding (-?%d+) EP to the raid for (.*)")
-      print(NoobDKP_color .. "EP event results: " .. ep .. " reasons: " .. reason)
-      getglobal("noobDKP_page2_amount"):SetText(ep)
-      getglobal("noobDKP_page2_reason"):SetText(reason)
-      NoobDKP_AddRaidEP()
     end
   end
 end

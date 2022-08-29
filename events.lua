@@ -119,6 +119,7 @@ function NoobDKP_Event_EntryToString(id, entry)
 end
 
 function NoobDKP_ShowEventTab()
+  event_index = 1 -- reset to top
   local emptyFrame = getglobal("noobDKP_page2_empty_event")
   local fullFrame = getglobal("noobDKP_page2_event")
 

@@ -21,14 +21,12 @@ function NoobDKP_HandleSyncMessage(sender, text)
     if NOOBDKP_g_syncs[main] == nil then
       NOOBDKP_g_syncs[main] = {}
     end
-    print(NoobDKP_color .. " cmd: " .. cmd .. " args: " .. args)
     local _, _, version, sync_time = string.find(args, "(.*) # (.*)")
     NOOBDKP_g_syncs[main]["version"] = version
     NOOBDKP_g_syncs[main]["sync_time"] = sync_time
-    print(NoobDKP_color .. " version: " .. version .. " sync time: " .. sync_time)
-  elseif cmd == "auction" then
-    print(NoobDKP_color .. " cmd: " .. cmd .. " args: " .. args)
+  elseif (cmd == "auction") and (NOOBDKP_g_options["ignore_others"] == false) then
     local _, _, name, bid, ep, gp = string.find(args, "%s?(%w*)%s(%w*)%s(%d*)%s(%d*)")
+    print(NoobDKP_color .. "auction handler name:" .. name .. " bid: " .. bid .. " ep: " .. ep .. " gp: " .. gp )
     NoobDKP_SetEPGP(name, ep, gp)
     NoobDKP_HandleAddBid(name, bid)
     NoobDKP_HandleUpdateAuction()
@@ -38,8 +36,16 @@ function NoobDKP_HandleSyncMessage(sender, text)
   elseif cmd == "winner" then
     local _, _, name = string.find(args, "%s?(%w+)%s?")
     NoobDKP_HandleFinishAuction(name)
+  elseif (cmd == "epgp") and (NOOBDKP_g_options["ignore_others"] ~= true) then
+    local _, _, name, ep, gp = string.find(args, "%s?(%w+)%s(%d+)%s(%d+)")
+    local char = NOOBDKP_find_main(name)
+    if (char == "") then char = name end
+    print(NoobDKP_color .. "epgp handler: " .. name .. " -> " .. char .. " (" .. ep .. "/" .. gp .. ")")
+    NoobDKP_SetEPGP(char, ep, gp)
   end
   NoobDKP_HandleRefreshSyncs()
+  NoobDKP_HandleUpdateAuction()
+  NoobDKP_UpdateRoster()
 end
 
 -- handles sending sync messages when addon is loaded (sends a hello message)
@@ -80,6 +86,12 @@ end
 -- handles sending the sync message when an auction is finished
 function NoobDKP_HandleSyncAuctionFinish(name)
   local msg = "winner " .. name
+  SendAddonMessage("NoobDKP", msg, "RAID", 0)
+  print(NoobDKP_color .. "Sent addon message: " .. msg)
+end
+
+function NoobDKP_HandleSyncEPGP(name, ep, gp)
+  local msg = "epgp " .. name .. " " .. ep .. " " .. gp
   SendAddonMessage("NoobDKP", msg, "RAID", 0)
   print(NoobDKP_color .. "Sent addon message: " .. msg)
 end

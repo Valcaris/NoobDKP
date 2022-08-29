@@ -2149,7 +2149,7 @@
               </Anchor>
             </Anchors>
           </Button>
-          <Button name="$parent_scan" text="Guild Scan" inherits="UIPanelButtonTemplate">
+          <Button name="$parent_scan" text="Pull Guild Notes into Data" inherits="UIPanelButtonTemplate">
             <Anchors>
               <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT">
                 <Offset>
@@ -2158,7 +2158,7 @@
               </Anchor>
             </Anchors>
             <Size>
-              <AbsDimension x="80" y="25" />
+              <AbsDimension x="170" y="25" />
             </Size>
             <Scripts>
               <OnClick>NoobDKP_ScanRoster();</OnClick>
@@ -2256,47 +2256,56 @@
                 </Anchor>
               </Anchors>
             </FontString>
+            <FontString name="$parent_ignore_others_text" inherits="GameFontNormal" text="Ignore Others?">
+              <Anchors>
+                <Anchor point="TOPLEFT" relativeTo="$parent_admin_text">
+                  <Offset>
+                    <AbsDimension x="0" y="-25" />
+                  </Offset>
+                </Anchor>
+              </Anchors>
+            </FontString>
             <FontString name="$parent_loot_table_text" inherits="GameFontNormal" text="Populate Loot Table?">
               <Anchors>
-                <Anchor point="TOPLEFT" relativeTo="$parent">
+                <Anchor point="TOPLEFT" relativeTo="$parent_ignore_others_text">
                   <Offset>
-                    <AbsDimension x="15" y="-75" />
+                    <AbsDimension x="0" y="-25" />
                   </Offset>
                 </Anchor>
               </Anchors>
             </FontString>
             <FontString name="$parent_loot_need_greed_text" inherits="GameFontNormal" text="Show Need/Greed for Auctions?">
               <Anchors>
-                <Anchor point="TOPLEFT" relativeTo="$parent">
+                <Anchor point="TOPLEFT" relativeTo="$parent_loot_table_text">
                   <Offset>
-                    <AbsDimension x="15" y="-100" />
+                    <AbsDimension x="0" y="-25" />
                   </Offset>
                 </Anchor>
               </Anchors>
             </FontString>
             <FontString name="$parent_decay_percent_text" inherits="GameFontNormal" text="Decay Percentage:">
               <Anchors>
-                <Anchor point="TOPLEFT" relativeTo="$parent">
+                <Anchor point="TOPLEFT" relativeTo="$parent_loot_need_greed_text">
                   <Offset>
-                    <AbsDimension x="15" y="-125" />
+                    <AbsDimension x="0" y="-25" />
                   </Offset>
                 </Anchor>
               </Anchors>
             </FontString>
             <FontString name="$parent_auto_EP_text" inherits="GameFontNormal" text="Auto EP?">
               <Anchors>
-                <Anchor point="TOPLEFT" relativeTo="$parent">
+                <Anchor point="TOPLEFT" relativeTo="$parent_decay_percent_text">
                   <Offset>
-                    <AbsDimension x="15" y="-150" />
+                    <AbsDimension x="0" y="-25" />
                   </Offset>
                 </Anchor>
               </Anchors>
             </FontString>
             <FontString name="$parent_min_EP_heroic_text" inherits="GameFontNormal" text="Min EP for heroics:">
               <Anchors>
-                <Anchor point="TOPLEFT" relativeTo="$parent">
+                <Anchor point="TOPLEFT" relativeTo="$parent_auto_EP_text">
                   <Offset>
-                    <AbsDimension x="15" y="-180" />
+                    <AbsDimension x="0" y="-25" />
                   </Offset>
                 </Anchor>
               </Anchors>
@@ -2352,18 +2361,6 @@
               </OnLeave>
             </Scripts>
           </Button>
-          <EditBox name="$parent_external_name" inherits="InputBoxTemplate" autoFocus="false">
-            <Size>
-              <AbsDimension x="90" y="25" />
-            </Size>
-            <Anchors>
-              <Anchor relativePoint="TOP" point="TOP">
-                <Offset>
-                  <AbsDimension x="85" y="-20" />
-                </Offset>
-              </Anchor>
-            </Anchors>
-          </EditBox>
           <Button name="$parent_add_external" text="Add External" inherits="UIPanelButtonTemplate">
             <Anchors>
               <Anchor point="TOPRIGHT" relativePoint="TOPRIGHT">
@@ -2390,6 +2387,18 @@
               </OnLeave>
             </Scripts>
           </Button>
+          <EditBox name="$parent_external_name" inherits="InputBoxTemplate" autoFocus="false">
+            <Size>
+              <AbsDimension x="90" y="25" />
+            </Size>
+            <Anchors>
+                <Anchor point="TOPRIGHT" relativePoint="TOPLEFT" relativeTo="$parent_add_external">
+                <Offset>
+                  <AbsDimension x="0" y="0" />
+                </Offset>
+              </Anchor>
+            </Anchors>
+          </EditBox>
           <CheckButton name="$parent_admin" inherits="UICheckButtonTemplate">
             <Anchors>
               <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="$parent_admin_text">
@@ -2413,6 +2422,35 @@
               <OnEnter>
                 GameTooltip:SetOwner(this, "ANCHOR_RIGHT");
                 GameTooltip:SetText('Turns on Admin Mode.\nShould only be used by the raid leader.');
+              </OnEnter>
+              <OnLeave>
+                GameTooltip:Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+          <CheckButton name="$parent_ignore_others" inherits="UICheckButtonTemplate">
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="$parent_ignore_others_text">
+                <Offset>
+                  <AbsDimension x="5" y="5" />
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Size>
+              <AbsDimension x="25" y="25" />
+            </Size>
+            <Scripts>
+              <OnClick>
+                NOOBDKP_g_options["ignore_others"] = this:GetChecked()
+              </OnClick>
+              <OnShow>
+                if NOOBDKP_g_options["ignore_others"] then
+                  this:SetChecked(true)
+                end
+              </OnShow>
+              <OnEnter>
+                GameTooltip:SetOwner(this, "ANCHOR_RIGHT");
+                GameTooltip:SetText('Instructs NoobDKP to ignore raid messages from other NoobDKPs.\nUseful for EPGP officers.');
               </OnEnter>
               <OnLeave>
                 GameTooltip:Hide();

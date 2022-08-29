@@ -10,6 +10,7 @@ if NOOBDKP_g_options == nil then
   NOOBDKP_g_options = {}
 
   NOOBDKP_g_options["admin_mode"] = false
+  NOOBDKP_g_options["ignore_others"] = false
   NOOBDKP_g_options["loot_table"] = false
   NOOBDKP_g_options["auto_EP"] = true
   

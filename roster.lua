@@ -125,13 +125,25 @@ function NoobDKP_AltRoster(args)
   local _, _, alt, main = string.find(args, "%s?(%w+)%s?(.*)")
   alt = NoobDKP_FixName(alt)
   main = NoobDKP_FixName(main)
-  print(NoobDKP_color .. "Alt: " .. alt .. ", Main: " .. main)
+
+  -- exit early if alt and main are already set (or reversed)
+  if (NOOBDKP_find_main(alt) == main) or (NOOBDKP_find_main(main) == alt) then
+    print(NoobDKP_color .. "NoobDKP_AltRoster invalid alt/main already exists!")
+    return
+  end
+  
   if NOOBDKP_g_roster[alt] == nil then
     print(NoobDKP_color .. "Unable to find alt: " .. alt)
   elseif NOOBDKP_g_roster[main] == nil then
     print(NoobDKP_color .. "Unable to find main: " .. main)
   else
+    local _, alt_ep, alt_gp = NoobDKP_GetEPGP(alt)
+    local _, main_ep, main_gp = NoobDKP_GetEPGP(main)
+    print(NoobDKP_color .. "Alt " .. alt .. " (" .. alt_ep .. "/" .. alt_gp .. ") Main " .. main .. " (" .. main_ep .. "/" .. main_gp .. ")")
     NOOBDKP_g_roster[alt][3] = main
+    NoobDKP_SetEPGP(main, (alt_ep + main_ep), (alt_gp + main_gp))
+    NoobDKP_UpdateRaidRoster()
+    NoobDKP_HandleUpdateAuction()
   end
 end
 
