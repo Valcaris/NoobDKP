@@ -51,11 +51,12 @@ function NoobDKP_FinishAuction(args)
 
   local win_char = NOOBDKP_g_auction["_winner"]
   if win_char == "" then
-    return 
+    return
   end
   local score, ep, gp = NoobDKP_GetEPGP(win_char)
   NoobDKP_HandleAuctionResponse("win", win_char, NOOBDKP_g_auction["_item"], score)
   NoobDKP_HandleSyncAuctionFinish(win_char)
+  NoobDKP_PrePopulateGP(NOOBDKP_g_auction["_item"])
 end
 
 function NoobDKP_HandleFinishAuction(char)
@@ -72,7 +73,7 @@ function NoobDKP_HandleFinishAuction(char)
 
   local win_char = NOOBDKP_g_auction["_winner"]
   if win_char == "" then
-    return 
+    return
   end
   local score, ep, gp = NoobDKP_GetEPGP(win_char)
   getglobal("noobDKP_page3_auction_Winner"):SetText(win_char)
@@ -87,7 +88,7 @@ function NoobDKP_HandleDeclareWinner()
   local win_char = NOOBDKP_g_auction["_winner"]
   if win_char == "" then
     print(NoobDKP_color .. "NoobDKP: No winner found!")
-    return 
+    return
   end
   local score, ep, gp = NoobDKP_GetEPGP(win_char)
   NoobDKP_HandleSyncAuctionFinish(win_char)
@@ -354,7 +355,7 @@ function NoobDKP_HandleHeroicItemBid(name, bid)
   if box:GetChecked() then
     local score, ep, gp = NoobDKP_GetEPGP(name)
     local hero = NOOBDKP_g_options["min_EP_heroics"]
-    -- check that the config value is valid and non zero, 
+    -- check that the config value is valid and non zero,
     -- that the bidder doesn't have enough EP,
     -- and that they tried to bid need.
     -- If so, force the bid to greed.
@@ -382,7 +383,7 @@ function NoobDKP_HandleAuctionGP()
   NoobDKP_HandleUpdateAuction()
   getglobal("noobDKP_page3_auction_amount"):ClearFocus()
   NoobDKP_HandleAuctionResponse("gp", winner, wingp)
-  NoobDKP_HandleSyncEPGP(winner, ep, gp)  
+  NoobDKP_HandleSyncEPGP(winner, ep, gp)
   local item = NOOBDKP_g_auction["_item"]
 
   local chars = { winner }
@@ -436,7 +437,7 @@ function NoobDKP_HandleAuctionResponse(type, ...)
       SendChatMessage("NoobDKP: " .. name .. " wins the bid for " .. item .. " with a score of " .. score, "RAID")
     elseif type == "gp" then
       local name, gp = ...
-      SendChatMessage("NoobDKP: GP " .. gp .. " to " .. name, "RAID")
+      SendChatMessage("NoobDKP: " .. gp .. " GP added to " .. name, "RAID")
     elseif type == "DQ" then
       local name = ...
       if NOOBDKP_g_auction[name]["DQ"] then
@@ -555,7 +556,7 @@ function NoobDKP_PrePopulateGP(item)
     equipLoc = "MARK"
   end
 
-  -- determine if item is heroic version. Would be nice if there was a 
+  -- determine if item is heroic version. Would be nice if there was a
   -- way to get this from the item or WoW, but having the user handle it
   -- seems to work for now
   if getglobal("noobDKP_page3_auctionIsHeroic"):GetChecked() then
@@ -568,12 +569,27 @@ function NoobDKP_PrePopulateGP(item)
     gp = ""
   end
 
+  local win_char = NOOBDKP_g_auction["_winner"]
+
+  if(win_char ~= nil
+  and (NOOBDKP_g_auction[win_char]["_type"] == "greed")
+  and (NOOBDKP_g_options["greed_discount"])) then
+    local discount = tonumber(NOOBDKP_g_options["greed_discount_percent"])
+    gp = gp * (1 - (discount / 100))
+    print(NoobDKP_color .. "Greed discount applied!")
+  end
+
   getglobal("noobDKP_page3_auction_amount"):SetText(gp)
 end
 
 function NoobDKP_IsHeroicChanged()
   local item = NOOBDKP_g_auction["_item"]
   NoobDKP_PrePopulateGP(item)
+end
+
+function NoobDKP_IsGreedDiscountChanged()
+  local value = getglobal("noobDKP_page3_auctionIsGreedDiscount"):GetChecked()
+  NOOBDKP_g_options["greed_discount"] = value
 end
 
 -- handler when an item is shift-clicked (creates auction if valid)

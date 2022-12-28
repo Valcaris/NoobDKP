@@ -122,7 +122,7 @@
 
   <Button name="event_container_list_template" virtual="true" hidden="false">
     <Size>
-      <AbsDimension x="400" y="15" />      
+      <AbsDimension x="400" y="15" />
     </Size>
     <Layers>
       <Layer level="ARTWORK">
@@ -242,7 +242,7 @@
             <Anchor relativePoint="LEFT" point="LEFT" />
           </Anchors>
         </FontString>
-        <FontString name="$parent_version" inherits="GameFontHighlight" wraponspaces="false" justifyH="LEFT" text="Jan 1, 2022 22:22">
+        <FontString name="$parent_version" inherits="GameFontHighlight" wraponspaces="false" justifyH="LEFT" text="???">
           <Size>
             <AbsDimension x="50" y="14" />
           </Size>
@@ -250,24 +250,32 @@
             <Anchor point="TOPLEFT" relativeTo="$parent_name" relativePoint="TOPRIGHT" />
           </Anchors>
         </FontString>
-        <FontString name="$parent_sync_time" inherits="GameFontHighlight" wraponspaces="false" justifyH="LEFT" text="Jan 1, 2022 22:22">
+        <FontString name="$parent_sync_time" inherits="GameFontHighlight" wraponspaces="false" justifyH="LEFT" text="Unknown">
           <Size>
-            <AbsDimension x="150" y="14" />
+            <AbsDimension x="125" y="14" />
           </Size>
           <Anchors>
             <Anchor point="TOPLEFT" relativeTo="$parent_version" relativePoint="TOPRIGHT" />
           </Anchors>
         </FontString>
-        <FontString name="$parent_events" inherits="GameFontHighlight" wraponspaces="false" justifyH="LEFT" text="Events...">
-          <Size>
-            <AbsDimension x="50" y="14" />
-          </Size>
-          <Anchors>
-            <Anchor point="TOPLEFT" relativeTo="$parent_sync_time" relativePoint="TOPRIGHT" />
-          </Anchors>
-        </FontString>
       </Layer>
     </Layers>
+    <Frames>
+      <Button name="$parent_button_request_sync" inherits="UIPanelButtonTemplate" text="Request">
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeTo="$parent_sync_time" relativePoint="TOPRIGHT" />
+        </Anchors>
+        <Size>
+          <AbsDimension x="60" y="14" />
+        </Size>
+        <Scripts>
+          <OnClick>
+            local nameText = getglobal(this:GetParent():GetName() .. "_name")
+            NoobDKP_RequestSync(nameText:GetText())
+          </OnClick>
+        </Scripts>
+      </Button>
+    </Frames>
   </Button>
 
   <Frame name="roster_menu" hidden="true" frameStrata="TOOLTIP">
@@ -1259,7 +1267,7 @@
                     NoobDKP_GenerateEventName()
                   </OnClick>
                 </Scripts>
-              </Button>              
+              </Button>
             </Frames>
             <Scripts>
               <OnMouseWheel>NoobDKP_EmptyEventVerticalScroll(arg1 * -1)</OnMouseWheel>
@@ -1303,7 +1311,7 @@
                     eventText:ClearFocus()
                   </OnClick>
                 </Scripts>
-              </Button>              
+              </Button>
               <Button name="$parent_event_1" inherits="event_list_template">
                 <Anchors>
                   <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$parent">
@@ -1579,6 +1587,15 @@
                     <Anchor point="BOTTOMRIGHT" relativePoint="BOTTOMRIGHT" relativeTo="$parent">
                       <Offset>
                         <AbsDimension x="-35" y="55" />
+                      </Offset>
+                    </Anchor>
+                  </Anchors>
+                </FontString>
+                <FontString name="$parent_IsGreedDiscountText" inherits="GameFontNormal" text="Greed Discount?">
+                  <Anchors>
+                    <Anchor point="BOTTOMRIGHT" relativePoint="BOTTOMRIGHT" relativeTo="$parent">
+                      <Offset>
+                        <AbsDimension x="-105" y="55" />
                       </Offset>
                     </Anchor>
                   </Anchors>
@@ -1920,6 +1937,24 @@
                   <OnClick>NoobDKP_IsHeroicChanged();</OnClick>
                 </Scripts>
               </CheckButton>
+              <CheckButton name="$parentIsGreedDiscount" inherits="UICheckButtonTemplate">
+                <Anchors>
+                  <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="$parent_IsGreedDiscountText">
+                    <Offset>
+                      <AbsDimension x="0" y="0" />
+                    </Offset>
+                  </Anchor>
+                </Anchors>
+                <Size>
+                  <AbsDimension x="25" y="25" />
+                </Size>
+                <Scripts>
+                  <OnShow>
+                    if NOOBDKP_g_options["greed_discount"] then this:SetChecked(true) end
+                  </OnShow>
+                  <OnClick>NoobDKP_IsGreedDiscountChanged();</OnClick>
+                </Scripts>
+              </CheckButton>
             </Frames>
           </Frame>
         </Frames>
@@ -2067,7 +2102,7 @@
                 </Offset>
               </Anchor>
             </Anchors>
-          </Button>          
+          </Button>
           <Button name="$parent_entry2" inherits="sync_list_template">
             <Anchors>
               <Anchor relativePoint="BOTTOMLEFT" point="TOPLEFT" relativeTo="$parent_entry1">
@@ -2304,6 +2339,15 @@
             <FontString name="$parent_min_EP_heroic_text" inherits="GameFontNormal" text="Min EP for heroics:">
               <Anchors>
                 <Anchor point="TOPLEFT" relativeTo="$parent_auto_EP_text">
+                  <Offset>
+                    <AbsDimension x="0" y="-25" />
+                  </Offset>
+                </Anchor>
+              </Anchors>
+            </FontString>
+            <FontString name="$parent_greed_discount_percent_text" inherits="GameFontNormal" text="Greed Discount Percentage:">
+              <Anchors>
+                <Anchor point="TOPLEFT" relativeTo="$parent_min_EP_heroic_text">
                   <Offset>
                     <AbsDimension x="0" y="-25" />
                   </Offset>
@@ -2620,6 +2664,28 @@
               </OnLeave>
             </Scripts>
           </EditBox>
+          <EditBox name="$parent_greed_discount_percent" inherits="InputBoxTemplate" autoFocus="false">
+            <Size>
+              <AbsDimension x="40" y="25" />
+            </Size>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="$parent_greed_discount_percent_text">
+                <Offset>
+                  <AbsDimension x="5" y="5" />
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnShow>
+                if(NOOBDKP_g_options["greed_discount_percent"] == nil) then NOOBDKP_g_options["greed_discount_percent"] = 50 end
+                this:SetText(NOOBDKP_g_options["greed_discount_percent"]);</OnShow>
+              <OnEnterPressed>
+                NOOBDKP_g_options["greed_discount_percent"] = tonumber(this:GetText())
+                this:ClearFocus();
+              </OnEnterPressed>
+            </Scripts>
+          </EditBox>
+
           <Button name="$parent_purge_tables" text="Purge Tables" inherits="UIPanelButtonTemplate">
             <Anchors>
               <Anchor point="BOTTOMRIGHT" relativePoint="BOTTOMRIGHT" relativeTo="$parent">
@@ -2693,7 +2759,7 @@
            </Scripts>
           </ScrollFrame>
         </Frames>
-      </Frame>      
+      </Frame>
       <Button name="$parentTab1" inherits="CharacterFrameTabButtonTemplate" id="1" text="Roster">
         <Anchors>
           <Anchor point="CENTER" relativePoint="BOTTOMLEFT">

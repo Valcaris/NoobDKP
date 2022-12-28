@@ -13,9 +13,9 @@ if NOOBDKP_g_options == nil then
   NOOBDKP_g_options["ignore_others"] = false
   NOOBDKP_g_options["loot_table"] = false
   NOOBDKP_g_options["auto_EP"] = true
-  
+
   NOOBDKP_g_options["scroll_scale"] = 5
-  
+
   -- score calculation options
   NOOBDKP_g_options["base_EP"] = 200
   NOOBDKP_g_options["base_GP"] = 200
@@ -24,6 +24,8 @@ if NOOBDKP_g_options == nil then
   NOOBDKP_g_options["min_EP"] = 0
   NOOBDKP_g_options["min_EP_heroics"] = 500
   NOOBDKP_g_options["decay_percent"] = 30
+  NOOBDKP_g_options["greed_discount"] = true
+  NOOBDKP_g_options["greed_discount_percent"] = 50
 
   -- gear options by inventory slot type
   NOOBDKP_g_options["INVTYPE_HEAD"] = 50
@@ -827,7 +829,7 @@ if NOOBDKP_g_loot_table == nil then
       ["need"] = "All DPS Casters",
       ["greed"] = "Other casters",
     },
-  }  
+  }
 end
 
 if NOOBDKP_g_minimap == nil then

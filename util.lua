@@ -143,7 +143,7 @@ function NoobDKP_SetEPGP(char, ep, gp)
   local main = NOOBDKP_find_main(char)
   if main == nil or main == "" then
     main = char
-    NOOBDKP_g_roster[main] = {} 
+    NOOBDKP_g_roster[main] = {}
   end
   NOOBDKP_g_roster[main][3] = note
 end
@@ -151,4 +151,25 @@ end
 function NoobDKP_ParseNameText(text)
   local _, _, name = string.find(text, "(%w*)(.*)")
   return name
+end
+
+g_NoobDKP_MessageQueue = {first = 0, last = -1}
+
+function g_NoobDKP_MessageQueue.push(value)
+  local last = g_NoobDKP_MessageQueue.last + 1
+  g_NoobDKP_MessageQueue.last = last
+  g_NoobDKP_MessageQueue[last] = value
+end
+
+function g_NoobDKP_MessageQueue.pop()
+  local first = g_NoobDKP_MessageQueue.first
+  if first > g_NoobDKP_MessageQueue.last then return "" end
+  local value = g_NoobDKP_MessageQueue[first]
+  g_NoobDKP_MessageQueue[first] = nil
+  g_NoobDKP_MessageQueue.first = first + 1
+  return value
+end
+
+function g_NoobDKP_MessageQueue.empty()
+  return (g_NoobDKP_MessageQueue.last == -1) or (g_NoobDKP_MessageQueue.first == g_NoobDKP_MessageQueue.last)
 end
