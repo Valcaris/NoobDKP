@@ -2,6 +2,7 @@ local event_index = 1
 local event_container_index = 1
 local event_id = 1
 
+-- Chat handler for events
 function NoobDKPHandleEvents(msg)
   print(NoobDKP_color .. "Handle Events: " .. msg)
   local syntax =
@@ -25,6 +26,7 @@ function NoobDKPHandleEvents(msg)
   end
 end
 
+-- Adds/Creates a new event
 function NoobDKP_AddEvent(msg)
   local _, _, desc = string.find(msg, "%s?(.*)")
   local timestamp = time()
@@ -34,10 +36,17 @@ function NoobDKP_AddEvent(msg)
     desc = "No Description on " .. d
   end
 
+  NoobDKP_Add2Event(desc, timestamp)
+
+  print(NoobDKP_color .. "Add Event: " .. desc .. ", " .. timestamp)
+end
+
+function NoobDKP_Add2Event(desc, timestamp)
   print(NoobDKP_color .. "Add Event: " .. desc .. ", " .. timestamp)
 
   if NOOBDKP_g_options["admin_mode"] then
     SendChatMessage("NoobDKP has started a new raid. Whisper me \"noob help\" for options!", "RAID")
+    NoobDKP_SyncAddEvent(desc, timestamp)
   end
 
   if NOOBDKP_g_events == nil then
@@ -46,8 +55,13 @@ function NoobDKP_AddEvent(msg)
 
   NOOBDKP_g_events[timestamp] = {description = desc, last_id = 1}
   NOOBDKP_g_events["active_raid"] = timestamp
+  NoobDKP_ShowEventTab()
 end
 
+-- Sets an event as virtual
+-- Virtual events are for adding EPGP after the fact rather
+--  than during a live raid. Players are added to/from the event
+--  regardless of whether or not they are in the raid.
 function NoobDKP_AddVirtualEvent(msg)
   if NOOBDKP_g_events == nil then
     NOOBDKP_g_events = {}
@@ -55,6 +69,7 @@ function NoobDKP_AddVirtualEvent(msg)
   NOOBDKP_g_events["virtual"] = true
 end
 
+-- Remove/delete an event
 function NoobDKP_RemoveEvent(msg)
   if NOOBDKP_g_events == nil then
     NOOBDKP_g_events = {}
@@ -74,6 +89,7 @@ function NoobDKP_RemoveEvent(msg)
   end
 end
 
+-- Closes an event (declares it as finished and no longer open or active)
 function NoobDKP_CloseEvent()
   getglobal("noobDKP_page1_virtual"):Hide()
   getglobal("noobDKP_page2_virtual"):Hide()
@@ -85,22 +101,41 @@ function NoobDKP_CloseEvent()
   NoobDKP_ShowEventTab()
 end
 
+-- Add an entry to an event. Entries include boss kills, loot awarded,
+--  or other awards or penalties.
 function NoobDKP_Event_AddEntry(ep, gp, text, chars, id)
+  local timestamp = NOOBDKP_g_events["active_raid"]
+  if(timestamp ~= nil) then
+    NoobDKP_Event_Add2Entry(timestamp, id, ep, gp, text, chars)
+    if NOOBDKP_g_options["admin_mode"] then
+      -- last id was incremented earlier, so decrement here
+      id = NOOBDKP_g_events[timestamp]["last_id"] - 1
+      local entry = NoobDKP_Event_EntryToString(id, NOOBDKP_g_events[timestamp][id])
+      NoobDKP_SyncEventEntry(timestamp, entry)
+    end
+  end
+end
+
+function NoobDKP_Event_Add2Entry(timestamp, id, ep, gp, text, chars)
   if NOOBDKP_g_events == nil then
     NOOBDKP_g_events = {}
   end
-  local raid = NOOBDKP_g_events["active_raid"]
+
+  local raid = NOOBDKP_g_events[timestamp]
   if raid ~= nil then
     if id == 0 or id == nil then
-      id = NOOBDKP_g_events[raid]["last_id"]
-      NOOBDKP_g_events[raid]["last_id"] = id + 1
+      id = raid["last_id"]
+      raid["last_id"] = id + 1
     end
+    ep = tonumber(ep)
+    gp = tonumber(gp)
     local t = {ep, gp, text, chars}
-    NOOBDKP_g_events[raid][id] = t
+    raid[id] = t
     NoobDKP_HandleUpdateFullEvent()
   end
 end
 
+-- converts an event entry to a string (for saving to a report)
 function NoobDKP_Event_EntryToString(id, entry)
   local ep = entry[1]
   local gp = entry[2]
@@ -118,6 +153,7 @@ function NoobDKP_Event_EntryToString(id, entry)
   return s;
 end
 
+-- Tells the event tab in the GUI to display
 function NoobDKP_ShowEventTab()
   event_index = 1 -- reset to top
   local emptyFrame = getglobal("noobDKP_page2_empty_event")
@@ -152,6 +188,7 @@ function NoobDKP_ShowEventTab()
   end
 end
 
+-- Adds EP to the entire raid in an active event
 function NoobDKP_AddRaidEP()
   local amount = getglobal("noobDKP_page2_amount"):GetText()
   local reason = getglobal("noobDKP_page2_reason"):GetText()
@@ -172,13 +209,16 @@ function NoobDKP_AddRaidEP()
     value[2] = NoobDKP_calculateScore(ep, gp)
     NoobDKP_SetEPGP(key, ep, gp)
     table.insert(chars, key)
+    if NOOBDKP_g_options["admin_mode"] then
+      NoobDKP_HandleSyncEPGP(key, ep, gp)
+    end
   end
 
   getglobal("noobDKP_page2_amount"):ClearFocus()
   getglobal("noobDKP_page2_reason"):ClearFocus()
   NoobDKP_UpdateRoster()
 
-  if NOOBDKP_g_auction ~= nil and NOOBDKP_g_auction ~= {} then 
+  if NOOBDKP_g_auction ~= nil and NOOBDKP_g_auction ~= {} then
     NoobDKP_HandleUpdateAuction()
   end
   NoobDKP_Event_AddEntry(amount, 0, reason, chars, 0)
@@ -189,6 +229,50 @@ function NoobDKP_AddRaidEP()
   end
 end
 
+function NoobDKP_AddEP(amount, who, reason)
+  if reason == nil or reason == "" then
+    reason = "no reason"
+  end
+
+  if amount == nil or tonumber(amount) == nil then
+    amount = 0
+  end
+
+  local chars = {}
+  if(who == "raid") then
+    for key, value in pairs(NOOBDKP_g_raid_roster) do
+      local ep = value[3] + amount
+      local gp = value[4]
+      value[3] = ep
+      value[2] = NoobDKP_calculateScore(ep, gp)
+      NoobDKP_SetEPGP(key, ep, gp)
+      table.insert(chars, key)
+      NoobDKP_HandleSyncEPGP(key, ep, gp)
+    end
+  else
+    chars = { who }
+    local ep, gp
+    local old_score, old_ep, old_gp = NoobDKP_GetEPGP(who)
+    ep = old_ep + amount
+    gp = old_gp
+    NoobDKP_SetEPGP(who, ep, gp)
+    NoobDKP_HandleSyncEPGP(who, ep, gp)
+  end
+
+  NoobDKP_UpdateRoster()
+
+  if NOOBDKP_g_auction ~= nil and NOOBDKP_g_auction ~= {} then
+    NoobDKP_HandleUpdateAuction()
+  end
+  NoobDKP_Event_AddEntry(amount, 0, reason, chars, 0)
+
+  print(NoobDKP_color .. "Adding " .. amount .. " EP to raid because: " .. reason)
+  if NOOBDKP_g_options["admin_mode"] then
+    SendChatMessage("NoobDKP: EP Adding " .. amount .. " EP to the raid for " .. reason, "RAID")
+  end
+end
+
+-- Adds GP to the entire raid in an active event
 function NoobDKP_AddRaidGP()
   local amount = getglobal("noobDKP_page2_amount_GP"):GetText()
   local reason = getglobal("noobDKP_page2_reason"):GetText()
@@ -215,7 +299,7 @@ function NoobDKP_AddRaidGP()
   getglobal("noobDKP_page2_reason"):ClearFocus()
   NoobDKP_UpdateRoster()
 
-  if NOOBDKP_g_auction ~= nil then 
+  if NOOBDKP_g_auction ~= nil then
     NoobDKP_HandleUpdateAuction()
   end
   NoobDKP_Event_AddEntry(0, amount, reason, chars, 0)
@@ -226,6 +310,7 @@ function NoobDKP_AddRaidGP()
   end
 end
 
+-- Handles when an event is triggered
 function event_helper(i, pos)
   if NOOBDKP_g_events == nil then
     NOOBDKP_g_events = {}
@@ -354,8 +439,8 @@ function NoobDKP_HandleOpenEvent(button)
       break
     end
   end
-  
-  if newactive ~= "" then 
+
+  if newactive ~= "" then
     NOOBDKP_g_events["active_raid"] = newactive
   end
   NoobDKP_ShowEventTab()
@@ -407,7 +492,7 @@ function NoobDKP_EventItemOnClick(self)
   local item_text = getglobal(self:GetName() .. "_text"):GetText()
 
   local _, _, id = string.find("(%d+).(.*)")
-  
+
   menu:ClearAllPoints()
   menu:SetPoint("LEFT", self, "LEFT", 30, -30)
 
@@ -461,13 +546,13 @@ function NoobDKP_EventHandleType(button)
   if button:GetName() == "event_menu_type_EP" then
     if button:GetChecked() then
       getglobal("event_menu_type_GP"):SetChecked(false)
-    else 
+    else
       getglobal("event_menu_type_GP"):SetChecked(true)
     end
   else
     if button:GetChecked() then
       getglobal("event_menu_type_EP"):SetChecked(false)
-    else 
+    else
       getglobal("event_menu_type_EP"):SetChecked(true)
     end
   end

@@ -1246,7 +1246,6 @@
                   <OnClick>
                     local eventText = getglobal("noobDKP_page2_empty_event_event_location")
                     NoobDKP_AddEvent(eventText:GetText())
-                    NoobDKP_ShowEventTab()
                     eventText:ClearFocus()
                   </OnClick>
                 </Scripts>
@@ -2523,7 +2522,7 @@
               </OnShow>
               <OnEnter>
                 GameTooltip:SetOwner(this, "ANCHOR_RIGHT");
-                GameTooltip:SetText('Shift-Right-Click will add item\ninfo into internal loot table');
+                GameTooltip:SetText('Shift-Click will add item\ninfo into internal loot table');
               </OnEnter>
               <OnLeave>
                 GameTooltip:Hide();
@@ -2962,6 +2961,9 @@
         this:StopMovingOrSizing();
         this.isMoving = false;
       </OnDragStop>
+      <OnUpdate>
+        NoobDKP_SyncOnUpdate();
+      </OnUpdate>
     </Scripts>
   </Frame>
 </Ui>

@@ -10,18 +10,27 @@
         - Should be able to remove alt status from char
         - When char enters raid, check to fix class
         - Clamp scrolling to end of list
+        - Ability to change main characters
+         - move EPGP to new main
+         - convert all alts to new main
+         - set old main as alt
+         - lock the tab/sorting in place if a new person enters a raid
     - Events Tab
         - Add color to event listings
         - add indicators when events scroll off the page up or down
         - *allow editing of event entry roster
         - *when virtual event, repopulate raid roster from event entry roster
         - right-click on container = rename event
+        - when receive entry in the middle of event from sync, open new event
     - Auctions Tab
         - Add countdown to window when auction started, possibly broadcast to raid (with checkbox)
         - trim need/greed of whitespace
         - * auto-detect for Rotface/Festergut bloods
     - Reports Tab
     - Sync Tab
+        - Push raid roster EPGP
+        - Push guild EPGP
+
         - Choose to pull EPGP or events (or both)
         - Permissions based on guild rank for who can set what
         - Sync Externals (guildies are just in notes)
@@ -33,7 +42,7 @@
           - Various widgets for the options, may need mulitple pages or scrolling page
           - Refactor Audit Guild Roster, find use for it (different than purge)
           - Move Add External to Roster tab
-    - TitanBars Icon
+    - Add ability to view/add/remove/edit need/greed text
     - README.md, code documentation comments, general cleanup, QDKP acknowledgement
     - Conversion from QDKP T:x N:y to own custom notes E:x G:y
 ]]
@@ -179,7 +188,7 @@ noobldb = LibStub("LibDataBroker-1.1"):NewDataObject("NoobDKP", {
   type = "data source",
   icon = "Interface\\AddOns\\NoobDKP\\TNG.blp",
   OnClick = function(clickedframe, button) NoobDKP_ToggleView() end,
-  OnEnter = function(self) 
+  OnEnter = function(self)
     local tooltip = getglobal("NoobDKP_tooltip")
     tooltip:SetOwner(self, "ANCHOR_LEFT");
     tooltip:ClearLines();
@@ -187,7 +196,7 @@ noobldb = LibStub("LibDataBroker-1.1"):NewDataObject("NoobDKP", {
     tooltip:AddLine("Click to toggle frame");
     tooltip:Show();
   end,
-  OnLeave = function(self) 
+  OnLeave = function(self)
     local tooltip = getglobal("NoobDKP_tooltip")
     tooltip:Hide();
   end,

@@ -32,6 +32,7 @@ function NoobDKP_HandleSyncMessage(sender, text)
     NoobDKP_HandleUpdateAuction()
   elseif cmd == "item" then
     local _, _, item = string.find(args, "%s?(.*)")
+    print(NoobDKP_color .. "item handler: " .. item)
     NoobDKP_HandleItemAuction(item)
   elseif cmd == "winner" then
     local _, _, name = string.find(args, "%s?(%w+)%s?")
@@ -42,9 +43,20 @@ function NoobDKP_HandleSyncMessage(sender, text)
     if (char == "") then char = name end
     print(NoobDKP_color .. "epgp handler: " .. name .. " -> " .. char .. " (" .. ep .. "/" .. gp .. ")")
     NoobDKP_SetEPGP(char, ep, gp)
+  elseif cmd == "alt" then
+    local _, _, alt, main = string.find(args, "%s?(%w+)%s(%w+)")
+    print(NoobDKP_color .. "alt handler: " .. alt .. " " .. main)
+    NoobDKP_Add2Roster(alt, main)
   elseif cmd == "sync" then
     print(NoobDKP_color .. "Request sync detected from: " .. sender)
     NoobDKP_HandleRequestSync(sender)
+  elseif cmd == "addevent" then
+    print(NoobDKP_color .. "Request add event detected from: " .. sender)
+    NoobDKP_HandleSyncAddEvent(args)
+  elseif cmd == "evententry" then
+    local _, _, timestamp, entry = string.find(args, "%s?(%d+)%s(.*)")
+    print(NoobDKP_color .. "Event entry found: " .. timestamp .. ": " .. entry)
+    NoobDKP_HandleSyncEventEntry(timestamp, entry)
   end
 
   NoobDKP_HandleRefreshSyncs()
@@ -100,7 +112,56 @@ function NoobDKP_HandleSyncEPGP(name, ep, gp)
   print(NoobDKP_color .. "Sent addon message: " .. msg)
 end
 
+function NoobDKP_SyncAddEvent(desc, time)
+  local msg = "addevent " .. time .. " " .. desc
+  SendAddonMessage("NoobDKP", msg, "RAID", 0)
+  print(NoobDKP_color .. "Sent addon message: " .. msg)
+end
+
+function NoobDKP_HandleSyncAddEvent(text)
+  local _, _, timestamp, desc = string.find(text, "%s?(%d*)%s(.*)")
+  print("adding event: " .. desc .. " " .. timestamp)
+  NoobDKP_Add2Event(desc, timestamp)
+end
+
+function NoobDKP_SyncEventEntry(timestamp, entry)
+  local msg = "evententry " .. timestamp .. " " .. entry
+  SendAddonMessage("NoobDKP", msg, "RAID", 0)
+  print(NoobDKP_color .. "Sent addon message: " .. msg)
+end
+
+function NoobDKP_HandleSyncEventEntry(timestamp, entry)
+  local _, _, id, ep, gp, text, chars = string.find(entry, "%s?(%d+). (%d+) EP and (%d+) GP for (.*) to (.*)")
+
+  -- chars at this point is a text string, need to convert to a table
+  local t = {}
+  local _, _, name, remainder = string.find(chars, ",?%s?(%w+)(.*)")
+  while (name ~= nil) do
+    table.insert(t, name)
+    if(remainder ~= nil and remainder ~= "") then
+      _, _, name, remainder = string.find(remainder, ",?%s?(%w+)(.*)")
+    else
+      break
+    end
+  end
+
+  NoobDKP_Event_Add2Entry(timestamp, id, ep, gp, text, t)
+end
+
+function NoobDKP_SyncAddEP(ep, who, reason)
+  local msg = "addep " .. ep .. " " .. who .. " " .. reason
+  SendAddonMessage("NoobDKP", msg, "RAID", 0)
+  print(NoobDKP_color .. "Sent addon message: " .. msg)
+end
+
+function NoobDKP_HandleSyncAddEP(text)
+  local _, _, ep, who, reason = string.find(text, "%s?(%d*)%s(%w*)%s(.*)")
+  print("adding EP: " .. ep .. " " .. who .. " " .. reason)
+  NoobDKP_AddEP(desc, timestamp)
+end
+
 g_player = ""
+g_update_count = 0
 
 function NoobDKP_HandleRequestSync(player)
   local i = 0
@@ -109,18 +170,22 @@ function NoobDKP_HandleRequestSync(player)
     local char = key
     local main = NOOBDKP_find_main(char)
     if main == char then
-      local score, ep, gp = NoobDKP_ParseOfficerNote(NOOBDKP_g_roster[main][3])
+      -- send EPGP of mains
+      local score, ep, gp =NoobDKP_GetEPGP(main)
       local msg = "epgp " .. main .. " " .. ep .. " " .. gp
       print(NoobDKP_color .. "Queued message: " .. msg)
       g_NoobDKP_MessageQueue.push(msg)
---      SendAddonMessage("NoobDKP", msg, "WHISPER", player)
---      print(NoobDKP_color .. "Sent addon message: " .. msg)
+    else
+      -- send alts with link to main
+      local msg = "alt " .. char .. " " .. main
+      print(NoobDKP_color .. "Queued message: " .. msg)
+      g_NoobDKP_MessageQueue.push(msg)
     end
   end
 
   -- drain the queue several messages at a time so they don't get throttled
   g_player = player
-  NoobDKP_DrainMessageQueue()
+  g_update_count = 1
 end
 
 function NoobDKP_RequestSync(player)
@@ -129,20 +194,25 @@ function NoobDKP_RequestSync(player)
   print(NoobDKP_color .. "Sent addon message: " .. msg .. " to " .. player)
 end
 
-function NoobDKP_DrainMessageQueue()
-  print(NoobDKP_color .. "Queue draining...")
-  if not g_NoobDKP_MessageQueue.empty() then
-    for i = 1, 20 do
+function NoobDKP_SyncOnUpdate()
+  if g_update_count > 1 then
+    g_update_count = g_update_count - 1
+  elseif g_update_count == 1 then
+    g_update_count = 150
+    print(NoobDKP_color .. "SyncOnUpdate!")
+    for i = 1, 15 do
       msg = g_NoobDKP_MessageQueue.pop()
       if msg ~= "" then
         SendAddonMessage("NoobDKP", msg, "WHISPER", g_player)
         print(NoobDKP_color .. "Sent addon message: " .. msg)
+      else
+        g_update_count = 0
+        print(NoobDKP_color .. "Queue emptied!")
+        break
       end
     end
-    C_Timer.After(5.0, NoobDKP_DrainMessageQueue)
   end
 end
-
 
 -- handles refreshing all known syncs
 function NoobDKP_HandleRefreshSyncs()

@@ -113,6 +113,18 @@ function NoobDKP_AddRoster(name)
   end
 end
 
+function NoobDKP_Add2Roster(alt, main)
+  alt = NoobDKP_FixName(alt)
+  main = NoobDKP_FixName(main)
+
+  if NOOBDKP_g_roster[alt] == nil then
+    NOOBDKP_g_roster[alt] = {"*external*", "unknown", main}
+  else
+    NOOBDKP_g_roster[alt][3] = main
+  end
+  print(NoobDKP_color .. "Alt " .. alt .. " Main " .. main)
+end
+
 -- remove a character from the roster (should only be used on externals)
 function NoobDKP_RemoveRoster(name)
   name = NoobDKP_FixName(name)
@@ -131,7 +143,7 @@ function NoobDKP_AltRoster(args)
     print(NoobDKP_color .. "NoobDKP_AltRoster invalid alt/main already exists!")
     return
   end
-  
+
   if NOOBDKP_g_roster[alt] == nil then
     print(NoobDKP_color .. "Unable to find alt: " .. alt)
   elseif NOOBDKP_g_roster[main] == nil then
@@ -167,7 +179,7 @@ function NoobDKP_RosterItemOnClick(self)
 
   if my_name == nil or my_name == "" then
     menu:Hide()
-    return 
+    return
   end
 
   local menu_name = getglobal("roster_menu_name")
