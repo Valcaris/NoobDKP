@@ -26,6 +26,7 @@
         - Add countdown to window when auction started, possibly broadcast to raid (with checkbox)
         - trim need/greed of whitespace
         - * auto-detect for Rotface/Festergut bloods
+        - Add icon, buttons for need/greed/pass
     - Reports Tab
     - Sync Tab
         - Push raid roster EPGP

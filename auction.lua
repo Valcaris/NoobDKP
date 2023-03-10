@@ -246,6 +246,10 @@ function NoobDKP_SortAuction()
   local needList = {}
   local greedList = {}
 
+  if(NOOBDKP_g_auction == nil) then
+    NOOBDKP_g_auction = {}
+  end
+
   -- find all need rolls and insert into needList
   for key, value in pairs(NOOBDKP_g_auction) do
     if key ~= "_item" and key ~= "_winner" and value["_type"] == "need" then
